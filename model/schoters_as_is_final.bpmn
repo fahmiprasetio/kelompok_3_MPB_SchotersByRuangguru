@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Schoters_AS" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.44.0">
+  <bpmn:collaboration id="Collab_AS">
+    <bpmn:participant id="Participant_AS" name="Schoters by Ruangguru - Study Abroad Enrollment (As-Is / Manual)" processRef="Process_Schoters_AS"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Schoters_AS" name="Schoters Enrollment Process (As-Is)" isExecutable="false" camunda:historyTimeToLive="P180D">
+    <bpmn:laneSet id="LaneSet_AS">
+      <bpmn:lane id="L_Student" name="Prospective Student &amp; Parent">
+        <bpmn:flowNodeRef>AS_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Request</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Attend</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Submit</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Resubmit</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_ReviewOffer</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Proceed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Pay</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_RecvReceipt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Sign</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_Consultant" name="Education Consultant / Sales">
+        <bpmn:flowNodeRef>T_LogReq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Schedule</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Conduct</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>AS_Timer1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Followup</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_RecvDocs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_ReviewDocs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Docs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_NotifyDocIssue</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_PrepOffer</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_SendOffer</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Drop</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_NotifyFinance</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_Academic" name="Academic &amp; Mentor Team">
+        <bpmn:flowNodeRef>T_CheckAvail</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Match</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Onboard</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_Finance" name="Admin &amp; Finance">
+        <bpmn:flowNodeRef>T_Invoice</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_SendInstr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>AS_Timer2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_VerifyPay</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Pay</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_NotifyPayIssue</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Receipt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_PrepAgreement</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Archive</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Enrolled</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:sequenceFlow id="f37" sourceRef="T_Archive" targetRef="End_Enrolled"/>
+    <bpmn:sequenceFlow id="f36" sourceRef="T_Onboard" targetRef="T_Archive"/>
+    <bpmn:sequenceFlow id="f35" sourceRef="T_Sign" targetRef="T_Onboard"/>
+    <bpmn:sequenceFlow id="f34" sourceRef="T_PrepAgreement" targetRef="T_Sign"/>
+    <bpmn:sequenceFlow id="f33" sourceRef="T_RecvReceipt" targetRef="T_PrepAgreement"/>
+    <bpmn:sequenceFlow id="f32" sourceRef="T_Receipt" targetRef="T_RecvReceipt"/>
+    <bpmn:sequenceFlow id="f31" name="Valid" sourceRef="GW_Pay" targetRef="T_Receipt"/>
+    <bpmn:sequenceFlow id="f29" name="Invalid" sourceRef="GW_Pay" targetRef="T_NotifyPayIssue"/>
+    <bpmn:sequenceFlow id="f28" sourceRef="T_VerifyPay" targetRef="GW_Pay"/>
+    <bpmn:sequenceFlow id="f27" sourceRef="T_Pay" targetRef="T_VerifyPay"/>
+    <bpmn:sequenceFlow id="f30" sourceRef="T_NotifyPayIssue" targetRef="T_Pay"/>
+    <bpmn:sequenceFlow id="f26" sourceRef="AS_Timer2" targetRef="T_Pay"/>
+    <bpmn:sequenceFlow id="f25" sourceRef="T_SendInstr" targetRef="AS_Timer2"/>
+    <bpmn:sequenceFlow id="f24" sourceRef="T_Invoice" targetRef="T_SendInstr"/>
+    <bpmn:sequenceFlow id="f23" sourceRef="T_NotifyFinance" targetRef="T_Invoice"/>
+    <bpmn:sequenceFlow id="f22" name="Proceed" sourceRef="GW_Proceed" targetRef="T_NotifyFinance"/>
+    <bpmn:sequenceFlow id="f21" name="Not Interested" sourceRef="GW_Proceed" targetRef="End_Drop"/>
+    <bpmn:sequenceFlow id="f20" sourceRef="T_ReviewOffer" targetRef="GW_Proceed"/>
+    <bpmn:sequenceFlow id="f19" sourceRef="T_SendOffer" targetRef="T_ReviewOffer"/>
+    <bpmn:sequenceFlow id="f18" sourceRef="T_PrepOffer" targetRef="T_SendOffer"/>
+    <bpmn:sequenceFlow id="f15" sourceRef="T_NotifyDocIssue" targetRef="T_Resubmit"/>
+    <bpmn:sequenceFlow id="f17" name="Complete &amp; Valid" sourceRef="GW_Docs" targetRef="T_PrepOffer"/>
+    <bpmn:sequenceFlow id="f14" name="Incomplete / Invalid" sourceRef="GW_Docs" targetRef="T_NotifyDocIssue"/>
+    <bpmn:sequenceFlow id="f13" sourceRef="T_ReviewDocs" targetRef="GW_Docs"/>
+    <bpmn:sequenceFlow id="f12" sourceRef="T_RecvDocs" targetRef="T_ReviewDocs"/>
+    <bpmn:sequenceFlow id="f16" sourceRef="T_Resubmit" targetRef="T_RecvDocs"/>
+    <bpmn:sequenceFlow id="f11" sourceRef="T_Submit" targetRef="T_RecvDocs"/>
+    <bpmn:sequenceFlow id="f10" sourceRef="T_Followup" targetRef="T_Submit"/>
+    <bpmn:sequenceFlow id="f9" sourceRef="AS_Timer1" targetRef="T_Followup"/>
+    <bpmn:sequenceFlow id="f8" sourceRef="T_Match" targetRef="AS_Timer1"/>
+    <bpmn:sequenceFlow id="f7" sourceRef="T_CheckAvail" targetRef="T_Match"/>
+    <bpmn:sequenceFlow id="f6" sourceRef="T_Conduct" targetRef="T_CheckAvail"/>
+    <bpmn:sequenceFlow id="f5" sourceRef="T_Attend" targetRef="T_Conduct"/>
+    <bpmn:sequenceFlow id="f4" sourceRef="T_Schedule" targetRef="T_Attend"/>
+    <bpmn:sequenceFlow id="f3" sourceRef="T_LogReq" targetRef="T_Schedule"/>
+    <bpmn:sequenceFlow id="f2" sourceRef="T_Request" targetRef="T_LogReq"/>
+    <bpmn:sequenceFlow id="f1" sourceRef="AS_Start" targetRef="T_Request"/>
+    <bpmn:dataObjectReference id="D_Agreement" name="Enrollment Agreement / LoA" dataObjectRef="DO_D_Agreement"/>
+    <bpmn:dataObject id="DO_D_Agreement"/>
+    <bpmn:dataObjectReference id="D_Receipt" name="Payment Confirmation Receipt" dataObjectRef="DO_D_Receipt"/>
+    <bpmn:dataObject id="DO_D_Receipt"/>
+    <bpmn:dataObjectReference id="D_PaymentProof" name="Payment Evidence (Transfer Receipt)" dataObjectRef="DO_D_PaymentProof"/>
+    <bpmn:dataObject id="DO_D_PaymentProof"/>
+    <bpmn:dataObjectReference id="D_Invoice" name="Manual Invoice" dataObjectRef="DO_D_Invoice"/>
+    <bpmn:dataObject id="DO_D_Invoice"/>
+    <bpmn:dataObjectReference id="D_OfferLetter" name="Recommendation &amp; Offer Letter" dataObjectRef="DO_D_OfferLetter"/>
+    <bpmn:dataObject id="DO_D_OfferLetter"/>
+    <bpmn:dataObjectReference id="D_VerificationNote" name="Document Verification Note" dataObjectRef="DO_D_VerificationNote"/>
+    <bpmn:dataObject id="DO_D_VerificationNote"/>
+    <bpmn:dataObjectReference id="D_Documents" name="Supporting Documents" dataObjectRef="DO_D_Documents"/>
+    <bpmn:dataObject id="DO_D_Documents"/>
+    <bpmn:dataObjectReference id="D_ProgramAvailability" name="Program &amp; Mentor Availability" dataObjectRef="DO_D_ProgramAvailability"/>
+    <bpmn:dataObject id="DO_D_ProgramAvailability"/>
+    <bpmn:dataObjectReference id="D_ConsultNotes" name="Consultation Notes" dataObjectRef="DO_D_ConsultNotes"/>
+    <bpmn:dataObject id="DO_D_ConsultNotes"/>
+    <bpmn:dataObjectReference id="D_LeadRecord" name="Lead Record (CRM Spreadsheet)" dataObjectRef="DO_D_LeadRecord"/>
+    <bpmn:dataObject id="DO_D_LeadRecord"/>
+    <bpmn:dataObjectReference id="D_ConsultRequest" name="Consultation Request" dataObjectRef="DO_D_ConsultRequest"/>
+    <bpmn:dataObject id="DO_D_ConsultRequest"/>
+    <bpmn:endEvent id="End_Enrolled" name="Student Officially Enrolled"/>
+    <bpmn:userTask id="T_Archive" name="Archive Student File Manually (Drive/Physical)"/>
+    <bpmn:userTask id="T_Onboard" name="Initiate Student Onboarding (Video Call + LMS Setup)"/>
+    <bpmn:userTask id="T_Sign" name="Sign Enrollment Agreement / LoA">
+      <bpmn:property id="Property_08lw3sq" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="din_D_Agreement_T_Sign">
+        <bpmn:sourceRef>D_Agreement</bpmn:sourceRef>
+        <bpmn:targetRef>Property_08lw3sq</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_PrepAgreement" name="Prepare Enrollment Agreement / LoA">
+      <bpmn:dataOutputAssociation id="dout_T_PrepAgreement_D_Agreement">
+        <bpmn:targetRef>D_Agreement</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_RecvReceipt" name="Receive Payment Confirmation Receipt">
+      <bpmn:property id="Property_0a8lt5t" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="din_D_Receipt_T_RecvReceipt">
+        <bpmn:sourceRef>D_Receipt</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0a8lt5t</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Receipt" name="Issue Manual Payment Confirmation Receipt">
+      <bpmn:dataOutputAssociation id="dout_T_Receipt_D_Receipt">
+        <bpmn:targetRef>D_Receipt</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_NotifyPayIssue" name="Notify Student: Payment Issue (Wrong Amount/Account)"/>
+    <bpmn:exclusiveGateway id="GW_Pay" name="Payment Valid?" default="f31"/>
+    <bpmn:userTask id="T_VerifyPay" name="Manually Verify Payment Evidence (Check Bank Statement)">
+      <bpmn:property id="Property_1blwata" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="din_D_PaymentProof_T_VerifyPay">
+        <bpmn:sourceRef>D_PaymentProof</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1blwata</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Pay" name="Make Manual Bank Transfer Payment">
+      <bpmn:property id="Property_057rhe8" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="din_D_Invoice_T_Pay">
+        <bpmn:sourceRef>D_Invoice</bpmn:sourceRef>
+        <bpmn:targetRef>Property_057rhe8</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="dout_T_Pay_D_PaymentProof">
+        <bpmn:targetRef>D_PaymentProof</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:intermediateCatchEvent id="AS_Timer2" name="Await Payment Transfer (3 Days)">
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P3D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:userTask id="T_SendInstr" name="Send Bank Transfer Instructions to Student"/>
+    <bpmn:userTask id="T_Invoice" name="Issue Manual Invoice / Payment Instructions">
+      <bpmn:dataOutputAssociation id="dout_T_Invoice_D_Invoice">
+        <bpmn:targetRef>D_Invoice</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_NotifyFinance" name="Notify Finance of Accepted Deal &amp; Expected Payment"/>
+    <bpmn:endEvent id="End_Drop" name="Student Drops Out / Not Proceeding"/>
+    <bpmn:exclusiveGateway id="GW_Proceed" name="Interested to Proceed?" default="f22"/>
+    <bpmn:userTask id="T_ReviewOffer" name="Review Program Recommendation &amp; Offer Letter">
+      <bpmn:property id="Property_1xf4mf5" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="din_D_OfferLetter_T_ReviewOffer">
+        <bpmn:sourceRef>D_OfferLetter</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1xf4mf5</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_SendOffer" name="Send Offer Letter to Student"/>
+    <bpmn:userTask id="T_PrepOffer" name="Prepare Program Recommendation &amp; Offer Letter (Manual)">
+      <bpmn:property id="Property_04pvh2f" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="din_D_ConsultNotes_T_PrepOffer">
+        <bpmn:sourceRef>D_ConsultNotes</bpmn:sourceRef>
+        <bpmn:targetRef>Property_04pvh2f</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataInputAssociation id="din_D_ProgramAvailability_T_PrepOffer">
+        <bpmn:sourceRef>D_ProgramAvailability</bpmn:sourceRef>
+        <bpmn:targetRef>Property_04pvh2f</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="dout_T_PrepOffer_D_OfferLetter">
+        <bpmn:targetRef>D_OfferLetter</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Resubmit" name="Resubmit Corrected Documents">
+      <bpmn:dataOutputAssociation id="dout_T_Resubmit_D_Documents">
+        <bpmn:targetRef>D_Documents</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_NotifyDocIssue" name="Notify Student of Document Issue (Missing/Invalid)"/>
+    <bpmn:exclusiveGateway id="GW_Docs" name="Documents Complete &amp; Valid?" default="f17"/>
+    <bpmn:userTask id="T_ReviewDocs" name="Manually Review Document Authenticity (Visual Check)">
+      <bpmn:dataOutputAssociation id="dout_T_ReviewDocs_D_VerificationNote">
+        <bpmn:targetRef>D_VerificationNote</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_RecvDocs" name="Receive Student Documents">
+      <bpmn:property id="Property_0qg1iy4" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="din_D_Documents_T_RecvDocs">
+        <bpmn:sourceRef>D_Documents</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0qg1iy4</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Submit" name="Submit Supporting Documents via Email/WhatsApp">
+      <bpmn:dataOutputAssociation id="dout_T_Submit_D_Documents">
+        <bpmn:targetRef>D_Documents</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Followup" name="Manual Follow-up via WhatsApp (3-5 Days)"/>
+    <bpmn:intermediateCatchEvent id="AS_Timer1" name="Await Document Submission (3 Days)">
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P3D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:userTask id="T_Match" name="Match Student with Suitable Program &amp; Mentor"/>
+    <bpmn:userTask id="T_CheckAvail" name="Check Mentor &amp; Program Availability">
+      <bpmn:dataOutputAssociation id="dout_T_CheckAvail_D_ProgramAvailability">
+        <bpmn:targetRef>D_ProgramAvailability</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Conduct" name="Conduct Consultation (Assess Needs, Goals, Budget)">
+      <bpmn:dataOutputAssociation id="dout_T_Conduct_D_ConsultNotes">
+        <bpmn:targetRef>D_ConsultNotes</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Attend" name="Attend 1-on-1 Online Consultation"/>
+    <bpmn:userTask id="T_Schedule" name="Schedule &amp; Send Consultation Invitation"/>
+    <bpmn:userTask id="T_LogReq" name="Receive &amp; Log Consultation Request in CRM (Spreadsheet)">
+      <bpmn:property id="Property_1ccwnpy" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="din_D_ConsultRequest_T_LogReq">
+        <bpmn:sourceRef>D_ConsultRequest</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1ccwnpy</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="dout_T_LogReq_D_LeadRecord">
+        <bpmn:targetRef>D_LeadRecord</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Request" name="Request Free Consultation (via WhatsApp)">
+      <bpmn:dataOutputAssociation id="dout_T_Request_D_ConsultRequest">
+        <bpmn:targetRef>D_ConsultRequest</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:startEvent id="AS_Start" name="Prospective Student Interested in Study Abroad"/>
+    <bpmn:textAnnotation id="TA_VerifyPay">
+      <bpmn:text>Manual bank reconciliation: confirmation can take hours or days</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TA_Review">
+      <bpmn:text>Manual visual document check: no automated validation, slow &amp; error-prone</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TA_Followup">
+      <bpmn:text>Manual follow-up depends on staff memory: leads often go cold</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TA_Log">
+      <bpmn:text>Manual CRM logging in a spreadsheet: prone to duplicate or lost leads</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="assoc_TA_VerifyPay" associationDirection="None" sourceRef="T_VerifyPay" targetRef="TA_VerifyPay"/>
+    <bpmn:association id="assoc_TA_Review" associationDirection="None" sourceRef="T_ReviewDocs" targetRef="TA_Review"/>
+    <bpmn:association id="assoc_TA_Followup" associationDirection="None" sourceRef="T_Followup" targetRef="TA_Followup"/>
+    <bpmn:association id="assoc_TA_Log" associationDirection="None" sourceRef="T_LogReq" targetRef="TA_Log"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diag_AS">
+    <bpmndi:BPMNPlane id="Plane_AS" bpmnElement="Collab_AS">
+      <bpmndi:BPMNShape id="di_Participant_AS" bpmnElement="Participant_AS" isHorizontal="true">
+        <dc:Bounds x="140" y="80" width="6858" height="960"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Finance" bpmnElement="L_Finance" isHorizontal="true">
+        <dc:Bounds x="170" y="800" width="6828" height="240"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Academic" bpmnElement="L_Academic" isHorizontal="true">
+        <dc:Bounds x="170" y="560" width="6828" height="240"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Consultant" bpmnElement="L_Consultant" isHorizontal="true">
+        <dc:Bounds x="170" y="320" width="6828" height="240"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Student" bpmnElement="L_Student" isHorizontal="true">
+        <dc:Bounds x="170" y="80" width="6828" height="240"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Start" bpmnElement="AS_Start">
+        <dc:Bounds x="242" y="182" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="227" y="218" width="67" height="53"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Request" bpmnElement="T_Request">
+        <dc:Bounds x="395" y="160" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_LogReq" bpmnElement="T_LogReq">
+        <dc:Bounds x="590" y="400" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Schedule" bpmnElement="T_Schedule">
+        <dc:Bounds x="785" y="400" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Attend" bpmnElement="T_Attend">
+        <dc:Bounds x="980" y="160" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Conduct" bpmnElement="T_Conduct">
+        <dc:Bounds x="1175" y="400" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_CheckAvail" bpmnElement="T_CheckAvail">
+        <dc:Bounds x="1370" y="640" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Match" bpmnElement="T_Match">
+        <dc:Bounds x="1565" y="640" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Timer1" bpmnElement="AS_Timer1">
+        <dc:Bounds x="1802" y="422" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1780" y="458" width="80" height="40"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Followup" bpmnElement="T_Followup">
+        <dc:Bounds x="1955" y="400" width="120" height="80"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Submit" bpmnElement="T_Submit">
+        <dc:Bounds x="2150" y="160" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_RecvDocs" bpmnElement="T_RecvDocs">
+        <dc:Bounds x="2345" y="400" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ReviewDocs" bpmnElement="T_ReviewDocs">
+        <dc:Bounds x="2540" y="400" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_Docs" bpmnElement="GW_Docs" isMarkerVisible="true">
+        <dc:Bounds x="2770" y="415" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2766" y="465" width="59" height="40"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_NotifyDocIssue" bpmnElement="T_NotifyDocIssue">
+        <dc:Bounds x="2930" y="400" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Resubmit" bpmnElement="T_Resubmit">
+        <dc:Bounds x="3125" y="160" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_PrepOffer" bpmnElement="T_PrepOffer">
+        <dc:Bounds x="3320" y="400" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_SendOffer" bpmnElement="T_SendOffer">
+        <dc:Bounds x="3515" y="400" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ReviewOffer" bpmnElement="T_ReviewOffer">
+        <dc:Bounds x="3710" y="160" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_Proceed" bpmnElement="GW_Proceed" isMarkerVisible="true">
+        <dc:Bounds x="3940" y="175" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3934" y="225" width="62" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_End_Drop" bpmnElement="End_Drop">
+        <dc:Bounds x="3947" y="422" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3930" y="458" width="71" height="40"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_NotifyFinance" bpmnElement="T_NotifyFinance">
+        <dc:Bounds x="4100" y="400" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Invoice" bpmnElement="T_Invoice">
+        <dc:Bounds x="4295" y="880" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_SendInstr" bpmnElement="T_SendInstr">
+        <dc:Bounds x="4490" y="880" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Timer2" bpmnElement="AS_Timer2">
+        <dc:Bounds x="4727" y="902" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4703" y="938" width="85" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Pay" bpmnElement="T_Pay">
+        <dc:Bounds x="4880" y="160" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_VerifyPay" bpmnElement="T_VerifyPay">
+        <dc:Bounds x="5075" y="880" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_Pay" bpmnElement="GW_Pay" isMarkerVisible="true">
+        <dc:Bounds x="5305" y="895" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="5292" y="945" width="77" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_NotifyPayIssue" bpmnElement="T_NotifyPayIssue">
+        <dc:Bounds x="5465" y="880" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Receipt" bpmnElement="T_Receipt">
+        <dc:Bounds x="5660" y="880" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_RecvReceipt" bpmnElement="T_RecvReceipt">
+        <dc:Bounds x="5855" y="160" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_PrepAgreement" bpmnElement="T_PrepAgreement">
+        <dc:Bounds x="6050" y="880" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Sign" bpmnElement="T_Sign">
+        <dc:Bounds x="6245" y="160" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Onboard" bpmnElement="T_Onboard">
+        <dc:Bounds x="6440" y="640" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Archive" bpmnElement="T_Archive">
+        <dc:Bounds x="6635" y="880" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_End_Enrolled" bpmnElement="End_Enrolled">
+        <dc:Bounds x="6872" y="902" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="6849" y="938" width="83" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_D_ConsultRequest" bpmnElement="D_ConsultRequest">
+        <dc:Bounds x="437" y="270" width="36" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="424" y="320" width="62" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_D_LeadRecord" bpmnElement="D_LeadRecord">
+        <dc:Bounds x="632" y="320" width="36" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="617" y="370" width="67" height="40"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_D_ConsultNotes" bpmnElement="D_ConsultNotes">
+        <dc:Bounds x="1217" y="320" width="36" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1204" y="370" width="62" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_D_ProgramAvailability" bpmnElement="D_ProgramAvailability">
+        <dc:Bounds x="1412" y="560" width="36" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1386" y="610" width="89" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_D_Documents" bpmnElement="D_Documents">
+        <dc:Bounds x="2192" y="270" width="36" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2182" y="320" width="57" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_D_VerificationNote" bpmnElement="D_VerificationNote">
+        <dc:Bounds x="2582" y="320" width="36" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2560" y="370" width="80" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_D_OfferLetter" bpmnElement="D_OfferLetter">
+        <dc:Bounds x="3362" y="320" width="36" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3337" y="370" width="87" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_D_Invoice" bpmnElement="D_Invoice">
+        <dc:Bounds x="4337" y="800" width="36" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4318" y="850" width="74" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_D_PaymentProof" bpmnElement="D_PaymentProof">
+        <dc:Bounds x="4922" y="270" width="36" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4896" y="320" width="89" height="40"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_D_Receipt" bpmnElement="D_Receipt">
+        <dc:Bounds x="5702" y="800" width="36" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="5689" y="850" width="63" height="40"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_D_Agreement" bpmnElement="D_Agreement">
+        <dc:Bounds x="6092" y="800" width="36" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="6069" y="850" width="83" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_TA_Log" bpmnElement="TA_Log">
+        <dc:Bounds x="545" y="542" width="210" height="55"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_TA_Followup" bpmnElement="TA_Followup">
+        <dc:Bounds x="1910" y="542" width="210" height="55"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_TA_Review" bpmnElement="TA_Review">
+        <dc:Bounds x="2495" y="562" width="210" height="55"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_TA_VerifyPay" bpmnElement="TA_VerifyPay">
+        <dc:Bounds x="5030" y="987" width="210" height="55"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_f1" bpmnElement="f1">
+        <di:waypoint x="278" y="200"/>
+        <di:waypoint x="395" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f2" bpmnElement="f2">
+        <di:waypoint x="515" y="200"/>
+        <di:waypoint x="552" y="200"/>
+        <di:waypoint x="552" y="440"/>
+        <di:waypoint x="590" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f3" bpmnElement="f3">
+        <di:waypoint x="710" y="440"/>
+        <di:waypoint x="785" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f4" bpmnElement="f4">
+        <di:waypoint x="905" y="440"/>
+        <di:waypoint x="942" y="440"/>
+        <di:waypoint x="942" y="200"/>
+        <di:waypoint x="980" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f5" bpmnElement="f5">
+        <di:waypoint x="1100" y="200"/>
+        <di:waypoint x="1138" y="200"/>
+        <di:waypoint x="1138" y="440"/>
+        <di:waypoint x="1175" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f6" bpmnElement="f6">
+        <di:waypoint x="1295" y="440"/>
+        <di:waypoint x="1332" y="440"/>
+        <di:waypoint x="1332" y="680"/>
+        <di:waypoint x="1370" y="680"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f7" bpmnElement="f7">
+        <di:waypoint x="1490" y="680"/>
+        <di:waypoint x="1565" y="680"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f8" bpmnElement="f8">
+        <di:waypoint x="1685" y="680"/>
+        <di:waypoint x="1744" y="680"/>
+        <di:waypoint x="1744" y="440"/>
+        <di:waypoint x="1802" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f9" bpmnElement="f9">
+        <di:waypoint x="1838" y="440"/>
+        <di:waypoint x="1955" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f10" bpmnElement="f10">
+        <di:waypoint x="2075" y="440"/>
+        <di:waypoint x="2112" y="440"/>
+        <di:waypoint x="2112" y="200"/>
+        <di:waypoint x="2150" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f11" bpmnElement="f11">
+        <di:waypoint x="2270" y="200"/>
+        <di:waypoint x="2308" y="200"/>
+        <di:waypoint x="2308" y="440"/>
+        <di:waypoint x="2345" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f12" bpmnElement="f12">
+        <di:waypoint x="2465" y="440"/>
+        <di:waypoint x="2540" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f13" bpmnElement="f13">
+        <di:waypoint x="2660" y="440"/>
+        <di:waypoint x="2770" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f14" bpmnElement="f14">
+        <di:waypoint x="2820" y="440"/>
+        <di:waypoint x="2930" y="440"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2845" y="415" width="61" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f15" bpmnElement="f15">
+        <di:waypoint x="3050" y="440"/>
+        <di:waypoint x="3088" y="440"/>
+        <di:waypoint x="3088" y="200"/>
+        <di:waypoint x="3125" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f16" bpmnElement="f16">
+        <di:waypoint x="3185" y="240"/>
+        <di:waypoint x="3185" y="535"/>
+        <di:waypoint x="2405" y="535"/>
+        <di:waypoint x="2405" y="480"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f17" bpmnElement="f17">
+        <di:waypoint x="2820" y="440"/>
+        <di:waypoint x="3320" y="440"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3028" y="415" width="85" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f18" bpmnElement="f18">
+        <di:waypoint x="3440" y="440"/>
+        <di:waypoint x="3515" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f19" bpmnElement="f19">
+        <di:waypoint x="3635" y="440"/>
+        <di:waypoint x="3672" y="440"/>
+        <di:waypoint x="3672" y="200"/>
+        <di:waypoint x="3710" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f20" bpmnElement="f20">
+        <di:waypoint x="3830" y="200"/>
+        <di:waypoint x="3940" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f21" bpmnElement="f21">
+        <di:waypoint x="3965" y="225"/>
+        <di:waypoint x="3965" y="422"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3945" y="314" width="70" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f22" bpmnElement="f22">
+        <di:waypoint x="3990" y="200"/>
+        <di:waypoint x="4045" y="200"/>
+        <di:waypoint x="4045" y="440"/>
+        <di:waypoint x="4100" y="440"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4040" y="310" width="41" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f23" bpmnElement="f23">
+        <di:waypoint x="4220" y="440"/>
+        <di:waypoint x="4258" y="440"/>
+        <di:waypoint x="4258" y="920"/>
+        <di:waypoint x="4295" y="920"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f24" bpmnElement="f24">
+        <di:waypoint x="4415" y="920"/>
+        <di:waypoint x="4490" y="920"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f25" bpmnElement="f25">
+        <di:waypoint x="4610" y="920"/>
+        <di:waypoint x="4727" y="920"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f26" bpmnElement="f26">
+        <di:waypoint x="4763" y="920"/>
+        <di:waypoint x="4822" y="920"/>
+        <di:waypoint x="4822" y="200"/>
+        <di:waypoint x="4880" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f27" bpmnElement="f27">
+        <di:waypoint x="5000" y="200"/>
+        <di:waypoint x="5038" y="200"/>
+        <di:waypoint x="5038" y="920"/>
+        <di:waypoint x="5075" y="920"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f28" bpmnElement="f28">
+        <di:waypoint x="5195" y="920"/>
+        <di:waypoint x="5305" y="920"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f29" bpmnElement="f29">
+        <di:waypoint x="5355" y="920"/>
+        <di:waypoint x="5465" y="920"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="5394" y="895" width="32" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f30" bpmnElement="f30">
+        <di:waypoint x="5525" y="880"/>
+        <di:waypoint x="5525" y="105"/>
+        <di:waypoint x="4940" y="105"/>
+        <di:waypoint x="4940" y="160"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f31" bpmnElement="f31">
+        <di:waypoint x="5355" y="920"/>
+        <di:waypoint x="5660" y="920"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="5496" y="895" width="23" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f32" bpmnElement="f32">
+        <di:waypoint x="5780" y="920"/>
+        <di:waypoint x="5818" y="920"/>
+        <di:waypoint x="5818" y="200"/>
+        <di:waypoint x="5855" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f33" bpmnElement="f33">
+        <di:waypoint x="5975" y="200"/>
+        <di:waypoint x="6012" y="200"/>
+        <di:waypoint x="6012" y="920"/>
+        <di:waypoint x="6050" y="920"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f34" bpmnElement="f34">
+        <di:waypoint x="6170" y="920"/>
+        <di:waypoint x="6208" y="920"/>
+        <di:waypoint x="6208" y="200"/>
+        <di:waypoint x="6245" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f35" bpmnElement="f35">
+        <di:waypoint x="6365" y="200"/>
+        <di:waypoint x="6402" y="200"/>
+        <di:waypoint x="6402" y="680"/>
+        <di:waypoint x="6440" y="680"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f36" bpmnElement="f36">
+        <di:waypoint x="6560" y="680"/>
+        <di:waypoint x="6598" y="680"/>
+        <di:waypoint x="6598" y="920"/>
+        <di:waypoint x="6635" y="920"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f37" bpmnElement="f37">
+        <di:waypoint x="6755" y="920"/>
+        <di:waypoint x="6872" y="920"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_assoc_TA_Log" bpmnElement="assoc_TA_Log">
+        <di:waypoint x="650" y="480"/>
+        <di:waypoint x="650" y="542"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_assoc_TA_Followup" bpmnElement="assoc_TA_Followup">
+        <di:waypoint x="2015" y="480"/>
+        <di:waypoint x="2015" y="542"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_assoc_TA_Review" bpmnElement="assoc_TA_Review">
+        <di:waypoint x="2600" y="480"/>
+        <di:waypoint x="2600" y="562"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_assoc_TA_VerifyPay" bpmnElement="assoc_TA_VerifyPay">
+        <di:waypoint x="5135" y="960"/>
+        <di:waypoint x="5135" y="988"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_dout_T_Request_D_ConsultRequest" bpmnElement="dout_T_Request_D_ConsultRequest">
+        <di:waypoint x="455" y="240"/>
+        <di:waypoint x="455" y="270"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_din_D_ConsultRequest_T_LogReq" bpmnElement="din_D_ConsultRequest_T_LogReq">
+        <di:waypoint x="473" y="295"/>
+        <di:waypoint x="532" y="295"/>
+        <di:waypoint x="532" y="440"/>
+        <di:waypoint x="590" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_dout_T_LogReq_D_LeadRecord" bpmnElement="dout_T_LogReq_D_LeadRecord">
+        <di:waypoint x="650" y="400"/>
+        <di:waypoint x="650" y="370"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_dout_T_Conduct_D_ConsultNotes" bpmnElement="dout_T_Conduct_D_ConsultNotes">
+        <di:waypoint x="1235" y="400"/>
+        <di:waypoint x="1235" y="370"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_dout_T_CheckAvail_D_ProgramAvailability" bpmnElement="dout_T_CheckAvail_D_ProgramAvailability">
+        <di:waypoint x="1430" y="640"/>
+        <di:waypoint x="1430" y="610"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_dout_T_Submit_D_Documents" bpmnElement="dout_T_Submit_D_Documents">
+        <di:waypoint x="2210" y="240"/>
+        <di:waypoint x="2210" y="270"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_din_D_Documents_T_RecvDocs" bpmnElement="din_D_Documents_T_RecvDocs">
+        <di:waypoint x="2228" y="295"/>
+        <di:waypoint x="2286" y="295"/>
+        <di:waypoint x="2286" y="440"/>
+        <di:waypoint x="2345" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_dout_T_ReviewDocs_D_VerificationNote" bpmnElement="dout_T_ReviewDocs_D_VerificationNote">
+        <di:waypoint x="2600" y="400"/>
+        <di:waypoint x="2600" y="370"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_dout_T_Resubmit_D_Documents" bpmnElement="dout_T_Resubmit_D_Documents">
+        <di:waypoint x="3185" y="240"/>
+        <di:waypoint x="3185" y="375"/>
+        <di:waypoint x="2210" y="375"/>
+        <di:waypoint x="2210" y="320"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_din_D_ConsultNotes_T_PrepOffer" bpmnElement="din_D_ConsultNotes_T_PrepOffer">
+        <di:waypoint x="1253" y="345"/>
+        <di:waypoint x="2286" y="345"/>
+        <di:waypoint x="2286" y="440"/>
+        <di:waypoint x="3320" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_din_D_ProgramAvailability_T_PrepOffer" bpmnElement="din_D_ProgramAvailability_T_PrepOffer">
+        <di:waypoint x="1448" y="585"/>
+        <di:waypoint x="2384" y="585"/>
+        <di:waypoint x="2384" y="440"/>
+        <di:waypoint x="3320" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_dout_T_PrepOffer_D_OfferLetter" bpmnElement="dout_T_PrepOffer_D_OfferLetter">
+        <di:waypoint x="3380" y="400"/>
+        <di:waypoint x="3380" y="370"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_din_D_OfferLetter_T_ReviewOffer" bpmnElement="din_D_OfferLetter_T_ReviewOffer">
+        <di:waypoint x="3398" y="345"/>
+        <di:waypoint x="3554" y="345"/>
+        <di:waypoint x="3554" y="200"/>
+        <di:waypoint x="3710" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_dout_T_Invoice_D_Invoice" bpmnElement="dout_T_Invoice_D_Invoice">
+        <di:waypoint x="4355" y="880"/>
+        <di:waypoint x="4355" y="850"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_din_D_Invoice_T_Pay" bpmnElement="din_D_Invoice_T_Pay">
+        <di:waypoint x="4373" y="825"/>
+        <di:waypoint x="4626" y="825"/>
+        <di:waypoint x="4626" y="200"/>
+        <di:waypoint x="4880" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_dout_T_Pay_D_PaymentProof" bpmnElement="dout_T_Pay_D_PaymentProof">
+        <di:waypoint x="4940" y="240"/>
+        <di:waypoint x="4940" y="270"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_din_D_PaymentProof_T_VerifyPay" bpmnElement="din_D_PaymentProof_T_VerifyPay">
+        <di:waypoint x="4958" y="295"/>
+        <di:waypoint x="5016" y="295"/>
+        <di:waypoint x="5016" y="920"/>
+        <di:waypoint x="5075" y="920"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_dout_T_Receipt_D_Receipt" bpmnElement="dout_T_Receipt_D_Receipt">
+        <di:waypoint x="5720" y="880"/>
+        <di:waypoint x="5720" y="850"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_din_D_Receipt_T_RecvReceipt" bpmnElement="din_D_Receipt_T_RecvReceipt">
+        <di:waypoint x="5738" y="825"/>
+        <di:waypoint x="5796" y="825"/>
+        <di:waypoint x="5796" y="200"/>
+        <di:waypoint x="5855" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_dout_T_PrepAgreement_D_Agreement" bpmnElement="dout_T_PrepAgreement_D_Agreement">
+        <di:waypoint x="6110" y="880"/>
+        <di:waypoint x="6110" y="850"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_din_D_Agreement_T_Sign" bpmnElement="din_D_Agreement_T_Sign">
+        <di:waypoint x="6128" y="825"/>
+        <di:waypoint x="6186" y="825"/>
+        <di:waypoint x="6186" y="200"/>
+        <di:waypoint x="6245" y="200"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
