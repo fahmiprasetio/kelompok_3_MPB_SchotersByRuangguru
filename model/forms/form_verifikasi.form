@@ -1,0 +1,36 @@
+{
+  "components": [
+    {
+      "text": "# Form Verifikasi Dokumen & Risiko (Upload Supporting Documents)\nTandai kelengkapan dokumen dan tentukan tingkat risiko pemohon.",
+      "type": "text",
+      "layout": { "row": "Row_intro", "columns": null },
+      "id": "Field_intro_ver"
+    },
+    {
+      "label": "Documents Complete",
+      "type": "checkbox",
+      "layout": { "row": "Row_documentsComplete", "columns": null },
+      "id": "Field_documentsComplete",
+      "key": "documentsComplete"
+    },
+    {
+      "label": "Risk Level",
+      "type": "select",
+      "layout": { "row": "Row_riskLevel", "columns": null },
+      "id": "Field_riskLevel",
+      "key": "riskLevel",
+      "values": [
+        { "label": "Low", "value": "Low" },
+        { "label": "Medium", "value": "Medium" },
+        { "label": "High", "value": "High" }
+      ],
+      "validate": { "required": true }
+    }
+  ],
+  "type": "default",
+  "id": "form_verifikasi",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "exporter": { "name": "Camunda Modeler", "version": "5.20.0" },
+  "schemaVersion": 11
+}

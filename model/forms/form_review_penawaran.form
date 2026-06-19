@@ -1,0 +1,24 @@
+{
+  "components": [
+    {
+      "text": "# Form Review Penawaran (Review Digital Offer Letter)\nTinjau surat penawaran digital, lalu konfirmasi penerimaan.",
+      "type": "text",
+      "layout": { "row": "Row_intro", "columns": null },
+      "id": "Field_intro_offer"
+    },
+    {
+      "label": "Offer Accepted",
+      "type": "checkbox",
+      "layout": { "row": "Row_offerAccepted", "columns": null },
+      "id": "Field_offerAccepted",
+      "key": "offerAccepted",
+      "validate": { "required": true }
+    }
+  ],
+  "type": "default",
+  "id": "form_review_penawaran",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "exporter": { "name": "Camunda Modeler", "version": "5.20.0" },
+  "schemaVersion": 11
+}

@@ -1,0 +1,34 @@
+{
+  "components": [
+    {
+      "text": "# Form Tanda Tangan Digital (Sign Digital Agreement)\nKonfirmasi penandatanganan perjanjian digital (e-Signature).",
+      "type": "text",
+      "layout": { "row": "Row_intro", "columns": null },
+      "id": "Field_intro_sign"
+    },
+    {
+      "label": "Signature Confirmed",
+      "type": "checkbox",
+      "layout": { "row": "Row_signatureConfirmed", "columns": null },
+      "id": "Field_signatureConfirmed",
+      "key": "signatureConfirmed",
+      "validate": { "required": true }
+    },
+    {
+      "label": "Sign Date",
+      "type": "datetime",
+      "subtype": "date",
+      "dateLabel": "Sign Date",
+      "layout": { "row": "Row_signDate", "columns": null },
+      "id": "Field_signDate",
+      "key": "signDate",
+      "validate": { "required": true }
+    }
+  ],
+  "type": "default",
+  "id": "form_tanda_tangan",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "exporter": { "name": "Camunda Modeler", "version": "5.20.0" },
+  "schemaVersion": 11
+}

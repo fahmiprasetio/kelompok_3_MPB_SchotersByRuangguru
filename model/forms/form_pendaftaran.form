@@ -1,0 +1,61 @@
+{
+  "components": [
+    {
+      "text": "# Form Pendaftaran (Submit Enrollment Application)\nLengkapi data pemohon untuk memulai proses pendaftaran Schoters.",
+      "type": "text",
+      "layout": { "row": "Row_intro", "columns": null },
+      "id": "Field_intro_reg"
+    },
+    {
+      "label": "Full Name",
+      "type": "textfield",
+      "layout": { "row": "Row_fullName", "columns": null },
+      "id": "Field_fullName",
+      "key": "fullName",
+      "validate": { "required": true }
+    },
+    {
+      "label": "Email",
+      "type": "textfield",
+      "layout": { "row": "Row_email", "columns": null },
+      "id": "Field_email",
+      "key": "email",
+      "validate": { "required": true, "validationType": "email" }
+    },
+    {
+      "label": "Program Level",
+      "type": "select",
+      "layout": { "row": "Row_programLevel", "columns": null },
+      "id": "Field_programLevel",
+      "key": "programLevel",
+      "values": [
+        { "label": "Foundation", "value": "Foundation" },
+        { "label": "Bachelor", "value": "Bachelor" },
+        { "label": "Master", "value": "Master" }
+      ],
+      "validate": { "required": true }
+    },
+    {
+      "label": "Target Country",
+      "type": "textfield",
+      "layout": { "row": "Row_targetCountry", "columns": null },
+      "id": "Field_targetCountry",
+      "key": "targetCountry",
+      "validate": { "required": true }
+    },
+    {
+      "label": "Program Value (IDR)",
+      "type": "number",
+      "layout": { "row": "Row_programValue", "columns": null },
+      "id": "Field_programValue",
+      "key": "programValue",
+      "validate": { "required": true, "min": 0 }
+    }
+  ],
+  "type": "default",
+  "id": "form_pendaftaran",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "exporter": { "name": "Camunda Modeler", "version": "5.20.0" },
+  "schemaVersion": 11
+}

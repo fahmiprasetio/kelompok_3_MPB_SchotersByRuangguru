@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_Kelayakan" name="Eligibility Decision" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="Decision_Kelayakan" name="Student Eligibility Decision" camunda:historyTimeToLive="P180D">
+    <decisionTable id="DT_Kelayakan" hitPolicy="UNIQUE">
+      <input id="in_docs" label="Documents Complete">
+        <inputExpression id="ie_docs" typeRef="boolean"><text>documentsComplete</text></inputExpression>
+      </input>
+      <input id="in_risk" label="Risk Level">
+        <inputExpression id="ie_risk" typeRef="string"><text>riskLevel</text></inputExpression>
+      </input>
+      <input id="in_val" label="Program Value (IDR)">
+        <inputExpression id="ie_val" typeRef="double"><text>programValue</text></inputExpression>
+      </input>
+      <output id="out_dec" label="Decision" name="decision" typeRef="string" />
+      <rule id="r1">
+        <inputEntry id="r1i1"><text>false</text></inputEntry>
+        <inputEntry id="r1i2"><text></text></inputEntry>
+        <inputEntry id="r1i3"><text></text></inputEntry>
+        <outputEntry id="r1o1"><text>"Revision"</text></outputEntry>
+      </rule>
+      <rule id="r2">
+        <inputEntry id="r2i1"><text>true</text></inputEntry>
+        <inputEntry id="r2i2"><text>"High"</text></inputEntry>
+        <inputEntry id="r2i3"><text></text></inputEntry>
+        <outputEntry id="r2o1"><text>"Rejected"</text></outputEntry>
+      </rule>
+      <rule id="r3">
+        <inputEntry id="r3i1"><text>true</text></inputEntry>
+        <inputEntry id="r3i2"><text>"Low"</text></inputEntry>
+        <inputEntry id="r3i3"><text></text></inputEntry>
+        <outputEntry id="r3o1"><text>"Approved"</text></outputEntry>
+      </rule>
+      <rule id="r4">
+        <inputEntry id="r4i1"><text>true</text></inputEntry>
+        <inputEntry id="r4i2"><text>"Medium"</text></inputEntry>
+        <inputEntry id="r4i3"><text>&lt;= 30000000</text></inputEntry>
+        <outputEntry id="r4o1"><text>"Approved"</text></outputEntry>
+      </rule>
+      <rule id="r5">
+        <inputEntry id="r5i1"><text>true</text></inputEntry>
+        <inputEntry id="r5i2"><text>"Medium"</text></inputEntry>
+        <inputEntry id="r5i3"><text>&gt; 30000000</text></inputEntry>
+        <outputEntry id="r5o1"><text>"Rejected"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
