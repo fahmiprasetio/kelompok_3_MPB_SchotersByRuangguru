@@ -30,7 +30,7 @@
     <bpmn:startEvent id="Start_Refund" name="Ajukan Permintaan Refund" camunda:formRef="form_refund_request" camunda:formRefBinding="latest">
       <bpmn:outgoing>r1</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:serviceTask id="T_Validate" name="Validasi Otomatis Permintaan" camunda:expression="${true}">
+    <bpmn:serviceTask id="T_Validate" name="Validasi Otomatis Permintaan" camunda:expression="${true}" camunda:resultVariable="dataValid">
       <bpmn:incoming>r1</bpmn:incoming>
       <bpmn:incoming>r_loop</bpmn:incoming>
       <bpmn:outgoing>r2</bpmn:outgoing>
@@ -146,6 +146,7 @@
     <bpmn:sequenceFlow id="r1" sourceRef="Start_Refund" targetRef="T_Validate"/>
     <bpmn:sequenceFlow id="r2" sourceRef="T_Validate" targetRef="GW_Valid"/>
     <bpmn:sequenceFlow id="r3" sourceRef="GW_Valid" targetRef="T_FixData" name="Data Tidak Lengkap">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${dataValid == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="r_loop" sourceRef="T_FixData" targetRef="T_Validate"/>
     <bpmn:sequenceFlow id="r4" sourceRef="GW_Valid" targetRef="T_Review" name="Data Lengkap">
@@ -398,7 +399,7 @@
         <di:waypoint x="1489" y="410"/>
         <di:waypoint x="1660" y="410"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DRB_Instruksi_T_Record" bpmnElement="DIn_DRB_Instruksi_T_Record">
+      <bpmndi:BPMNEdge id="di_DIn_DRB_Tinjauan_T_Eval2" bpmnElement="DIn_DRB_Instruksi_T_Record">
         <di:waypoint x="1738" y="333"/>
         <di:waypoint x="2049" y="333"/>
         <di:waypoint x="2049" y="630"/>
