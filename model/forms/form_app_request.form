@@ -1,0 +1,52 @@
+{
+  "components": [
+    {
+      "text": "# Form Permintaan Aplikasi Universitas",
+      "type": "text",
+      "layout": {
+        "row": "Row_intro",
+        "columns": null
+      },
+      "id": "Field_intro_form_app_request"
+    },
+    {
+      "label": "Nama Lengkap",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_fullName",
+        "columns": null
+      },
+      "id": "Field_fullName",
+      "key": "fullName"
+    },
+    {
+      "label": "Negara Tujuan",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_targetCountry",
+        "columns": null
+      },
+      "id": "Field_targetCountry",
+      "key": "targetCountry"
+    },
+    {
+      "label": "Intake / Periode Masuk",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_intakeTerm",
+        "columns": null
+      },
+      "id": "Field_intakeTerm",
+      "key": "intakeTerm"
+    }
+  ],
+  "type": "default",
+  "id": "form_app_request",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.20.0"
+  },
+  "schemaVersion": 11
+}

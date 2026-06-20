@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Process_AppUniv_AS" targetNamespace="http://bpmn.io/schema/bpmn" exporter="manual" exporterVersion="1.0">
+  <bpmn:collaboration id="Collab_Process_AppUniv_AS">
+    <bpmn:participant id="Part_Process_AppUniv_AS" name="Schoters by Ruangguru - Pemrosesan Aplikasi Universitas (As-Is / Manual)" processRef="Process_AppUniv_AS" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_AppUniv_AS" name="Pemrosesan Aplikasi Universitas (As-Is)" isExecutable="false">
+    <bpmn:startEvent id="AS_Start" name="Mahasiswa Minta Bantuan Aplikasi"><bpmn:outgoing>a1</bpmn:outgoing></bpmn:startEvent>
+    <bpmn:userTask id="AS_Collect" name="Kumpulkan Dokumen via Email"><bpmn:incoming>a1</bpmn:incoming><bpmn:outgoing>a2</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="AS_Review" name="Tinjau Esai &amp; Transkrip Manual"><bpmn:incoming>a2</bpmn:incoming><bpmn:outgoing>a3</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="AS_Revisi" name="Kirim Permintaan Revisi via Email"><bpmn:incoming>a3</bpmn:incoming><bpmn:outgoing>a4</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="AS_Submit" name="Submit Aplikasi Manual per Universitas"><bpmn:incoming>a4</bpmn:incoming><bpmn:outgoing>a5</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="AS_Track" name="Lacak Hasil di Spreadsheet"><bpmn:incoming>a5</bpmn:incoming><bpmn:outgoing>a6</bpmn:outgoing></bpmn:userTask>
+    <bpmn:endEvent id="AS_End" name="Proses Aplikasi Selesai (Manual)"><bpmn:incoming>a6</bpmn:incoming></bpmn:endEvent>
+    <bpmn:sequenceFlow id="a1" sourceRef="AS_Start" targetRef="AS_Collect" />
+    <bpmn:sequenceFlow id="a2" sourceRef="AS_Collect" targetRef="AS_Review" />
+    <bpmn:sequenceFlow id="a3" sourceRef="AS_Review" targetRef="AS_Revisi" />
+    <bpmn:sequenceFlow id="a4" sourceRef="AS_Revisi" targetRef="AS_Submit" />
+    <bpmn:sequenceFlow id="a5" sourceRef="AS_Submit" targetRef="AS_Track" />
+    <bpmn:sequenceFlow id="a6" sourceRef="AS_Track" targetRef="AS_End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diag_Process_AppUniv_AS">
+    <bpmndi:BPMNPlane id="Plane_Process_AppUniv_AS" bpmnElement="Collab_Process_AppUniv_AS">
+      <bpmndi:BPMNShape id="di_Part_Process_AppUniv_AS" bpmnElement="Part_Process_AppUniv_AS" isHorizontal="true"><dc:Bounds x="160" y="80" width="1800" height="200" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Start" bpmnElement="AS_Start"><dc:Bounds x="342" y="162" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Collect" bpmnElement="AS_Collect"><dc:Bounds x="520" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Review" bpmnElement="AS_Review"><dc:Bounds x="740" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Revisi" bpmnElement="AS_Revisi"><dc:Bounds x="960" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Submit" bpmnElement="AS_Submit"><dc:Bounds x="1180" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Track" bpmnElement="AS_Track"><dc:Bounds x="1400" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_End" bpmnElement="AS_End"><dc:Bounds x="1662" y="162" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_a1" bpmnElement="a1"><di:waypoint x="378" y="180" /><di:waypoint x="520" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a2" bpmnElement="a2"><di:waypoint x="640" y="180" /><di:waypoint x="740" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a3" bpmnElement="a3"><di:waypoint x="860" y="180" /><di:waypoint x="960" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a4" bpmnElement="a4"><di:waypoint x="1080" y="180" /><di:waypoint x="1180" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a5" bpmnElement="a5"><di:waypoint x="1300" y="180" /><di:waypoint x="1400" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a6" bpmnElement="a6"><di:waypoint x="1520" y="180" /><di:waypoint x="1662" y="180" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

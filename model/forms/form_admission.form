@@ -1,0 +1,45 @@
+{
+  "components": [
+    {
+      "text": "# Form Hasil Penerimaan",
+      "type": "text",
+      "layout": {
+        "row": "Row_intro",
+        "columns": null
+      },
+      "id": "Field_intro_form_admission"
+    },
+    {
+      "label": "Hasil Penerimaan",
+      "type": "select",
+      "layout": {
+        "row": "Row_admissionResult",
+        "columns": null
+      },
+      "id": "Field_admissionResult",
+      "key": "admissionResult",
+      "values": [
+        {
+          "label": "Accepted",
+          "value": "Accepted"
+        },
+        {
+          "label": "Rejected",
+          "value": "Rejected"
+        }
+      ],
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "form_admission",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.20.0"
+  },
+  "schemaVersion": 11
+}

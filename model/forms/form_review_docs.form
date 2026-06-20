@@ -1,0 +1,69 @@
+{
+  "components": [
+    {
+      "text": "# Form Tinjauan Kualitas Dokumen",
+      "type": "text",
+      "layout": {
+        "row": "Row_intro",
+        "columns": null
+      },
+      "id": "Field_intro_form_review_docs"
+    },
+    {
+      "label": "Esai & Dokumen Siap",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_essayReady",
+        "columns": null
+      },
+      "id": "Field_essayReady",
+      "key": "essayReady"
+    },
+    {
+      "label": "IPK / GPA",
+      "type": "number",
+      "layout": {
+        "row": "Row_gpa",
+        "columns": null
+      },
+      "id": "Field_gpa",
+      "key": "gpa"
+    },
+    {
+      "label": "Tier Universitas Target",
+      "type": "select",
+      "layout": {
+        "row": "Row_targetTier",
+        "columns": null
+      },
+      "id": "Field_targetTier",
+      "key": "targetTier",
+      "values": [
+        {
+          "label": "Top",
+          "value": "Top"
+        },
+        {
+          "label": "Mid",
+          "value": "Mid"
+        },
+        {
+          "label": "Safe",
+          "value": "Safe"
+        }
+      ],
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "form_review_docs",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.20.0"
+  },
+  "schemaVersion": 11
+}

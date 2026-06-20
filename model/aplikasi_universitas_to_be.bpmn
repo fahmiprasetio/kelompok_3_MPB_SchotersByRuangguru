@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Process_AppUniv_TB" targetNamespace="http://bpmn.io/schema/bpmn" exporter="manual" exporterVersion="1.0">
+  <bpmn:collaboration id="Collab_Process_AppUniv_TB">
+    <bpmn:participant id="Part_Process_AppUniv_TB" name="Schoters by Ruangguru - Pemrosesan Aplikasi Universitas (To-Be / Terdigitalisasi)" processRef="Process_AppUniv_TB" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_AppUniv_TB" name="Pemrosesan Aplikasi Universitas (To-Be)" isExecutable="true" camunda:historyTimeToLive="P180D">
+    <bpmn:laneSet id="LaneSet_Process_AppUniv_TB">
+      <bpmn:lane id="L_Student" name="Calon Mahasiswa">
+        <bpmn:flowNodeRef>Start_App</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_CollectDocs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_ReviseDocs</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_Mentor" name="Academic Mentor">
+        <bpmn:flowNodeRef>T_ReviewDocs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_AdjustList</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Track</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_NotAccepted</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_System" name="Sistem Schoters">
+        <bpmn:flowNodeRef>T_EvalApp</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_App</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Submit</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Adm</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_RecordLoA</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_LoA</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_App" name="Ajukan Permintaan Aplikasi Universitas" camunda:formRef="form_app_request" camunda:formRefBinding="latest"><bpmn:outgoing>f1</bpmn:outgoing></bpmn:startEvent>
+    <bpmn:userTask id="T_CollectDocs" name="Kumpulkan Dokumen Akademik"><bpmn:incoming>f1</bpmn:incoming><bpmn:outgoing>f2</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="T_ReviewDocs" name="Tinjau Kualitas Dokumen" camunda:formRef="form_review_docs" camunda:formRefBinding="latest"><bpmn:incoming>f2</bpmn:incoming><bpmn:incoming>f6</bpmn:incoming><bpmn:incoming>f8</bpmn:incoming><bpmn:outgoing>f3</bpmn:outgoing></bpmn:userTask>
+    <bpmn:businessRuleTask id="T_EvalApp" name="Evaluasi Kesiapan Aplikasi (DMN)" camunda:decisionRef="Decision_Aplikasi" camunda:mapDecisionResult="singleEntry" camunda:resultVariable="appDecision"><bpmn:incoming>f3</bpmn:incoming><bpmn:outgoing>f4</bpmn:outgoing></bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="GW_App" name="Kesiapan Aplikasi?" default="f_submit"><bpmn:incoming>f4</bpmn:incoming><bpmn:outgoing>f5</bpmn:outgoing><bpmn:outgoing>f7</bpmn:outgoing><bpmn:outgoing>f_submit</bpmn:outgoing></bpmn:exclusiveGateway>
+    <bpmn:userTask id="T_ReviseDocs" name="Perbaiki Dokumen Aplikasi"><bpmn:incoming>f5</bpmn:incoming><bpmn:outgoing>f6</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="T_AdjustList" name="Sesuaikan Daftar Universitas"><bpmn:incoming>f7</bpmn:incoming><bpmn:outgoing>f8</bpmn:outgoing></bpmn:userTask>
+    <bpmn:serviceTask id="T_Submit" name="Submit Aplikasi ke Universitas" camunda:expression="${true}"><bpmn:incoming>f_submit</bpmn:incoming><bpmn:outgoing>f9</bpmn:outgoing></bpmn:serviceTask>
+    <bpmn:userTask id="T_Track" name="Lacak Hasil Penerimaan" camunda:formRef="form_admission" camunda:formRefBinding="latest"><bpmn:incoming>f9</bpmn:incoming><bpmn:outgoing>f10</bpmn:outgoing></bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_Adm" name="Hasil Penerimaan?" default="f_reject"><bpmn:incoming>f10</bpmn:incoming><bpmn:outgoing>f11</bpmn:outgoing><bpmn:outgoing>f_reject</bpmn:outgoing></bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="T_RecordLoA" name="Catat Letter of Acceptance" camunda:expression="${true}"><bpmn:incoming>f11</bpmn:incoming><bpmn:outgoing>f12</bpmn:outgoing></bpmn:serviceTask>
+    <bpmn:endEvent id="End_LoA" name="LoA Diterima"><bpmn:incoming>f12</bpmn:incoming></bpmn:endEvent>
+    <bpmn:endEvent id="End_NotAccepted" name="Aplikasi Tidak Diterima"><bpmn:incoming>f_reject</bpmn:incoming></bpmn:endEvent>
+    <bpmn:sequenceFlow id="f1" sourceRef="Start_App" targetRef="T_CollectDocs" />
+    <bpmn:sequenceFlow id="f2" sourceRef="T_CollectDocs" targetRef="T_ReviewDocs" />
+    <bpmn:sequenceFlow id="f3" sourceRef="T_ReviewDocs" targetRef="T_EvalApp" />
+    <bpmn:sequenceFlow id="f4" sourceRef="T_EvalApp" targetRef="GW_App" />
+    <bpmn:sequenceFlow id="f5" sourceRef="GW_App" targetRef="T_ReviseDocs" name="Revisi Dokumen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${appDecision==&quot;Revise Documents&quot;}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f6" sourceRef="T_ReviseDocs" targetRef="T_ReviewDocs" />
+    <bpmn:sequenceFlow id="f7" sourceRef="GW_App" targetRef="T_AdjustList" name="Sesuaikan Target">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${appDecision==&quot;Adjust Target&quot;}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f8" sourceRef="T_AdjustList" targetRef="T_ReviewDocs" />
+    <bpmn:sequenceFlow id="f_submit" sourceRef="GW_App" targetRef="T_Submit" name="Submit" />
+    <bpmn:sequenceFlow id="f9" sourceRef="T_Submit" targetRef="T_Track" />
+    <bpmn:sequenceFlow id="f10" sourceRef="T_Track" targetRef="GW_Adm" />
+    <bpmn:sequenceFlow id="f11" sourceRef="GW_Adm" targetRef="T_RecordLoA" name="Diterima">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${admissionResult==&quot;Accepted&quot;}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f12" sourceRef="T_RecordLoA" targetRef="End_LoA" />
+    <bpmn:sequenceFlow id="f_reject" sourceRef="GW_Adm" targetRef="End_NotAccepted" name="Ditolak" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diag_Process_AppUniv_TB">
+    <bpmndi:BPMNPlane id="Plane_Process_AppUniv_TB" bpmnElement="Collab_Process_AppUniv_TB">
+      <bpmndi:BPMNShape id="di_Part_Process_AppUniv_TB" bpmnElement="Part_Process_AppUniv_TB" isHorizontal="true"><dc:Bounds x="160" y="80" width="2460" height="600" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Student" bpmnElement="L_Student" isHorizontal="true"><dc:Bounds x="190" y="80" width="2430" height="200" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Mentor" bpmnElement="L_Mentor" isHorizontal="true"><dc:Bounds x="190" y="280" width="2430" height="200" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_System" bpmnElement="L_System" isHorizontal="true"><dc:Bounds x="190" y="480" width="2430" height="200" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_Start_App" bpmnElement="Start_App"><dc:Bounds x="342" y="162" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_CollectDocs" bpmnElement="T_CollectDocs"><dc:Bounds x="520" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ReviewDocs" bpmnElement="T_ReviewDocs"><dc:Bounds x="740" y="340" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_EvalApp" bpmnElement="T_EvalApp"><dc:Bounds x="960" y="540" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_App" bpmnElement="GW_App"><dc:Bounds x="1215" y="555" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ReviseDocs" bpmnElement="T_ReviseDocs"><dc:Bounds x="1400" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_AdjustList" bpmnElement="T_AdjustList"><dc:Bounds x="1400" y="340" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Submit" bpmnElement="T_Submit"><dc:Bounds x="1400" y="540" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Track" bpmnElement="T_Track"><dc:Bounds x="1620" y="340" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_Adm" bpmnElement="GW_Adm"><dc:Bounds x="1875" y="555" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_RecordLoA" bpmnElement="T_RecordLoA"><dc:Bounds x="2060" y="540" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_End_LoA" bpmnElement="End_LoA"><dc:Bounds x="2322" y="562" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_End_NotAccepted" bpmnElement="End_NotAccepted"><dc:Bounds x="2102" y="362" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_f1" bpmnElement="f1"><di:waypoint x="378" y="180" /><di:waypoint x="520" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f2" bpmnElement="f2"><di:waypoint x="640" y="180" /><di:waypoint x="690" y="180" /><di:waypoint x="690" y="380" /><di:waypoint x="740" y="380" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f3" bpmnElement="f3"><di:waypoint x="860" y="380" /><di:waypoint x="910" y="380" /><di:waypoint x="910" y="580" /><di:waypoint x="960" y="580" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f4" bpmnElement="f4"><di:waypoint x="1080" y="580" /><di:waypoint x="1215" y="580" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f5" bpmnElement="f5"><di:waypoint x="1265" y="580" /><di:waypoint x="1332" y="580" /><di:waypoint x="1332" y="180" /><di:waypoint x="1400" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f6" bpmnElement="f6"><di:waypoint x="1460" y="140" /><di:waypoint x="1460" y="100" /><di:waypoint x="800" y="100" /><di:waypoint x="800" y="340" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f7" bpmnElement="f7"><di:waypoint x="1265" y="580" /><di:waypoint x="1332" y="580" /><di:waypoint x="1332" y="380" /><di:waypoint x="1400" y="380" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f8" bpmnElement="f8"><di:waypoint x="1460" y="340" /><di:waypoint x="1460" y="300" /><di:waypoint x="800" y="300" /><di:waypoint x="800" y="340" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f_submit" bpmnElement="f_submit"><di:waypoint x="1265" y="580" /><di:waypoint x="1400" y="580" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f9" bpmnElement="f9"><di:waypoint x="1520" y="580" /><di:waypoint x="1570" y="580" /><di:waypoint x="1570" y="380" /><di:waypoint x="1620" y="380" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f10" bpmnElement="f10"><di:waypoint x="1740" y="380" /><di:waypoint x="1808" y="380" /><di:waypoint x="1808" y="580" /><di:waypoint x="1875" y="580" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f11" bpmnElement="f11"><di:waypoint x="1925" y="580" /><di:waypoint x="2060" y="580" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f12" bpmnElement="f12"><di:waypoint x="2180" y="580" /><di:waypoint x="2322" y="580" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f_reject" bpmnElement="f_reject"><di:waypoint x="1925" y="580" /><di:waypoint x="2014" y="580" /><di:waypoint x="2014" y="380" /><di:waypoint x="2102" y="380" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
