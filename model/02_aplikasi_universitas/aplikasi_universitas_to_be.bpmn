@@ -123,20 +123,20 @@
       <bpmndi:BPMNEdge id="di_f13" bpmnElement="f13"><di:waypoint x="2620" y="730" /><di:waypoint x="2720" y="730" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_f14" bpmnElement="f14"><di:waypoint x="2840" y="730" /><di:waypoint x="2982" y="730" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_f_reject" bpmnElement="f_reject"><di:waypoint x="2365" y="730" /><di:waypoint x="2564" y="730" /><di:waypoint x="2564" y="470" /><di:waypoint x="2762" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_Docs" bpmnElement="DOut_Docs"><di:waypoint x="599" y="170" /><di:waypoint x="616" y="136" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_Docs_T_AutoCheck" bpmnElement="DIn_Docs_T_AutoCheck"><di:waypoint x="635" y="136" /><di:waypoint x="789" y="690" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_Docs_T_ReviewDocs" bpmnElement="DIn_Docs_T_ReviewDocs"><di:waypoint x="646" y="127" /><di:waypoint x="976" y="430" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_Validation" bpmnElement="DOut_Validation"><di:waypoint x="819" y="690" /><di:waypoint x="836" y="656" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_Validation_T_ReviewDocs" bpmnElement="DIn_Validation_T_ReviewDocs"><di:waypoint x="866" y="614" /><di:waypoint x="977" y="510" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_Review" bpmnElement="DOut_Review"><di:waypoint x="1039" y="430" /><di:waypoint x="1056" y="396" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_Review_T_EvalApp" bpmnElement="DIn_Review_T_EvalApp"><di:waypoint x="1080" y="396" /><di:waypoint x="1221" y="690" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_Decision" bpmnElement="DOut_Decision"><di:waypoint x="1259" y="690" /><di:waypoint x="1276" y="656" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_Decision_T_Submit" bpmnElement="DIn_Decision_T_Submit"><di:waypoint x="1306" y="634" /><di:waypoint x="1840" y="720" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_UnivList" bpmnElement="DOut_UnivList"><di:waypoint x="1699" y="430" /><di:waypoint x="1716" y="396" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_UnivList_T_Submit" bpmnElement="DIn_UnivList_T_Submit"><di:waypoint x="1740" y="396" /><di:waypoint x="1881" y="690" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_AppPackage" bpmnElement="DOut_AppPackage"><di:waypoint x="1919" y="690" /><di:waypoint x="1936" y="656" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_AppPackage_T_Track" bpmnElement="DIn_AppPackage_T_Track"><di:waypoint x="1966" y="614" /><di:waypoint x="2077" y="510" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_LoA" bpmnElement="DOut_LoA"><di:waypoint x="2579" y="690" /><di:waypoint x="2596" y="656" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_Docs" bpmnElement="DOut_Docs"><di:waypoint x="580" y="170" /><di:waypoint x="580" y="153" /><di:waypoint x="628" y="153" /><di:waypoint x="628" y="136" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_Docs_T_AutoCheck" bpmnElement="DIn_Docs_T_AutoCheck"><di:waypoint x="628" y="136" /><di:waypoint x="628" y="413" /><di:waypoint x="800" y="413" /><di:waypoint x="800" y="690" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_Docs_T_ReviewDocs" bpmnElement="DIn_Docs_T_ReviewDocs"><di:waypoint x="646" y="127" /><di:waypoint x="803" y="127" /><di:waypoint x="803" y="470" /><di:waypoint x="960" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_Validation" bpmnElement="DOut_Validation"><di:waypoint x="800" y="690" /><di:waypoint x="800" y="673" /><di:waypoint x="848" y="673" /><di:waypoint x="848" y="656" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_Validation_T_ReviewDocs" bpmnElement="DIn_Validation_T_ReviewDocs"><di:waypoint x="866" y="631" /><di:waypoint x="913" y="631" /><di:waypoint x="913" y="470" /><di:waypoint x="960" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_Review" bpmnElement="DOut_Review"><di:waypoint x="1020" y="430" /><di:waypoint x="1020" y="413" /><di:waypoint x="1068" y="413" /><di:waypoint x="1068" y="396" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_Review_T_EvalApp" bpmnElement="DIn_Review_T_EvalApp"><di:waypoint x="1068" y="396" /><di:waypoint x="1068" y="543" /><di:waypoint x="1240" y="543" /><di:waypoint x="1240" y="690" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_Decision" bpmnElement="DOut_Decision"><di:waypoint x="1240" y="690" /><di:waypoint x="1240" y="673" /><di:waypoint x="1288" y="673" /><di:waypoint x="1288" y="656" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_Decision_T_Submit" bpmnElement="DIn_Decision_T_Submit"><di:waypoint x="1306" y="631" /><di:waypoint x="1573" y="631" /><di:waypoint x="1573" y="730" /><di:waypoint x="1840" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_UnivList" bpmnElement="DOut_UnivList"><di:waypoint x="1680" y="430" /><di:waypoint x="1680" y="413" /><di:waypoint x="1728" y="413" /><di:waypoint x="1728" y="396" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_UnivList_T_Submit" bpmnElement="DIn_UnivList_T_Submit"><di:waypoint x="1728" y="396" /><di:waypoint x="1728" y="543" /><di:waypoint x="1900" y="543" /><di:waypoint x="1900" y="690" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_AppPackage" bpmnElement="DOut_AppPackage"><di:waypoint x="1900" y="690" /><di:waypoint x="1900" y="673" /><di:waypoint x="1948" y="673" /><di:waypoint x="1948" y="656" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_AppPackage_T_Track" bpmnElement="DIn_AppPackage_T_Track"><di:waypoint x="1966" y="631" /><di:waypoint x="2013" y="631" /><di:waypoint x="2013" y="470" /><di:waypoint x="2060" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_LoA" bpmnElement="DOut_LoA"><di:waypoint x="2560" y="690" /><di:waypoint x="2560" y="673" /><di:waypoint x="2608" y="673" /><di:waypoint x="2608" y="656" /></bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

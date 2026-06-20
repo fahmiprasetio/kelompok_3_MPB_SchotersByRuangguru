@@ -144,29 +144,29 @@
       <bpmndi:BPMNEdge id="di_a17" bpmnElement="a17"><di:waypoint x="3720" y="470" /><di:waypoint x="3791" y="470" /><di:waypoint x="3791" y="210" /><di:waypoint x="3862" y="210" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_a18" bpmnElement="a18"><di:waypoint x="3245" y="470" /><di:waypoint x="3380" y="470" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_a19" bpmnElement="a19"><di:waypoint x="3500" y="470" /><di:waypoint x="3571" y="470" /><di:waypoint x="3571" y="210" /><di:waypoint x="3642" y="210" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_FormMinat" bpmnElement="DOut_FormMinat"><di:waypoint x="599" y="170" /><di:waypoint x="616" y="136" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_FormMinat_AS_Recap" bpmnElement="DIn_FormMinat_AS_Recap"><di:waypoint x="644" y="136" /><di:waypoint x="995" y="690" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_EmailDocs" bpmnElement="DOut_EmailDocs"><di:waypoint x="819" y="170" /><di:waypoint x="836" y="136" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_EmailDocs_AS_Recap" bpmnElement="DIn_EmailDocs_AS_Recap"><di:waypoint x="855" y="136" /><di:waypoint x="1009" y="690" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_EmailDocs_AS_Review" bpmnElement="DIn_EmailDocs_AS_Review"><di:waypoint x="866" y="127" /><di:waypoint x="1196" y="430" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_Spreadsheet" bpmnElement="DOut_Spreadsheet"><di:waypoint x="1039" y="690" /><di:waypoint x="1056" y="656" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_Spreadsheet_AS_TrackResult" bpmnElement="DIn_Spreadsheet_AS_TrackResult"><di:waypoint x="1086" y="630" /><di:waypoint x="2940" y="475" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_CatatanReview" bpmnElement="DOut_CatatanReview"><di:waypoint x="1259" y="430" /><di:waypoint x="1276" y="396" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_CatatanReview_AS_ReqRevisi" bpmnElement="DIn_CatatanReview_AS_ReqRevisi"><di:waypoint x="1306" y="376" /><di:waypoint x="1620" y="455" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_CatatanReview_AS_BuildList" bpmnElement="DIn_CatatanReview_AS_BuildList"><di:waypoint x="1306" y="373" /><di:waypoint x="2060" y="463" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_EmailRevisi" bpmnElement="DOut_EmailRevisi"><di:waypoint x="1699" y="430" /><di:waypoint x="1716" y="396" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_EmailRevisi_AS_FixDocs" bpmnElement="DIn_EmailRevisi_AS_FixDocs"><di:waypoint x="1746" y="354" /><di:waypoint x="1857" y="250" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_DaftarUniv" bpmnElement="DOut_DaftarUniv"><di:waypoint x="2139" y="430" /><di:waypoint x="2156" y="396" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DaftarUniv_AS_Approve" bpmnElement="DIn_DaftarUniv_AS_Approve"><di:waypoint x="2186" y="354" /><di:waypoint x="2297" y="250" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DaftarUniv_AS_SubmitManual" bpmnElement="DIn_DaftarUniv_AS_SubmitManual"><di:waypoint x="2186" y="387" /><di:waypoint x="2516" y="690" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_BuktiSubmit" bpmnElement="DOut_BuktiSubmit"><di:waypoint x="2579" y="690" /><di:waypoint x="2596" y="656" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_BuktiSubmit_AS_UpdateSheet" bpmnElement="DIn_BuktiSubmit_AS_UpdateSheet"><di:waypoint x="2626" y="641" /><di:waypoint x="2720" y="695" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_StatusSheet" bpmnElement="DOut_StatusSheet"><di:waypoint x="2799" y="690" /><di:waypoint x="2816" y="656" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_StatusSheet_AS_TrackResult" bpmnElement="DIn_StatusSheet_AS_TrackResult"><di:waypoint x="2846" y="614" /><di:waypoint x="2957" y="510" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_EmailHasil" bpmnElement="DOut_EmailHasil"><di:waypoint x="3019" y="430" /><di:waypoint x="3036" y="396" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_EmailHasil_AS_RecordLoA" bpmnElement="DIn_EmailHasil_AS_RecordLoA"><di:waypoint x="3066" y="387" /><di:waypoint x="3396" y="690" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_EmailHasil_AS_NotifyNo" bpmnElement="DIn_EmailHasil_AS_NotifyNo"><di:waypoint x="3066" y="376" /><di:waypoint x="3380" y="455" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_ScanLoA" bpmnElement="DOut_ScanLoA"><di:waypoint x="3459" y="690" /><di:waypoint x="3476" y="656" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_FormMinat" bpmnElement="DOut_FormMinat"><di:waypoint x="580" y="170" /><di:waypoint x="580" y="153" /><di:waypoint x="628" y="153" /><di:waypoint x="628" y="136" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_FormMinat_AS_Recap" bpmnElement="DIn_FormMinat_AS_Recap"><di:waypoint x="628" y="136" /><di:waypoint x="628" y="413" /><di:waypoint x="1020" y="413" /><di:waypoint x="1020" y="690" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_EmailDocs" bpmnElement="DOut_EmailDocs"><di:waypoint x="800" y="170" /><di:waypoint x="800" y="153" /><di:waypoint x="848" y="153" /><di:waypoint x="848" y="136" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_EmailDocs_AS_Recap" bpmnElement="DIn_EmailDocs_AS_Recap"><di:waypoint x="848" y="136" /><di:waypoint x="848" y="413" /><di:waypoint x="1020" y="413" /><di:waypoint x="1020" y="690" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_EmailDocs_AS_Review" bpmnElement="DIn_EmailDocs_AS_Review"><di:waypoint x="866" y="111" /><di:waypoint x="1023" y="111" /><di:waypoint x="1023" y="470" /><di:waypoint x="1180" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_Spreadsheet" bpmnElement="DOut_Spreadsheet"><di:waypoint x="1020" y="690" /><di:waypoint x="1020" y="673" /><di:waypoint x="1068" y="673" /><di:waypoint x="1068" y="656" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_Spreadsheet_AS_TrackResult" bpmnElement="DIn_Spreadsheet_AS_TrackResult"><di:waypoint x="1086" y="631" /><di:waypoint x="2013" y="631" /><di:waypoint x="2013" y="470" /><di:waypoint x="2940" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_CatatanReview" bpmnElement="DOut_CatatanReview"><di:waypoint x="1240" y="430" /><di:waypoint x="1240" y="413" /><di:waypoint x="1288" y="413" /><di:waypoint x="1288" y="396" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_CatatanReview_AS_ReqRevisi" bpmnElement="DIn_CatatanReview_AS_ReqRevisi"><di:waypoint x="1306" y="371" /><di:waypoint x="1463" y="371" /><di:waypoint x="1463" y="470" /><di:waypoint x="1620" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_CatatanReview_AS_BuildList" bpmnElement="DIn_CatatanReview_AS_BuildList"><di:waypoint x="1306" y="371" /><di:waypoint x="1683" y="371" /><di:waypoint x="1683" y="470" /><di:waypoint x="2060" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_EmailRevisi" bpmnElement="DOut_EmailRevisi"><di:waypoint x="1680" y="430" /><di:waypoint x="1680" y="413" /><di:waypoint x="1728" y="413" /><di:waypoint x="1728" y="396" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_EmailRevisi_AS_FixDocs" bpmnElement="DIn_EmailRevisi_AS_FixDocs"><di:waypoint x="1746" y="371" /><di:waypoint x="1793" y="371" /><di:waypoint x="1793" y="210" /><di:waypoint x="1840" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_DaftarUniv" bpmnElement="DOut_DaftarUniv"><di:waypoint x="2120" y="430" /><di:waypoint x="2120" y="413" /><di:waypoint x="2168" y="413" /><di:waypoint x="2168" y="396" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DaftarUniv_AS_Approve" bpmnElement="DIn_DaftarUniv_AS_Approve"><di:waypoint x="2186" y="371" /><di:waypoint x="2233" y="371" /><di:waypoint x="2233" y="210" /><di:waypoint x="2280" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DaftarUniv_AS_SubmitManual" bpmnElement="DIn_DaftarUniv_AS_SubmitManual"><di:waypoint x="2186" y="371" /><di:waypoint x="2343" y="371" /><di:waypoint x="2343" y="730" /><di:waypoint x="2500" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_BuktiSubmit" bpmnElement="DOut_BuktiSubmit"><di:waypoint x="2560" y="690" /><di:waypoint x="2560" y="673" /><di:waypoint x="2608" y="673" /><di:waypoint x="2608" y="656" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_BuktiSubmit_AS_UpdateSheet" bpmnElement="DIn_BuktiSubmit_AS_UpdateSheet"><di:waypoint x="2626" y="631" /><di:waypoint x="2673" y="631" /><di:waypoint x="2673" y="730" /><di:waypoint x="2720" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_StatusSheet" bpmnElement="DOut_StatusSheet"><di:waypoint x="2780" y="690" /><di:waypoint x="2780" y="673" /><di:waypoint x="2828" y="673" /><di:waypoint x="2828" y="656" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_StatusSheet_AS_TrackResult" bpmnElement="DIn_StatusSheet_AS_TrackResult"><di:waypoint x="2846" y="631" /><di:waypoint x="2893" y="631" /><di:waypoint x="2893" y="470" /><di:waypoint x="2940" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_EmailHasil" bpmnElement="DOut_EmailHasil"><di:waypoint x="3000" y="430" /><di:waypoint x="3000" y="413" /><di:waypoint x="3048" y="413" /><di:waypoint x="3048" y="396" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_EmailHasil_AS_RecordLoA" bpmnElement="DIn_EmailHasil_AS_RecordLoA"><di:waypoint x="3066" y="371" /><di:waypoint x="3223" y="371" /><di:waypoint x="3223" y="730" /><di:waypoint x="3380" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_EmailHasil_AS_NotifyNo" bpmnElement="DIn_EmailHasil_AS_NotifyNo"><di:waypoint x="3066" y="371" /><di:waypoint x="3223" y="371" /><di:waypoint x="3223" y="470" /><di:waypoint x="3380" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_ScanLoA" bpmnElement="DOut_ScanLoA"><di:waypoint x="3440" y="690" /><di:waypoint x="3440" y="673" /><di:waypoint x="3488" y="673" /><di:waypoint x="3488" y="656" /></bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
