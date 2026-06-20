@@ -1,0 +1,52 @@
+{
+  "components": [
+    {
+      "text": "# Form Permohonan Visa Pelajar",
+      "type": "text",
+      "layout": {
+        "row": "Row_intro",
+        "columns": null
+      },
+      "id": "Field_intro_form_visa_request"
+    },
+    {
+      "label": "Nama Lengkap",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_fullName",
+        "columns": null
+      },
+      "id": "Field_fullName",
+      "key": "fullName"
+    },
+    {
+      "label": "Negara Tujuan",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_destinationCountry",
+        "columns": null
+      },
+      "id": "Field_destinationCountry",
+      "key": "destinationCountry"
+    },
+    {
+      "label": "Nama Universitas",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_universityName",
+        "columns": null
+      },
+      "id": "Field_universityName",
+      "key": "universityName"
+    }
+  ],
+  "type": "default",
+  "id": "form_visa_request",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.20.0"
+  },
+  "schemaVersion": 11
+}

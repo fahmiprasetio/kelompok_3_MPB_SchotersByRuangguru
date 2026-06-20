@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Process_Visa_AS" targetNamespace="http://bpmn.io/schema/bpmn" exporter="manual" exporterVersion="1.0">
+  <bpmn:collaboration id="Collab_Process_Visa_AS">
+    <bpmn:participant id="Part_Process_Visa_AS" name="Schoters by Ruangguru - Pengajuan Visa Pelajar (As-Is / Manual)" processRef="Process_Visa_AS" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Visa_AS" name="Pengajuan Visa Pelajar (As-Is)" isExecutable="false">
+    <bpmn:startEvent id="VAS_Start" name="Mahasiswa Minta Bantuan Visa"><bpmn:outgoing>va1</bpmn:outgoing></bpmn:startEvent>
+    <bpmn:userTask id="VAS_Collect" name="Kumpulkan Dokumen Visa Manual"><bpmn:incoming>va1</bpmn:incoming><bpmn:outgoing>va2</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="VAS_Check" name="Cek Finansial via Email"><bpmn:incoming>va2</bpmn:incoming><bpmn:outgoing>va3</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="VAS_Book" name="Booking Janji Temu Manual"><bpmn:incoming>va3</bpmn:incoming><bpmn:outgoing>va4</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="VAS_Submit" name="Submit di Kedutaan Manual"><bpmn:incoming>va4</bpmn:incoming><bpmn:outgoing>va5</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="VAS_Follow" name="Follow Up via Telepon/Email"><bpmn:incoming>va5</bpmn:incoming><bpmn:outgoing>va6</bpmn:outgoing></bpmn:userTask>
+    <bpmn:endEvent id="VAS_End" name="Proses Visa Selesai (Manual)"><bpmn:incoming>va6</bpmn:incoming></bpmn:endEvent>
+    <bpmn:sequenceFlow id="va1" sourceRef="VAS_Start" targetRef="VAS_Collect" />
+    <bpmn:sequenceFlow id="va2" sourceRef="VAS_Collect" targetRef="VAS_Check" />
+    <bpmn:sequenceFlow id="va3" sourceRef="VAS_Check" targetRef="VAS_Book" />
+    <bpmn:sequenceFlow id="va4" sourceRef="VAS_Book" targetRef="VAS_Submit" />
+    <bpmn:sequenceFlow id="va5" sourceRef="VAS_Submit" targetRef="VAS_Follow" />
+    <bpmn:sequenceFlow id="va6" sourceRef="VAS_Follow" targetRef="VAS_End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diag_Process_Visa_AS">
+    <bpmndi:BPMNPlane id="Plane_Process_Visa_AS" bpmnElement="Collab_Process_Visa_AS">
+      <bpmndi:BPMNShape id="di_Part_Process_Visa_AS" bpmnElement="Part_Process_Visa_AS" isHorizontal="true"><dc:Bounds x="160" y="80" width="1800" height="200" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_VAS_Start" bpmnElement="VAS_Start"><dc:Bounds x="342" y="162" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_VAS_Collect" bpmnElement="VAS_Collect"><dc:Bounds x="520" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_VAS_Check" bpmnElement="VAS_Check"><dc:Bounds x="740" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_VAS_Book" bpmnElement="VAS_Book"><dc:Bounds x="960" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_VAS_Submit" bpmnElement="VAS_Submit"><dc:Bounds x="1180" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_VAS_Follow" bpmnElement="VAS_Follow"><dc:Bounds x="1400" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_VAS_End" bpmnElement="VAS_End"><dc:Bounds x="1662" y="162" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_va1" bpmnElement="va1"><di:waypoint x="378" y="180" /><di:waypoint x="520" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_va2" bpmnElement="va2"><di:waypoint x="640" y="180" /><di:waypoint x="740" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_va3" bpmnElement="va3"><di:waypoint x="860" y="180" /><di:waypoint x="960" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_va4" bpmnElement="va4"><di:waypoint x="1080" y="180" /><di:waypoint x="1180" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_va5" bpmnElement="va5"><di:waypoint x="1300" y="180" /><di:waypoint x="1400" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_va6" bpmnElement="va6"><di:waypoint x="1520" y="180" /><di:waypoint x="1662" y="180" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
