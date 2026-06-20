@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Refund_TB" targetNamespace="http://bpmn.io/schema/bpmn" exporter="manual" exporterVersion="1.0">
+  <bpmn:collaboration id="Collab_Refund_TB">
+    <bpmn:participant id="Part_Refund_TB" name="Schoters by Ruangguru - Refund / Pembatalan (To-Be / Terdigitalisasi)" processRef="Process_Refund_TB" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Refund_TB" name="Refund / Pembatalan Program (To-Be)" isExecutable="true" camunda:historyTimeToLive="P180D">
+    <bpmn:laneSet id="LaneSet_Process_Refund_TB">
+      <bpmn:lane id="L_Mhs" name="Mahasiswa">
+        <bpmn:flowNodeRef>Start_Refund</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_FixData</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_Fin" name="Tim Finance">
+        <bpmn:flowNodeRef>T_Review</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_ProcessFull</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_ApprovePartial</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_ProcessPartial</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_Sys" name="Sistem Schoters">
+        <bpmn:flowNodeRef>T_Validate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Valid</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Eval</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Dec</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_NotifyReject</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Reject</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Record</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_NotifyDone</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Done</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Refund" name="Ajukan Permintaan Refund" camunda:formRef="form_refund_request" camunda:formRefBinding="latest">
+      <bpmn:outgoing>r1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="T_Validate" name="Validasi Otomatis Permintaan" camunda:expression="${true}">
+      <bpmn:incoming>r1</bpmn:incoming>
+      <bpmn:incoming>r_loop</bpmn:incoming>
+      <bpmn:outgoing>r2</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="doab_tiket">
+        <bpmn:targetRef>DRB_Tiket</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="GW_Valid" name="Data Lengkap?" default="r4">
+      <bpmn:incoming>r2</bpmn:incoming>
+      <bpmn:outgoing>r3</bpmn:outgoing>
+      <bpmn:outgoing>r4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="T_FixData" name="Perbaiki Data Permintaan">
+      <bpmn:incoming>r3</bpmn:incoming>
+      <bpmn:outgoing>r_loop</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Review" name="Tinjau Permintaan Refund" camunda:formRef="form_refund_review" camunda:formRefBinding="latest">
+      <bpmn:incoming>r4</bpmn:incoming>
+      <bpmn:outgoing>r5</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="doab_tinjauan">
+        <bpmn:targetRef>DRB_Tinjauan</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:businessRuleTask id="T_Eval" name="Evaluasi Kelayakan Refund (DMN)" camunda:decisionRef="Decision_Refund" camunda:mapDecisionResult="singleEntry" camunda:resultVariable="refundDecision">
+      <bpmn:incoming>r5</bpmn:incoming>
+      <bpmn:outgoing>r6</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="doab_keputusan">
+        <bpmn:targetRef>DRB_Keputusan</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="GW_Dec" name="Keputusan Refund?" default="r12">
+      <bpmn:incoming>r6</bpmn:incoming>
+      <bpmn:outgoing>r7</bpmn:outgoing>
+      <bpmn:outgoing>r9</bpmn:outgoing>
+      <bpmn:outgoing>r12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="T_ProcessFull" name="Proses Refund Penuh" camunda:expression="${true}">
+      <bpmn:incoming>r7</bpmn:incoming>
+      <bpmn:outgoing>r8</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="doab_instruksi">
+        <bpmn:targetRef>DRB_Instruksi</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="T_ApprovePartial" name="Setujui Refund Sebagian">
+      <bpmn:incoming>r9</bpmn:incoming>
+      <bpmn:outgoing>r10</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="T_ProcessPartial" name="Proses Refund Sebagian" camunda:expression="${true}">
+      <bpmn:incoming>r10</bpmn:incoming>
+      <bpmn:outgoing>r11</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="doab_instruksip">
+        <bpmn:targetRef>DRB_InstruksiP</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="T_NotifyReject" name="Kirim Notifikasi Penolakan" camunda:expression="${true}">
+      <bpmn:incoming>r12</bpmn:incoming>
+      <bpmn:outgoing>r13</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="doab_emailtolak">
+        <bpmn:targetRef>DRB_EmailTolak</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Reject" name="Refund Ditolak">
+      <bpmn:incoming>r13</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="T_Record" name="Catat Transaksi Refund" camunda:expression="${true}">
+      <bpmn:incoming>r8</bpmn:incoming>
+      <bpmn:incoming>r11</bpmn:incoming>
+      <bpmn:outgoing>r14</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="doab_bukti">
+        <bpmn:targetRef>DRB_Bukti</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="T_NotifyDone" name="Kirim Notifikasi Refund Selesai" camunda:expression="${true}">
+      <bpmn:incoming>r14</bpmn:incoming>
+      <bpmn:outgoing>r15</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="doab_konfirmasi">
+        <bpmn:targetRef>DRB_Konfirmasi</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Done" name="Refund Selesai">
+      <bpmn:incoming>r15</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="r1" sourceRef="Start_Refund" targetRef="T_Validate" />
+    <bpmn:sequenceFlow id="r2" sourceRef="T_Validate" targetRef="GW_Valid" />
+    <bpmn:sequenceFlow id="r3" sourceRef="GW_Valid" targetRef="T_FixData" name="Data Tidak Lengkap">
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="r_loop" sourceRef="T_FixData" targetRef="T_Validate" />
+    <bpmn:sequenceFlow id="r4" sourceRef="GW_Valid" targetRef="T_Review" name="Data Lengkap">
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="r5" sourceRef="T_Review" targetRef="T_Eval" />
+    <bpmn:sequenceFlow id="r6" sourceRef="T_Eval" targetRef="GW_Dec" />
+    <bpmn:sequenceFlow id="r7" sourceRef="GW_Dec" targetRef="T_ProcessFull" name="Refund Penuh">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${refundDecision=='Full Refund'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="r8" sourceRef="T_ProcessFull" targetRef="T_Record" />
+    <bpmn:sequenceFlow id="r9" sourceRef="GW_Dec" targetRef="T_ApprovePartial" name="Refund Sebagian">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${refundDecision=='Partial Refund'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="r10" sourceRef="T_ApprovePartial" targetRef="T_ProcessPartial" />
+    <bpmn:sequenceFlow id="r11" sourceRef="T_ProcessPartial" targetRef="T_Record" />
+    <bpmn:sequenceFlow id="r12" sourceRef="GW_Dec" targetRef="T_NotifyReject" name="Tanpa Refund">
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="r13" sourceRef="T_NotifyReject" targetRef="End_Reject" />
+    <bpmn:sequenceFlow id="r14" sourceRef="T_Record" targetRef="T_NotifyDone" />
+    <bpmn:sequenceFlow id="r15" sourceRef="T_NotifyDone" targetRef="End_Done" />
+    <bpmn:dataObjectReference id="DRB_Tiket" name="Tiket Refund" dataObjectRef="DOB_Tiket" />
+    <bpmn:dataObject id="DOB_Tiket" />
+    <bpmn:dataObjectReference id="DRB_Tinjauan" name="Hasil Tinjauan Refund" dataObjectRef="DOB_Tinjauan" />
+    <bpmn:dataObject id="DOB_Tinjauan" />
+    <bpmn:dataObjectReference id="DRB_Keputusan" name="Keputusan Refund (DMN)" dataObjectRef="DOB_Keputusan" />
+    <bpmn:dataObject id="DOB_Keputusan" />
+    <bpmn:dataObjectReference id="DRB_Instruksi" name="Instruksi Transfer Penuh" dataObjectRef="DOB_Instruksi" />
+    <bpmn:dataObject id="DOB_Instruksi" />
+    <bpmn:dataObjectReference id="DRB_InstruksiP" name="Instruksi Transfer Sebagian" dataObjectRef="DOB_InstruksiP" />
+    <bpmn:dataObject id="DOB_InstruksiP" />
+    <bpmn:dataObjectReference id="DRB_EmailTolak" name="Email Penolakan" dataObjectRef="DOB_EmailTolak" />
+    <bpmn:dataObject id="DOB_EmailTolak" />
+    <bpmn:dataObjectReference id="DRB_Bukti" name="Bukti Transaksi Refund" dataObjectRef="DOB_Bukti" />
+    <bpmn:dataObject id="DOB_Bukti" />
+    <bpmn:dataObjectReference id="DRB_Konfirmasi" name="Email Konfirmasi Selesai" dataObjectRef="DOB_Konfirmasi" />
+    <bpmn:dataObject id="DOB_Konfirmasi" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diag_Process_Refund_TB">
+    <bpmndi:BPMNPlane id="Plane_Process_Refund_TB" bpmnElement="Collab_Refund_TB">
+      <bpmndi:BPMNShape id="di_Part_Refund_TB" bpmnElement="Part_Refund_TB" isHorizontal="true"><dc:Bounds x="160" y="80" width="2716" height="660" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Mhs" bpmnElement="L_Mhs" isHorizontal="true"><dc:Bounds x="190" y="80" width="2686" height="220" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Fin" bpmnElement="L_Fin" isHorizontal="true"><dc:Bounds x="190" y="300" width="2686" height="220" /></bpmndi:BP
