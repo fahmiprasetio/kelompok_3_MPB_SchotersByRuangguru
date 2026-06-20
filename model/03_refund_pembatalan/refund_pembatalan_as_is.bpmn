@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Refund_AS" targetNamespace="http://bpmn.io/schema/bpmn" exporter="manual" exporterVersion="1.0">
   <bpmn:collaboration id="Collab_Refund_AS">
-    <bpmn:participant id="Part_Refund_AS" name="Schoters by Ruangguru - Refund / Pembatalan (As-Is / Manual)" processRef="Process_Refund_AS" />
+    <bpmn:participant id="Part_Refund_AS" name="Schoters by Ruangguru - Refund / Pembatalan (As-Is / Manual)" processRef="Process_Refund_AS"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_Refund_AS" name="Refund / Pembatalan Program (As-Is)" isExecutable="false">
     <bpmn:laneSet id="LaneSet_Process_Refund_AS">
@@ -44,6 +44,11 @@
       <bpmn:incoming>ra2</bpmn:incoming>
       <bpmn:incoming>ra_loop</bpmn:incoming>
       <bpmn:outgoing>ra3</bpmn:outgoing>
+      <bpmn:property id="Prop_RAS_Verify_DR_Catatan" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="DIn_DR_Catatan_RAS_Verify">
+        <bpmn:sourceRef>DR_Catatan</bpmn:sourceRef>
+        <bpmn:targetRef>Prop_RAS_Verify_DR_Catatan</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="GW_Doc" name="Dokumen Lengkap?" default="ra5">
       <bpmn:incoming>ra3</bpmn:incoming>
@@ -64,6 +69,11 @@
     <bpmn:userTask id="RAS_Calc" name="Hitung Estimasi Nominal Refund">
       <bpmn:incoming>ra6</bpmn:incoming>
       <bpmn:outgoing>ra7</bpmn:outgoing>
+      <bpmn:property id="Prop_RAS_Calc_DR_Lembar" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="DIn_DR_Lembar_RAS_Calc">
+        <bpmn:sourceRef>DR_Lembar</bpmn:sourceRef>
+        <bpmn:targetRef>Prop_RAS_Calc_DR_Lembar</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
       <bpmn:dataOutputAssociation id="doa_hitung">
         <bpmn:targetRef>DR_Hitung</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
@@ -75,6 +85,11 @@
     <bpmn:userTask id="RAS_MgrReview" name="Tinjau &amp; Putuskan Refund">
       <bpmn:incoming>ra8</bpmn:incoming>
       <bpmn:outgoing>ra9</bpmn:outgoing>
+      <bpmn:property id="Prop_RAS_MgrReview_DR_Hitung" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="DIn_DR_Hitung_RAS_MgrReview">
+        <bpmn:sourceRef>DR_Hitung</bpmn:sourceRef>
+        <bpmn:targetRef>Prop_RAS_MgrReview_DR_Hitung</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="GW_Dec" name="Keputusan?">
       <bpmn:incoming>ra9</bpmn:incoming>
@@ -101,6 +116,11 @@
     <bpmn:userTask id="RAS_UpdateSheet" name="Update Status di Spreadsheet">
       <bpmn:incoming>ra13</bpmn:incoming>
       <bpmn:outgoing>ra14</bpmn:outgoing>
+      <bpmn:property id="Prop_RAS_UpdateSheet_DR_Bukti" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="DIn_DR_Bukti_RAS_UpdateSheet">
+        <bpmn:sourceRef>DR_Bukti</bpmn:sourceRef>
+        <bpmn:targetRef>Prop_RAS_UpdateSheet_DR_Bukti</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
       <bpmn:dataOutputAssociation id="doa_status">
         <bpmn:targetRef>DR_Status</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
@@ -108,6 +128,11 @@
     <bpmn:userTask id="RAS_Notify" name="Kirim Notifikasi Hasil ke Mahasiswa">
       <bpmn:incoming>ra14</bpmn:incoming>
       <bpmn:outgoing>ra15</bpmn:outgoing>
+      <bpmn:property id="Prop_RAS_Notify_DR_Status" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="DIn_DR_Status_RAS_Notify">
+        <bpmn:sourceRef>DR_Status</bpmn:sourceRef>
+        <bpmn:targetRef>Prop_RAS_Notify_DR_Status</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
       <bpmn:dataOutputAssociation id="doa_konfirmasi">
         <bpmn:targetRef>DR_Konfirmasi</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
@@ -115,94 +140,269 @@
     <bpmn:endEvent id="RAS_EndDone" name="Refund Selesai (Manual)">
       <bpmn:incoming>ra15</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="ra1" sourceRef="RAS_Start" targetRef="RAS_Receive" />
-    <bpmn:sequenceFlow id="ra2" sourceRef="RAS_Receive" targetRef="RAS_Verify" />
-    <bpmn:sequenceFlow id="ra3" sourceRef="RAS_Verify" targetRef="GW_Doc" />
+    <bpmn:sequenceFlow id="ra1" sourceRef="RAS_Start" targetRef="RAS_Receive"/>
+    <bpmn:sequenceFlow id="ra2" sourceRef="RAS_Receive" targetRef="RAS_Verify"/>
+    <bpmn:sequenceFlow id="ra3" sourceRef="RAS_Verify" targetRef="GW_Doc"/>
     <bpmn:sequenceFlow id="ra4" sourceRef="GW_Doc" targetRef="RAS_AskMore" name="Belum Lengkap">
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="ra_loop" sourceRef="RAS_AskMore" targetRef="RAS_Verify" />
+    <bpmn:sequenceFlow id="ra_loop" sourceRef="RAS_AskMore" targetRef="RAS_Verify"/>
     <bpmn:sequenceFlow id="ra5" sourceRef="GW_Doc" targetRef="RAS_CheckPolicy" name="Lengkap">
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="ra6" sourceRef="RAS_CheckPolicy" targetRef="RAS_Calc" />
-    <bpmn:sequenceFlow id="ra7" sourceRef="RAS_Calc" targetRef="RAS_Discuss" />
-    <bpmn:sequenceFlow id="ra8" sourceRef="RAS_Discuss" targetRef="RAS_MgrReview" />
-    <bpmn:sequenceFlow id="ra9" sourceRef="RAS_MgrReview" targetRef="GW_Dec" />
+    <bpmn:sequenceFlow id="ra6" sourceRef="RAS_CheckPolicy" targetRef="RAS_Calc"/>
+    <bpmn:sequenceFlow id="ra7" sourceRef="RAS_Calc" targetRef="RAS_Discuss"/>
+    <bpmn:sequenceFlow id="ra8" sourceRef="RAS_Discuss" targetRef="RAS_MgrReview"/>
+    <bpmn:sequenceFlow id="ra9" sourceRef="RAS_MgrReview" targetRef="GW_Dec"/>
     <bpmn:sequenceFlow id="ra10" sourceRef="GW_Dec" targetRef="RAS_RejectEmail" name="Ditolak">
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="ra11" sourceRef="RAS_RejectEmail" targetRef="RAS_EndReject" />
+    <bpmn:sequenceFlow id="ra11" sourceRef="RAS_RejectEmail" targetRef="RAS_EndReject"/>
     <bpmn:sequenceFlow id="ra12" sourceRef="GW_Dec" targetRef="RAS_Transfer" name="Disetujui">
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="ra13" sourceRef="RAS_Transfer" targetRef="RAS_UpdateSheet" />
-    <bpmn:sequenceFlow id="ra14" sourceRef="RAS_UpdateSheet" targetRef="RAS_Notify" />
-    <bpmn:sequenceFlow id="ra15" sourceRef="RAS_Notify" targetRef="RAS_EndDone" />
-    <bpmn:dataObjectReference id="DR_Catatan" name="Catatan Permintaan (Spreadsheet)" dataObjectRef="DO_Catatan" />
-    <bpmn:dataObject id="DO_Catatan" />
-    <bpmn:dataObjectReference id="DR_Lembar" name="Lembar Cek Kelayakan" dataObjectRef="DO_Lembar" />
-    <bpmn:dataObject id="DO_Lembar" />
-    <bpmn:dataObjectReference id="DR_Hitung" name="Perhitungan Refund (Excel)" dataObjectRef="DO_Hitung" />
-    <bpmn:dataObject id="DO_Hitung" />
-    <bpmn:dataObjectReference id="DR_EmailTolak" name="Email Penolakan" dataObjectRef="DO_EmailTolak" />
-    <bpmn:dataObject id="DO_EmailTolak" />
-    <bpmn:dataObjectReference id="DR_Bukti" name="Bukti Transfer Bank" dataObjectRef="DO_Bukti" />
-    <bpmn:dataObject id="DO_Bukti" />
-    <bpmn:dataObjectReference id="DR_Status" name="Status Spreadsheet" dataObjectRef="DO_Status" />
-    <bpmn:dataObject id="DO_Status" />
-    <bpmn:dataObjectReference id="DR_Konfirmasi" name="Email Konfirmasi Refund" dataObjectRef="DO_Konfirmasi" />
-    <bpmn:dataObject id="DO_Konfirmasi" />
+    <bpmn:sequenceFlow id="ra13" sourceRef="RAS_Transfer" targetRef="RAS_UpdateSheet"/>
+    <bpmn:sequenceFlow id="ra14" sourceRef="RAS_UpdateSheet" targetRef="RAS_Notify"/>
+    <bpmn:sequenceFlow id="ra15" sourceRef="RAS_Notify" targetRef="RAS_EndDone"/>
+    <bpmn:dataObjectReference id="DR_Catatan" name="Catatan Permintaan (Spreadsheet)" dataObjectRef="DO_Catatan"/>
+    <bpmn:dataObject id="DO_Catatan"/>
+    <bpmn:dataObjectReference id="DR_Lembar" name="Lembar Cek Kelayakan" dataObjectRef="DO_Lembar"/>
+    <bpmn:dataObject id="DO_Lembar"/>
+    <bpmn:dataObjectReference id="DR_Hitung" name="Perhitungan Refund (Excel)" dataObjectRef="DO_Hitung"/>
+    <bpmn:dataObject id="DO_Hitung"/>
+    <bpmn:dataObjectReference id="DR_EmailTolak" name="Email Penolakan" dataObjectRef="DO_EmailTolak"/>
+    <bpmn:dataObject id="DO_EmailTolak"/>
+    <bpmn:dataObjectReference id="DR_Bukti" name="Bukti Transfer Bank" dataObjectRef="DO_Bukti"/>
+    <bpmn:dataObject id="DO_Bukti"/>
+    <bpmn:dataObjectReference id="DR_Status" name="Status Spreadsheet" dataObjectRef="DO_Status"/>
+    <bpmn:dataObject id="DO_Status"/>
+    <bpmn:dataObjectReference id="DR_Konfirmasi" name="Email Konfirmasi Refund" dataObjectRef="DO_Konfirmasi"/>
+    <bpmn:dataObject id="DO_Konfirmasi"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diag_Process_Refund_AS">
     <bpmndi:BPMNPlane id="Plane_Process_Refund_AS" bpmnElement="Collab_Refund_AS">
-      <bpmndi:BPMNShape id="di_Part_Refund_AS" bpmnElement="Part_Refund_AS" isHorizontal="true"><dc:Bounds x="160" y="80" width="2816" height="880" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Student" bpmnElement="L_Student" isHorizontal="true"><dc:Bounds x="190" y="80" width="2786" height="220" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_CS" bpmnElement="L_CS" isHorizontal="true"><dc:Bounds x="190" y="300" width="2786" height="220" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Finance" bpmnElement="L_Finance" isHorizontal="true"><dc:Bounds x="190" y="520" width="2786" height="220" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Manager" bpmnElement="L_Manager" isHorizontal="true"><dc:Bounds x="190" y="740" width="2786" height="220" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_Start" bpmnElement="RAS_Start"><dc:Bounds x="260" y="172" width="36" height="36" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_Receive" bpmnElement="RAS_Receive"><dc:Bounds x="420" y="370" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_Verify" bpmnElement="RAS_Verify"><dc:Bounds x="620" y="370" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_GW_Doc" bpmnElement="GW_Doc"><dc:Bounds x="860" y="385" width="50" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_AskMore" bpmnElement="RAS_AskMore"><dc:Bounds x="1020" y="150" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_CheckPolicy" bpmnElement="RAS_CheckPolicy"><dc:Bounds x="1220" y="370" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_Calc" bpmnElement="RAS_Calc"><dc:Bounds x="1420" y="590" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_Discuss" bpmnElement="RAS_Discuss"><dc:Bounds x="1620" y="590" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_MgrReview" bpmnElement="RAS_MgrReview"><dc:Bounds x="1820" y="810" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_GW_Dec" bpmnElement="GW_Dec"><dc:Bounds x="2060" y="825" width="50" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_RejectEmail" bpmnElement="RAS_RejectEmail"><dc:Bounds x="2240" y="370" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_EndReject" bpmnElement="RAS_EndReject"><dc:Bounds x="2460" y="172" width="36" height="36" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_Transfer" bpmnElement="RAS_Transfer"><dc:Bounds x="2240" y="590" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_UpdateSheet" bpmnElement="RAS_UpdateSheet"><dc:Bounds x="2440" y="590" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_Notify" bpmnElement="RAS_Notify"><dc:Bounds x="2640" y="370" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_RAS_EndDone" bpmnElement="RAS_EndDone"><dc:Bounds x="2860" y="172" width="36" height="36" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DR_Catatan" bpmnElement="DR_Catatan"><dc:Bounds x="462" y="308" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DR_Lembar" bpmnElement="DR_Lembar"><dc:Bounds x="1262" y="308" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DR_Hitung" bpmnElement="DR_Hitung"><dc:Bounds x="1462" y="528" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DR_EmailTolak" bpmnElement="DR_EmailTolak"><dc:Bounds x="2282" y="308" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DR_Bukti" bpmnElement="DR_Bukti"><dc:Bounds x="2282" y="528" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DR_Status" bpmnElement="DR_Status"><dc:Bounds x="2482" y="528" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DR_Konfirmasi" bpmnElement="DR_Konfirmasi"><dc:Bounds x="2682" y="308" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="di_ra1" bpmnElement="ra1"><di:waypoint x="296" y="190" /><di:waypoint x="358" y="190" /><di:waypoint x="358" y="410" /><di:waypoint x="420" y="410" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra2" bpmnElement="ra2"><di:waypoint x="540" y="410" /><di:waypoint x="620" y="410" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra3" bpmnElement="ra3"><di:waypoint x="740" y="410" /><di:waypoint x="860" y="410" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra4" bpmnElement="ra4"><di:waypoint x="910" y="410" /><di:waypoint x="965" y="410" /><di:waypoint x="965" y="190" /><di:waypoint x="1020" y="190" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra_loop" bpmnElement="ra_loop"><di:waypoint x="1080" y="230" /><di:waypoint x="1080" y="490" /><di:waypoint x="680" y="490" /><di:waypoint x="680" y="450" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra5" bpmnElement="ra5"><di:waypoint x="910" y="410" /><di:waypoint x="1220" y="410" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra6" bpmnElement="ra6"><di:waypoint x="1340" y="410" /><di:waypoint x="1380" y="410" /><di:waypoint x="1380" y="630" /><di:waypoint x="1420" y="630" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra7" bpmnElement="ra7"><di:waypoint x="1540" y="630" /><di:waypoint x="1620" y="630" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra8" bpmnElement="ra8"><di:waypoint x="1740" y="630" /><di:waypoint x="1780" y="630" /><di:waypoint x="1780" y="850" /><di:waypoint x="1820" y="850" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra9" bpmnElement="ra9"><di:waypoint x="1940" y="850" /><di:waypoint x="2060" y="850" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra10" bpmnElement="ra10"><di:waypoint x="2110" y="850" /><di:waypoint x="2175" y="850" /><di:waypoint x="2175" y="410" /><di:waypoint x="2240" y="410" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra11" bpmnElement="ra11"><di:waypoint x="2360" y="410" /><di:waypoint x="2410" y="410" /><di:waypoint x="2410" y="190" /><di:waypoint x="2460" y="190" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra12" bpmnElement="ra12"><di:waypoint x="2110" y="850" /><di:waypoint x="2175" y="850" /><di:waypoint x="2175" y="630" /><di:waypoint x="2240" y="630" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra13" bpmnElement="ra13"><di:waypoint x="2360" y="630" /><di:waypoint x="2440" y="630" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra14" bpmnElement="ra14"><di:waypoint x="2560" y="630" /><di:waypoint x="2600" y="630" /><di:waypoint x="2600" y="410" /><di:waypoint x="2640" y="410" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_ra15" bpmnElement="ra15"><di:waypoint x="2760" y="410" /><di:waypoint x="2810" y="410" /><di:waypoint x="2810" y="190" /><di:waypoint x="2860" y="190" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_catatan" bpmnElement="doa_catatan"><di:waypoint x="480" y="370" /><di:waypoint x="480" y="358" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_lembar" bpmnElement="doa_lembar"><di:waypoint x="1280" y="370" /><di:waypoint x="1280" y="358" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_hitung" bpmnElement="doa_hitung"><di:waypoint x="1480" y="590" /><di:waypoint x="1480" y="578" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_emailtolak" bpmnElement="doa_emailtolak"><di:waypoint x="2300" y="370" /><di:waypoint x="2300" y="358" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_bukti" bpmnElement="doa_bukti"><di:waypoint x="2300" y="590" /><di:waypoint x="2300" y="578" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_status" bpmnElement="doa_status"><di:waypoint x="2500" y="590" /><di:waypoint x="2500" y="578" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_konfirmasi" bpmnElement="doa_konfirmasi"><di:waypoint x="2700" y="370" /><di:waypoint x="2700" y="358" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="di_Part_Refund_AS" bpmnElement="Part_Refund_AS" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="2816" height="880"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Student" bpmnElement="L_Student" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="2786" height="220"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_CS" bpmnElement="L_CS" isHorizontal="true">
+        <dc:Bounds x="190" y="300" width="2786" height="220"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Finance" bpmnElement="L_Finance" isHorizontal="true">
+        <dc:Bounds x="190" y="520" width="2786" height="220"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Manager" bpmnElement="L_Manager" isHorizontal="true">
+        <dc:Bounds x="190" y="740" width="2786" height="220"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_Start" bpmnElement="RAS_Start">
+        <dc:Bounds x="260" y="172" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_Receive" bpmnElement="RAS_Receive">
+        <dc:Bounds x="420" y="370" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_Verify" bpmnElement="RAS_Verify">
+        <dc:Bounds x="620" y="370" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_Doc" bpmnElement="GW_Doc">
+        <dc:Bounds x="860" y="385" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_AskMore" bpmnElement="RAS_AskMore">
+        <dc:Bounds x="1020" y="150" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_CheckPolicy" bpmnElement="RAS_CheckPolicy">
+        <dc:Bounds x="1220" y="370" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_Calc" bpmnElement="RAS_Calc">
+        <dc:Bounds x="1420" y="590" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_Discuss" bpmnElement="RAS_Discuss">
+        <dc:Bounds x="1620" y="590" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_MgrReview" bpmnElement="RAS_MgrReview">
+        <dc:Bounds x="1820" y="810" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_Dec" bpmnElement="GW_Dec">
+        <dc:Bounds x="2060" y="825" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_RejectEmail" bpmnElement="RAS_RejectEmail">
+        <dc:Bounds x="2240" y="370" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_EndReject" bpmnElement="RAS_EndReject">
+        <dc:Bounds x="2460" y="172" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_Transfer" bpmnElement="RAS_Transfer">
+        <dc:Bounds x="2240" y="590" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_UpdateSheet" bpmnElement="RAS_UpdateSheet">
+        <dc:Bounds x="2440" y="590" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_Notify" bpmnElement="RAS_Notify">
+        <dc:Bounds x="2640" y="370" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_RAS_EndDone" bpmnElement="RAS_EndDone">
+        <dc:Bounds x="2860" y="172" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DR_Catatan" bpmnElement="DR_Catatan">
+        <dc:Bounds x="462" y="308" width="36" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DR_Lembar" bpmnElement="DR_Lembar">
+        <dc:Bounds x="1262" y="308" width="36" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DR_Hitung" bpmnElement="DR_Hitung">
+        <dc:Bounds x="1462" y="528" width="36" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DR_EmailTolak" bpmnElement="DR_EmailTolak">
+        <dc:Bounds x="2282" y="308" width="36" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DR_Bukti" bpmnElement="DR_Bukti">
+        <dc:Bounds x="2282" y="528" width="36" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DR_Status" bpmnElement="DR_Status">
+        <dc:Bounds x="2482" y="528" width="36" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DR_Konfirmasi" bpmnElement="DR_Konfirmasi">
+        <dc:Bounds x="2682" y="308" width="36" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_ra1" bpmnElement="ra1">
+        <di:waypoint x="296" y="190"/>
+        <di:waypoint x="358" y="190"/>
+        <di:waypoint x="358" y="410"/>
+        <di:waypoint x="420" y="410"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra2" bpmnElement="ra2">
+        <di:waypoint x="540" y="410"/>
+        <di:waypoint x="620" y="410"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra3" bpmnElement="ra3">
+        <di:waypoint x="740" y="410"/>
+        <di:waypoint x="860" y="410"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra4" bpmnElement="ra4">
+        <di:waypoint x="910" y="410"/>
+        <di:waypoint x="965" y="410"/>
+        <di:waypoint x="965" y="190"/>
+        <di:waypoint x="1020" y="190"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra_loop" bpmnElement="ra_loop">
+        <di:waypoint x="1080" y="230"/>
+        <di:waypoint x="1080" y="490"/>
+        <di:waypoint x="680" y="490"/>
+        <di:waypoint x="680" y="450"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra5" bpmnElement="ra5">
+        <di:waypoint x="910" y="410"/>
+        <di:waypoint x="1220" y="410"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra6" bpmnElement="ra6">
+        <di:waypoint x="1340" y="410"/>
+        <di:waypoint x="1380" y="410"/>
+        <di:waypoint x="1380" y="630"/>
+        <di:waypoint x="1420" y="630"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra7" bpmnElement="ra7">
+        <di:waypoint x="1540" y="630"/>
+        <di:waypoint x="1620" y="630"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra8" bpmnElement="ra8">
+        <di:waypoint x="1740" y="630"/>
+        <di:waypoint x="1780" y="630"/>
+        <di:waypoint x="1780" y="850"/>
+        <di:waypoint x="1820" y="850"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra9" bpmnElement="ra9">
+        <di:waypoint x="1940" y="850"/>
+        <di:waypoint x="2060" y="850"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra10" bpmnElement="ra10">
+        <di:waypoint x="2110" y="850"/>
+        <di:waypoint x="2175" y="850"/>
+        <di:waypoint x="2175" y="410"/>
+        <di:waypoint x="2240" y="410"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra11" bpmnElement="ra11">
+        <di:waypoint x="2360" y="410"/>
+        <di:waypoint x="2410" y="410"/>
+        <di:waypoint x="2410" y="190"/>
+        <di:waypoint x="2460" y="190"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra12" bpmnElement="ra12">
+        <di:waypoint x="2110" y="850"/>
+        <di:waypoint x="2175" y="850"/>
+        <di:waypoint x="2175" y="630"/>
+        <di:waypoint x="2240" y="630"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra13" bpmnElement="ra13">
+        <di:waypoint x="2360" y="630"/>
+        <di:waypoint x="2440" y="630"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra14" bpmnElement="ra14">
+        <di:waypoint x="2560" y="630"/>
+        <di:waypoint x="2600" y="630"/>
+        <di:waypoint x="2600" y="410"/>
+        <di:waypoint x="2640" y="410"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ra15" bpmnElement="ra15">
+        <di:waypoint x="2760" y="410"/>
+        <di:waypoint x="2810" y="410"/>
+        <di:waypoint x="2810" y="190"/>
+        <di:waypoint x="2860" y="190"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_catatan" bpmnElement="doa_catatan">
+        <di:waypoint x="480" y="370"/>
+        <di:waypoint x="480" y="358"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_lembar" bpmnElement="doa_lembar">
+        <di:waypoint x="1280" y="370"/>
+        <di:waypoint x="1280" y="358"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_hitung" bpmnElement="doa_hitung">
+        <di:waypoint x="1480" y="590"/>
+        <di:waypoint x="1480" y="578"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_emailtolak" bpmnElement="doa_emailtolak">
+        <di:waypoint x="2300" y="370"/>
+        <di:waypoint x="2300" y="358"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_bukti" bpmnElement="doa_bukti">
+        <di:waypoint x="2300" y="590"/>
+        <di:waypoint x="2300" y="578"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_status" bpmnElement="doa_status">
+        <di:waypoint x="2500" y="590"/>
+        <di:waypoint x="2500" y="578"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_konfirmasi" bpmnElement="doa_konfirmasi">
+        <di:waypoint x="2700" y="370"/>
+        <di:waypoint x="2700" y="358"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DR_Catatan_RAS_Verify" bpmnElement="DIn_DR_Catatan_RAS_Verify">
+        <di:waypoint x="498" y="333"/>
+        <di:waypoint x="559" y="333"/>
+        <di:waypoint x="559" y="410"/>
+        <di:waypoint x="620" y="410"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DR_Lembar_RAS_Calc" bpmnElement="DIn_DR_Lembar_RAS_Calc">
+        <di:waypoint x="1298" y="333"/>
+        <di:waypoint x="1359" y="333"/>
+        <di:waypoint x="1359" y="630"/>
+        <di:waypoint x="1420" y="630"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DR_Hitung_RAS_MgrReview" bpmnElement="DIn_DR_Hitung_RAS_MgrReview">
+        <di:waypoint x="1498" y="553"/>
+        <di:waypoint x="1659" y="553"/>
+        <di:waypoint x="1659" y="850"/>
+        <di:waypoint x="1820" y="850"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DR_Bukti_RAS_UpdateSheet" bpmnElement="DIn_DR_Bukti_RAS_UpdateSheet">
+        <di:waypoint x="2318" y="553"/>
+        <di:waypoint x="2379" y="553"/>
+        <di:waypoint x="2379" y="630"/>
+        <di:waypoint x="2440" y="630"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DR_Status_RAS_Notify" bpmnElement="DIn_DR_Status_RAS_Notify">
+        <di:waypoint x="2518" y="553"/>
+        <di:waypoint x="2579" y="553"/>
+        <di:waypoint x="2579" y="410"/>
+        <di:waypoint x="2640" y="410"/>
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
