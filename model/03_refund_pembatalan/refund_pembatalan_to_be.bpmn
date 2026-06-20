@@ -1,7 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Refund_TB" targetNamespace="http://bpmn.io/schema/bpmn" exporter="manual" exporterVersion="1.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Refund_TB" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.44.0">
   <bpmn:collaboration id="Collab_Refund_TB">
-    <bpmn:participant id="Part_Refund_TB" name="Schoters by Ruangguru - Refund / Pembatalan (To-Be / Terdigitalisasi)" processRef="Process_Refund_TB"/>
+    <bpmn:participant id="Part_Refund_TB" name="Schoters by Ruangguru - Refund / Pembatalan (To-Be / Terdigitalisasi)" processRef="Process_Refund_TB" />
   </bpmn:collaboration>
   <bpmn:process id="Process_Refund_TB" name="Refund / Pembatalan Program (To-Be)" isExecutable="true" camunda:historyTimeToLive="P180D">
     <bpmn:laneSet id="LaneSet_Process_Refund_TB">
@@ -44,13 +44,14 @@
       <bpmn:outgoing>r4</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:userTask id="T_FixData" name="Perbaiki Data Permintaan">
+      <bpmn:extensionElements />
       <bpmn:incoming>r3</bpmn:incoming>
       <bpmn:outgoing>r_loop</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="T_Review" name="Tinjau Permintaan Refund" camunda:formRef="form_refund_review" camunda:formRefBinding="latest">
       <bpmn:incoming>r4</bpmn:incoming>
       <bpmn:outgoing>r5</bpmn:outgoing>
-      <bpmn:property id="Prop_T_Review_DRB_Tiket" name="__targetRef_placeholder"/>
+      <bpmn:property id="Prop_T_Review_DRB_Tiket" name="__targetRef_placeholder" />
       <bpmn:dataInputAssociation id="DIn_DRB_Tiket_T_Review">
         <bpmn:sourceRef>DRB_Tiket</bpmn:sourceRef>
         <bpmn:targetRef>Prop_T_Review_DRB_Tiket</bpmn:targetRef>
@@ -59,10 +60,10 @@
         <bpmn:targetRef>DRB_Tinjauan</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:userTask>
-    <bpmn:businessRuleTask id="T_Eval" name="Evaluasi Kelayakan Refund (DMN)" camunda:decisionRef="Decision_Refund" camunda:mapDecisionResult="singleEntry" camunda:resultVariable="refundDecision">
+    <bpmn:businessRuleTask id="T_Eval" name="Evaluasi Kelayakan Refund (DMN)" camunda:resultVariable="refundDecision" camunda:decisionRef="Decision_Refund" camunda:mapDecisionResult="singleEntry">
       <bpmn:incoming>r5</bpmn:incoming>
       <bpmn:outgoing>r6</bpmn:outgoing>
-      <bpmn:property id="Prop_T_Eval_DRB_Tinjauan" name="__targetRef_placeholder"/>
+      <bpmn:property id="Prop_T_Eval_DRB_Tinjauan" name="__targetRef_placeholder" />
       <bpmn:dataInputAssociation id="DIn_DRB_Tinjauan_T_Eval">
         <bpmn:sourceRef>DRB_Tinjauan</bpmn:sourceRef>
         <bpmn:targetRef>Prop_T_Eval_DRB_Tinjauan</bpmn:targetRef>
@@ -80,7 +81,7 @@
     <bpmn:serviceTask id="T_ProcessFull" name="Proses Refund Penuh" camunda:expression="${true}">
       <bpmn:incoming>r7</bpmn:incoming>
       <bpmn:outgoing>r8</bpmn:outgoing>
-      <bpmn:property id="Prop_T_ProcessFull_DRB_Keputusan" name="__targetRef_placeholder"/>
+      <bpmn:property id="Prop_T_ProcessFull_DRB_Keputusan" name="__targetRef_placeholder" />
       <bpmn:dataInputAssociation id="DIn_DRB_Keputusan_T_ProcessFull">
         <bpmn:sourceRef>DRB_Keputusan</bpmn:sourceRef>
         <bpmn:targetRef>Prop_T_ProcessFull_DRB_Keputusan</bpmn:targetRef>
@@ -114,12 +115,12 @@
       <bpmn:incoming>r8</bpmn:incoming>
       <bpmn:incoming>r11</bpmn:incoming>
       <bpmn:outgoing>r14</bpmn:outgoing>
-      <bpmn:property id="Prop_T_Record_DRB_Instruksi" name="__targetRef_placeholder"/>
+      <bpmn:property id="Prop_T_Record_DRB_Instruksi" name="__targetRef_placeholder" />
+      <bpmn:property id="Prop_T_Record_DRB_InstruksiP" name="__targetRef_placeholder" />
       <bpmn:dataInputAssociation id="DIn_DRB_Instruksi_T_Record">
         <bpmn:sourceRef>DRB_Instruksi</bpmn:sourceRef>
         <bpmn:targetRef>Prop_T_Record_DRB_Instruksi</bpmn:targetRef>
       </bpmn:dataInputAssociation>
-      <bpmn:property id="Prop_T_Record_DRB_InstruksiP" name="__targetRef_placeholder"/>
       <bpmn:dataInputAssociation id="DIn_DRB_InstruksiP_T_Record">
         <bpmn:sourceRef>DRB_InstruksiP</bpmn:sourceRef>
         <bpmn:targetRef>Prop_T_Record_DRB_InstruksiP</bpmn:targetRef>
@@ -131,7 +132,7 @@
     <bpmn:serviceTask id="T_NotifyDone" name="Kirim Notifikasi Refund Selesai" camunda:expression="${true}">
       <bpmn:incoming>r14</bpmn:incoming>
       <bpmn:outgoing>r15</bpmn:outgoing>
-      <bpmn:property id="Prop_T_NotifyDone_DRB_Bukti" name="__targetRef_placeholder"/>
+      <bpmn:property id="Prop_T_NotifyDone_DRB_Bukti" name="__targetRef_placeholder" />
       <bpmn:dataInputAssociation id="DIn_DRB_Bukti_T_NotifyDone">
         <bpmn:sourceRef>DRB_Bukti</bpmn:sourceRef>
         <bpmn:targetRef>Prop_T_NotifyDone_DRB_Bukti</bpmn:targetRef>
@@ -143,279 +144,277 @@
     <bpmn:endEvent id="End_Done" name="Refund Selesai">
       <bpmn:incoming>r15</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="r1" sourceRef="Start_Refund" targetRef="T_Validate"/>
-    <bpmn:sequenceFlow id="r2" sourceRef="T_Validate" targetRef="GW_Valid"/>
-    <bpmn:sequenceFlow id="r3" sourceRef="GW_Valid" targetRef="T_FixData" name="Data Tidak Lengkap">
+    <bpmn:sequenceFlow id="r1" sourceRef="Start_Refund" targetRef="T_Validate" />
+    <bpmn:sequenceFlow id="r2" sourceRef="T_Validate" targetRef="GW_Valid" />
+    <bpmn:sequenceFlow id="r3" name="Data Tidak Lengkap" sourceRef="GW_Valid" targetRef="T_FixData">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${dataValid == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="r_loop" sourceRef="T_FixData" targetRef="T_Validate"/>
-    <bpmn:sequenceFlow id="r4" sourceRef="GW_Valid" targetRef="T_Review" name="Data Lengkap">
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="r5" sourceRef="T_Review" targetRef="T_Eval"/>
-    <bpmn:sequenceFlow id="r6" sourceRef="T_Eval" targetRef="GW_Dec"/>
-    <bpmn:sequenceFlow id="r7" sourceRef="GW_Dec" targetRef="T_ProcessFull" name="Refund Penuh">
+    <bpmn:sequenceFlow id="r_loop" sourceRef="T_FixData" targetRef="T_Validate" />
+    <bpmn:sequenceFlow id="r4" name="Data Lengkap" sourceRef="GW_Valid" targetRef="T_Review" />
+    <bpmn:sequenceFlow id="r5" sourceRef="T_Review" targetRef="T_Eval" />
+    <bpmn:sequenceFlow id="r6" sourceRef="T_Eval" targetRef="GW_Dec" />
+    <bpmn:sequenceFlow id="r7" name="Refund Penuh" sourceRef="GW_Dec" targetRef="T_ProcessFull">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${refundDecision=='Full Refund'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="r8" sourceRef="T_ProcessFull" targetRef="T_Record"/>
-    <bpmn:sequenceFlow id="r9" sourceRef="GW_Dec" targetRef="T_ApprovePartial" name="Refund Sebagian">
+    <bpmn:sequenceFlow id="r8" sourceRef="T_ProcessFull" targetRef="T_Record" />
+    <bpmn:sequenceFlow id="r9" name="Refund Sebagian" sourceRef="GW_Dec" targetRef="T_ApprovePartial">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${refundDecision=='Partial Refund'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="r10" sourceRef="T_ApprovePartial" targetRef="T_ProcessPartial"/>
-    <bpmn:sequenceFlow id="r11" sourceRef="T_ProcessPartial" targetRef="T_Record"/>
-    <bpmn:sequenceFlow id="r12" sourceRef="GW_Dec" targetRef="T_NotifyReject" name="Tanpa Refund">
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="r13" sourceRef="T_NotifyReject" targetRef="End_Reject"/>
-    <bpmn:sequenceFlow id="r14" sourceRef="T_Record" targetRef="T_NotifyDone"/>
-    <bpmn:sequenceFlow id="r15" sourceRef="T_NotifyDone" targetRef="End_Done"/>
-    <bpmn:dataObjectReference id="DRB_Tiket" name="Tiket Refund" dataObjectRef="DOB_Tiket"/>
-    <bpmn:dataObject id="DOB_Tiket"/>
-    <bpmn:dataObjectReference id="DRB_Tinjauan" name="Hasil Tinjauan Refund" dataObjectRef="DOB_Tinjauan"/>
-    <bpmn:dataObject id="DOB_Tinjauan"/>
-    <bpmn:dataObjectReference id="DRB_Keputusan" name="Keputusan Refund (DMN)" dataObjectRef="DOB_Keputusan"/>
-    <bpmn:dataObject id="DOB_Keputusan"/>
-    <bpmn:dataObjectReference id="DRB_Instruksi" name="Instruksi Transfer Penuh" dataObjectRef="DOB_Instruksi"/>
-    <bpmn:dataObject id="DOB_Instruksi"/>
-    <bpmn:dataObjectReference id="DRB_InstruksiP" name="Instruksi Transfer Sebagian" dataObjectRef="DOB_InstruksiP"/>
-    <bpmn:dataObject id="DOB_InstruksiP"/>
-    <bpmn:dataObjectReference id="DRB_EmailTolak" name="Email Penolakan" dataObjectRef="DOB_EmailTolak"/>
-    <bpmn:dataObject id="DOB_EmailTolak"/>
-    <bpmn:dataObjectReference id="DRB_Bukti" name="Bukti Transaksi Refund" dataObjectRef="DOB_Bukti"/>
-    <bpmn:dataObject id="DOB_Bukti"/>
-    <bpmn:dataObjectReference id="DRB_Konfirmasi" name="Email Konfirmasi Selesai" dataObjectRef="DOB_Konfirmasi"/>
-    <bpmn:dataObject id="DOB_Konfirmasi"/>
+    <bpmn:sequenceFlow id="r10" sourceRef="T_ApprovePartial" targetRef="T_ProcessPartial" />
+    <bpmn:sequenceFlow id="r11" sourceRef="T_ProcessPartial" targetRef="T_Record" />
+    <bpmn:sequenceFlow id="r12" name="Tanpa Refund" sourceRef="GW_Dec" targetRef="T_NotifyReject" />
+    <bpmn:sequenceFlow id="r13" sourceRef="T_NotifyReject" targetRef="End_Reject" />
+    <bpmn:sequenceFlow id="r14" sourceRef="T_Record" targetRef="T_NotifyDone" />
+    <bpmn:sequenceFlow id="r15" sourceRef="T_NotifyDone" targetRef="End_Done" />
+    <bpmn:dataObjectReference id="DRB_Tiket" name="Tiket Refund" dataObjectRef="DOB_Tiket" />
+    <bpmn:dataObject id="DOB_Tiket" />
+    <bpmn:dataObjectReference id="DRB_Tinjauan" name="Hasil Tinjauan Refund" dataObjectRef="DOB_Tinjauan" />
+    <bpmn:dataObject id="DOB_Tinjauan" />
+    <bpmn:dataObjectReference id="DRB_Keputusan" name="Keputusan Refund (DMN)" dataObjectRef="DOB_Keputusan" />
+    <bpmn:dataObject id="DOB_Keputusan" />
+    <bpmn:dataObjectReference id="DRB_Instruksi" name="Instruksi Transfer Penuh" dataObjectRef="DOB_Instruksi" />
+    <bpmn:dataObject id="DOB_Instruksi" />
+    <bpmn:dataObjectReference id="DRB_InstruksiP" name="Instruksi Transfer Sebagian" dataObjectRef="DOB_InstruksiP" />
+    <bpmn:dataObject id="DOB_InstruksiP" />
+    <bpmn:dataObjectReference id="DRB_EmailTolak" name="Email Penolakan" dataObjectRef="DOB_EmailTolak" />
+    <bpmn:dataObject id="DOB_EmailTolak" />
+    <bpmn:dataObjectReference id="DRB_Bukti" name="Bukti Transaksi Refund" dataObjectRef="DOB_Bukti" />
+    <bpmn:dataObject id="DOB_Bukti" />
+    <bpmn:dataObjectReference id="DRB_Konfirmasi" name="Email Konfirmasi Selesai" dataObjectRef="DOB_Konfirmasi" />
+    <bpmn:dataObject id="DOB_Konfirmasi" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diag_Process_Refund_TB">
     <bpmndi:BPMNPlane id="Plane_Process_Refund_TB" bpmnElement="Collab_Refund_TB">
       <bpmndi:BPMNShape id="di_Part_Refund_TB" bpmnElement="Part_Refund_TB" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="2716" height="660"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Mhs" bpmnElement="L_Mhs" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="2686" height="220"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Fin" bpmnElement="L_Fin" isHorizontal="true">
-        <dc:Bounds x="190" y="300" width="2686" height="220"/>
+        <dc:Bounds x="160" y="80" width="2716" height="660" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_L_Sys" bpmnElement="L_Sys" isHorizontal="true">
-        <dc:Bounds x="190" y="520" width="2686" height="220"/>
+        <dc:Bounds x="190" y="520" width="2686" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Fin" bpmnElement="L_Fin" isHorizontal="true">
+        <dc:Bounds x="190" y="300" width="2686" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Mhs" bpmnElement="L_Mhs" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="2686" height="220" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_Start_Refund" bpmnElement="Start_Refund">
-        <dc:Bounds x="260" y="172" width="36" height="36"/>
+        <dc:Bounds x="260" y="172" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_Validate" bpmnElement="T_Validate">
-        <dc:Bounds x="420" y="590" width="120" height="80"/>
+        <dc:Bounds x="420" y="590" width="120" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_GW_Valid" bpmnElement="GW_Valid">
-        <dc:Bounds x="660" y="605" width="50" height="50"/>
+      <bpmndi:BPMNShape id="di_GW_Valid" bpmnElement="GW_Valid" isMarkerVisible="true">
+        <dc:Bounds x="660" y="605" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_FixData" bpmnElement="T_FixData">
-        <dc:Bounds x="820" y="150" width="120" height="80"/>
+        <dc:Bounds x="820" y="150" width="120" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_Review" bpmnElement="T_Review">
-        <dc:Bounds x="1020" y="370" width="120" height="80"/>
+        <dc:Bounds x="1020" y="370" width="120" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_Eval" bpmnElement="T_Eval">
-        <dc:Bounds x="1240" y="590" width="120" height="80"/>
+        <dc:Bounds x="1240" y="590" width="120" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_GW_Dec" bpmnElement="GW_Dec">
-        <dc:Bounds x="1480" y="605" width="50" height="50"/>
+      <bpmndi:BPMNShape id="di_GW_Dec" bpmnElement="GW_Dec" isMarkerVisible="true">
+        <dc:Bounds x="1480" y="605" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_ProcessFull" bpmnElement="T_ProcessFull">
-        <dc:Bounds x="1660" y="370" width="120" height="80"/>
+        <dc:Bounds x="1660" y="370" width="120" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_ApprovePartial" bpmnElement="T_ApprovePartial">
-        <dc:Bounds x="1900" y="370" width="120" height="80"/>
+        <dc:Bounds x="1900" y="370" width="120" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_ProcessPartial" bpmnElement="T_ProcessPartial">
-        <dc:Bounds x="2120" y="370" width="120" height="80"/>
+        <dc:Bounds x="2120" y="370" width="120" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_NotifyReject" bpmnElement="T_NotifyReject">
-        <dc:Bounds x="1660" y="590" width="120" height="80"/>
+        <dc:Bounds x="1660" y="590" width="120" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_End_Reject" bpmnElement="End_Reject">
-        <dc:Bounds x="1900" y="612" width="36" height="36"/>
+        <dc:Bounds x="1900" y="612" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_Record" bpmnElement="T_Record">
-        <dc:Bounds x="2360" y="590" width="120" height="80"/>
+        <dc:Bounds x="2360" y="590" width="120" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_NotifyDone" bpmnElement="T_NotifyDone">
-        <dc:Bounds x="2560" y="590" width="120" height="80"/>
+        <dc:Bounds x="2560" y="590" width="120" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_End_Done" bpmnElement="End_Done">
-        <dc:Bounds x="2760" y="612" width="36" height="36"/>
+        <dc:Bounds x="2760" y="612" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_DRB_Tiket" bpmnElement="DRB_Tiket">
-        <dc:Bounds x="462" y="528" width="36" height="50"/>
+        <dc:Bounds x="462" y="528" width="36" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_DRB_Tinjauan" bpmnElement="DRB_Tinjauan">
-        <dc:Bounds x="1062" y="308" width="36" height="50"/>
+        <dc:Bounds x="1062" y="308" width="36" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_DRB_Keputusan" bpmnElement="DRB_Keputusan">
-        <dc:Bounds x="1282" y="528" width="36" height="50"/>
+        <dc:Bounds x="1282" y="528" width="36" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_DRB_Instruksi" bpmnElement="DRB_Instruksi">
-        <dc:Bounds x="1702" y="308" width="36" height="50"/>
+        <dc:Bounds x="1702" y="308" width="36" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_DRB_InstruksiP" bpmnElement="DRB_InstruksiP">
-        <dc:Bounds x="2162" y="308" width="36" height="50"/>
+        <dc:Bounds x="2162" y="308" width="36" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_DRB_EmailTolak" bpmnElement="DRB_EmailTolak">
-        <dc:Bounds x="1702" y="528" width="36" height="50"/>
+        <dc:Bounds x="1702" y="528" width="36" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_DRB_Bukti" bpmnElement="DRB_Bukti">
-        <dc:Bounds x="2402" y="528" width="36" height="50"/>
+        <dc:Bounds x="2402" y="528" width="36" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_DRB_Konfirmasi" bpmnElement="DRB_Konfirmasi">
-        <dc:Bounds x="2602" y="528" width="36" height="50"/>
+        <dc:Bounds x="2602" y="528" width="36" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="di_r1" bpmnElement="r1">
-        <di:waypoint x="296" y="190"/>
-        <di:waypoint x="358" y="190"/>
-        <di:waypoint x="358" y="630"/>
-        <di:waypoint x="420" y="630"/>
+        <di:waypoint x="296" y="190" />
+        <di:waypoint x="358" y="190" />
+        <di:waypoint x="358" y="630" />
+        <di:waypoint x="420" y="630" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r2" bpmnElement="r2">
-        <di:waypoint x="540" y="630"/>
-        <di:waypoint x="660" y="630"/>
+        <di:waypoint x="540" y="630" />
+        <di:waypoint x="660" y="630" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r3" bpmnElement="r3">
-        <di:waypoint x="710" y="630"/>
-        <di:waypoint x="765" y="630"/>
-        <di:waypoint x="765" y="190"/>
-        <di:waypoint x="820" y="190"/>
+        <di:waypoint x="710" y="630" />
+        <di:waypoint x="765" y="630" />
+        <di:waypoint x="765" y="190" />
+        <di:waypoint x="820" y="190" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r_loop" bpmnElement="r_loop">
-        <di:waypoint x="880" y="230"/>
-        <di:waypoint x="880" y="700"/>
-        <di:waypoint x="480" y="700"/>
-        <di:waypoint x="480" y="670"/>
+        <di:waypoint x="880" y="230" />
+        <di:waypoint x="880" y="700" />
+        <di:waypoint x="480" y="700" />
+        <di:waypoint x="480" y="670" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r4" bpmnElement="r4">
-        <di:waypoint x="710" y="630"/>
-        <di:waypoint x="865" y="630"/>
-        <di:waypoint x="865" y="410"/>
-        <di:waypoint x="1020" y="410"/>
+        <di:waypoint x="710" y="630" />
+        <di:waypoint x="865" y="630" />
+        <di:waypoint x="865" y="410" />
+        <di:waypoint x="1020" y="410" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r5" bpmnElement="r5">
-        <di:waypoint x="1140" y="410"/>
-        <di:waypoint x="1190" y="410"/>
-        <di:waypoint x="1190" y="630"/>
-        <di:waypoint x="1240" y="630"/>
+        <di:waypoint x="1140" y="410" />
+        <di:waypoint x="1190" y="410" />
+        <di:waypoint x="1190" y="630" />
+        <di:waypoint x="1240" y="630" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r6" bpmnElement="r6">
-        <di:waypoint x="1360" y="630"/>
-        <di:waypoint x="1480" y="630"/>
+        <di:waypoint x="1360" y="630" />
+        <di:waypoint x="1480" y="630" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r7" bpmnElement="r7">
-        <di:waypoint x="1530" y="630"/>
-        <di:waypoint x="1595" y="630"/>
-        <di:waypoint x="1595" y="410"/>
-        <di:waypoint x="1660" y="410"/>
+        <di:waypoint x="1530" y="630" />
+        <di:waypoint x="1595" y="630" />
+        <di:waypoint x="1595" y="410" />
+        <di:waypoint x="1660" y="410" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r8" bpmnElement="r8">
-        <di:waypoint x="1780" y="410"/>
-        <di:waypoint x="2070" y="410"/>
-        <di:waypoint x="2070" y="630"/>
-        <di:waypoint x="2360" y="630"/>
+        <di:waypoint x="1780" y="410" />
+        <di:waypoint x="2070" y="410" />
+        <di:waypoint x="2070" y="630" />
+        <di:waypoint x="2360" y="630" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r9" bpmnElement="r9">
-        <di:waypoint x="1530" y="630"/>
-        <di:waypoint x="1715" y="630"/>
-        <di:waypoint x="1715" y="410"/>
-        <di:waypoint x="1900" y="410"/>
+        <di:waypoint x="1530" y="630" />
+        <di:waypoint x="1715" y="630" />
+        <di:waypoint x="1715" y="410" />
+        <di:waypoint x="1900" y="410" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r10" bpmnElement="r10">
-        <di:waypoint x="2020" y="410"/>
-        <di:waypoint x="2120" y="410"/>
+        <di:waypoint x="2020" y="410" />
+        <di:waypoint x="2120" y="410" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r11" bpmnElement="r11">
-        <di:waypoint x="2240" y="410"/>
-        <di:waypoint x="2300" y="410"/>
-        <di:waypoint x="2300" y="630"/>
-        <di:waypoint x="2360" y="630"/>
+        <di:waypoint x="2240" y="410" />
+        <di:waypoint x="2300" y="410" />
+        <di:waypoint x="2300" y="630" />
+        <di:waypoint x="2360" y="630" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r12" bpmnElement="r12">
-        <di:waypoint x="1530" y="630"/>
-        <di:waypoint x="1660" y="630"/>
+        <di:waypoint x="1530" y="630" />
+        <di:waypoint x="1660" y="630" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r13" bpmnElement="r13">
-        <di:waypoint x="1780" y="630"/>
-        <di:waypoint x="1900" y="630"/>
+        <di:waypoint x="1780" y="630" />
+        <di:waypoint x="1900" y="630" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r14" bpmnElement="r14">
-        <di:waypoint x="2480" y="630"/>
-        <di:waypoint x="2560" y="630"/>
+        <di:waypoint x="2480" y="630" />
+        <di:waypoint x="2560" y="630" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_r15" bpmnElement="r15">
-        <di:waypoint x="2680" y="630"/>
-        <di:waypoint x="2760" y="630"/>
+        <di:waypoint x="2680" y="630" />
+        <di:waypoint x="2760" y="630" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_doab_tiket" bpmnElement="doab_tiket">
-        <di:waypoint x="480" y="590"/>
-        <di:waypoint x="480" y="578"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doab_tinjauan" bpmnElement="doab_tinjauan">
-        <di:waypoint x="1080" y="370"/>
-        <di:waypoint x="1080" y="358"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doab_keputusan" bpmnElement="doab_keputusan">
-        <di:waypoint x="1300" y="590"/>
-        <di:waypoint x="1300" y="578"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doab_instruksi" bpmnElement="doab_instruksi">
-        <di:waypoint x="1720" y="370"/>
-        <di:waypoint x="1720" y="358"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doab_instruksip" bpmnElement="doab_instruksip">
-        <di:waypoint x="2180" y="370"/>
-        <di:waypoint x="2180" y="358"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doab_emailtolak" bpmnElement="doab_emailtolak">
-        <di:waypoint x="1720" y="590"/>
-        <di:waypoint x="1720" y="578"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doab_bukti" bpmnElement="doab_bukti">
-        <di:waypoint x="2420" y="590"/>
-        <di:waypoint x="2420" y="578"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doab_konfirmasi" bpmnElement="doab_konfirmasi">
-        <di:waypoint x="2620" y="590"/>
-        <di:waypoint x="2620" y="578"/>
+        <di:waypoint x="480" y="590" />
+        <di:waypoint x="480" y="578" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_DIn_DRB_Tiket_T_Review" bpmnElement="DIn_DRB_Tiket_T_Review">
-        <di:waypoint x="498" y="553"/>
-        <di:waypoint x="759" y="553"/>
-        <di:waypoint x="759" y="410"/>
-        <di:waypoint x="1020" y="410"/>
+        <di:waypoint x="498" y="553" />
+        <di:waypoint x="759" y="553" />
+        <di:waypoint x="759" y="410" />
+        <di:waypoint x="1020" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doab_tinjauan" bpmnElement="doab_tinjauan">
+        <di:waypoint x="1080" y="370" />
+        <di:waypoint x="1080" y="358" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_DIn_DRB_Tinjauan_T_Eval" bpmnElement="DIn_DRB_Tinjauan_T_Eval">
-        <di:waypoint x="1098" y="333"/>
-        <di:waypoint x="1169" y="333"/>
-        <di:waypoint x="1169" y="630"/>
-        <di:waypoint x="1240" y="630"/>
+        <di:waypoint x="1098" y="333" />
+        <di:waypoint x="1169" y="333" />
+        <di:waypoint x="1169" y="630" />
+        <di:waypoint x="1240" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doab_keputusan" bpmnElement="doab_keputusan">
+        <di:waypoint x="1300" y="590" />
+        <di:waypoint x="1300" y="578" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_DIn_DRB_Keputusan_T_ProcessFull" bpmnElement="DIn_DRB_Keputusan_T_ProcessFull">
-        <di:waypoint x="1318" y="553"/>
-        <di:waypoint x="1489" y="553"/>
-        <di:waypoint x="1489" y="410"/>
-        <di:waypoint x="1660" y="410"/>
+        <di:waypoint x="1318" y="553" />
+        <di:waypoint x="1489" y="553" />
+        <di:waypoint x="1489" y="410" />
+        <di:waypoint x="1660" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doab_instruksi" bpmnElement="doab_instruksi">
+        <di:waypoint x="1720" y="370" />
+        <di:waypoint x="1720" y="358" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doab_instruksip" bpmnElement="doab_instruksip">
+        <di:waypoint x="2180" y="370" />
+        <di:waypoint x="2180" y="358" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doab_emailtolak" bpmnElement="doab_emailtolak">
+        <di:waypoint x="1720" y="590" />
+        <di:waypoint x="1720" y="578" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_DIn_DRB_Tinjauan_T_Eval2" bpmnElement="DIn_DRB_Instruksi_T_Record">
-        <di:waypoint x="1738" y="333"/>
-        <di:waypoint x="2049" y="333"/>
-        <di:waypoint x="2049" y="630"/>
-        <di:waypoint x="2360" y="630"/>
+        <di:waypoint x="1738" y="333" />
+        <di:waypoint x="2049" y="333" />
+        <di:waypoint x="2049" y="630" />
+        <di:waypoint x="2360" y="630" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_DIn_DRB_InstruksiP_T_Record" bpmnElement="DIn_DRB_InstruksiP_T_Record">
-        <di:waypoint x="2198" y="333"/>
-        <di:waypoint x="2279" y="333"/>
-        <di:waypoint x="2279" y="630"/>
-        <di:waypoint x="2360" y="630"/>
+        <di:waypoint x="2198" y="333" />
+        <di:waypoint x="2279" y="333" />
+        <di:waypoint x="2279" y="630" />
+        <di:waypoint x="2360" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doab_bukti" bpmnElement="doab_bukti">
+        <di:waypoint x="2420" y="590" />
+        <di:waypoint x="2420" y="578" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_DIn_DRB_Bukti_T_NotifyDone" bpmnElement="DIn_DRB_Bukti_T_NotifyDone">
-        <di:waypoint x="2438" y="553"/>
-        <di:waypoint x="2499" y="553"/>
-        <di:waypoint x="2499" y="630"/>
-        <di:waypoint x="2560" y="630"/>
+        <di:waypoint x="2438" y="553" />
+        <di:waypoint x="2499" y="553" />
+        <di:waypoint x="2499" y="630" />
+        <di:waypoint x="2560" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doab_konfirmasi" bpmnElement="doab_konfirmasi">
+        <di:waypoint x="2620" y="590" />
+        <di:waypoint x="2620" y="578" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
