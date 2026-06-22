@@ -1,45 +1,24 @@
 {
   "components": [
-    {
-      "text": "# Form Hasil Penerimaan",
-      "type": "text",
-      "layout": {
-        "row": "Row_intro",
-        "columns": null
-      },
-      "id": "Field_intro_form_admission"
-    },
-    {
-      "label": "Hasil Penerimaan",
-      "type": "select",
-      "layout": {
-        "row": "Row_admissionResult",
-        "columns": null
-      },
-      "id": "Field_admissionResult",
-      "key": "admissionResult",
-      "values": [
-        {
-          "label": "Accepted",
-          "value": "Accepted"
-        },
-        {
-          "label": "Rejected",
-          "value": "Rejected"
-        }
-      ],
-      "validate": {
-        "required": true
-      }
-    }
+    { "text": "# Form Pelacakan Hasil Penerimaan\nCatat keputusan universitas, tawaran beasiswa, dan rencana tindak lanjut untuk mahasiswa.", "type": "text", "layout": { "row": "Row_intro", "columns": null }, "id": "Field_intro_form_admission" },
+    { "text": "## A. Informasi Universitas", "type": "text", "layout": { "row": "Row_sec_univ", "columns": null }, "id": "Field_sec_univ" },
+    { "label": "Nama Universitas", "type": "textfield", "layout": { "row": "Row_universityName", "columns": null }, "id": "Field_universityName", "key": "universityName", "validate": { "required": true } },
+    { "label": "Program / Jurusan", "type": "textfield", "layout": { "row": "Row_programName", "columns": null }, "id": "Field_programName", "key": "programName" },
+    { "label": "Tanggal Keputusan", "type": "datetime", "subtype": "date", "dateLabel": "Tanggal Keputusan", "layout": { "row": "Row_decisionDate", "columns": null }, "id": "Field_decisionDate", "key": "decisionDate" },
+    { "text": "## B. Hasil Penerimaan", "type": "text", "layout": { "row": "Row_sec_hasil", "columns": null }, "id": "Field_sec_hasil" },
+    { "label": "Hasil Penerimaan", "type": "select", "layout": { "row": "Row_admissionResult", "columns": null }, "id": "Field_admissionResult", "key": "admissionResult", "values": [ { "label": "Diterima (Accepted)", "value": "Accepted" }, { "label": "Ditolak (Rejected)", "value": "Rejected" }, { "label": "Daftar Tunggu (Waitlisted)", "value": "Waitlisted" } ], "validate": { "required": true } },
+    { "label": "Mendapat Tawaran Beasiswa", "type": "checkbox", "layout": { "row": "Row_scholarshipOffered", "columns": null }, "id": "Field_scholarshipOffered", "key": "scholarshipOffered" },
+    { "label": "Nilai Beasiswa (%)", "type": "number", "layout": { "row": "Row_scholarshipPct", "columns": null }, "id": "Field_scholarshipPct", "key": "scholarshipPct", "validate": { "min": 0, "max": 100 } },
+    { "label": "Syarat / Kondisi Penerimaan", "type": "textarea", "layout": { "row": "Row_conditions", "columns": null }, "id": "Field_conditions", "key": "admissionConditions" },
+    { "text": "## C. Tindak Lanjut", "type": "text", "layout": { "row": "Row_sec_followup", "columns": null }, "id": "Field_sec_followup" },
+    { "label": "Batas Waktu Konfirmasi (Deadline)", "type": "datetime", "subtype": "date", "dateLabel": "Deadline Konfirmasi", "layout": { "row": "Row_confirmDeadline", "columns": null }, "id": "Field_confirmDeadline", "key": "confirmDeadline" },
+    { "label": "Langkah Selanjutnya", "type": "select", "layout": { "row": "Row_nextStep", "columns": null }, "id": "Field_nextStep", "key": "nextStep", "values": [ {"label":"Terima & Lanjut Onboarding","value":"Enroll"}, {"label":"Negosiasi Beasiswa","value":"Negotiate"}, {"label":"Pertimbangkan Opsi Lain","value":"Consider"}, {"label":"Tolak Tawaran","value":"Decline"} ] },
+    { "label": "Catatan Tindak Lanjut", "type": "textarea", "layout": { "row": "Row_followupNotes", "columns": null }, "id": "Field_followupNotes", "key": "followupNotes" }
   ],
   "type": "default",
   "id": "form_admission",
   "executionPlatform": "Camunda Platform",
   "executionPlatformVersion": "7.20.0",
-  "exporter": {
-    "name": "Camunda Modeler",
-    "version": "5.20.0"
-  },
+  "exporter": { "name": "Camunda Modeler", "version": "5.20.0" },
   "schemaVersion": 11
 }
