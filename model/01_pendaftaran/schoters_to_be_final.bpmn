@@ -95,14 +95,14 @@
         <camunda:connector>
           <camunda:connectorId>http-connector</camunda:connectorId>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">https://api.telegram.org/botGANTI_DENGAN_BOT_TOKEN/sendMessage</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter>
             <camunda:inputParameter name="method">POST</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
                 <camunda:entry key="Content-Type">application/json</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
-            <camunda:inputParameter name="payload">{"chat_id":"GANTI_DENGAN_CHAT_ID","text":"Pengingat: dokumen perjanjian digital Anda belum ditandatangani. Mohon segera tandatangani."}</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"Pengingat: dokumen perjanjian digital Anda belum ditandatangani. Mohon segera tandatangani."}</camunda:inputParameter>
             <camunda:outputParameter name="remindStatus">${statusCode}</camunda:outputParameter>
           </camunda:inputOutput>
         </camunda:connector>
@@ -115,14 +115,14 @@
         <camunda:connector>
           <camunda:connectorId>http-connector</camunda:connectorId>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">https://api.telegram.org/botGANTI_DENGAN_BOT_TOKEN/sendMessage</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter>
             <camunda:inputParameter name="method">POST</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
                 <camunda:entry key="Content-Type">application/json</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
-            <camunda:inputParameter name="payload">{"chat_id":"GANTI_DENGAN_CHAT_ID","text":"Selamat! Pendaftaran telah selesai dan mahasiswa resmi enrolled di Schoters."}</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"Selamat! Pendaftaran telah selesai dan mahasiswa resmi enrolled di Schoters."}</camunda:inputParameter>
             <camunda:outputParameter name="notifyStatus">${statusCode}</camunda:outputParameter>
           </camunda:inputOutput>
         </camunda:connector>
