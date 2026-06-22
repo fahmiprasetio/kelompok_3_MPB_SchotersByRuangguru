@@ -11,13 +11,16 @@
         <bpmn:flowNodeRef>AS_SendDocs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>AS_FixDocs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>AS_Approve</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>AS_GwApprove</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>AS_EndOk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>AS_EndNo</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="L_Mentor" name="Mentor Akademik">
+        <bpmn:flowNodeRef>AS_Consult</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>AS_Review</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>AS_GwCheck</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>AS_ReqRevisi</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>AS_Shortlist</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>AS_BuildList</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>AS_TrackResult</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>AS_GwResult</bpmn:flowNodeRef>
@@ -26,147 +29,49 @@
       </bpmn:lane>
       <bpmn:lane id="L_Admin" name="Tim Operasional Schoters">
         <bpmn:flowNodeRef>AS_Recap</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>AS_VerifyDocs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>AS_PrepDocs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>AS_SubmitManual</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>AS_UpdateSheet</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>AS_RecordLoA</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="AS_Start" name="Mahasiswa Hubungi via WhatsApp / Email"><bpmn:outgoing>a1</bpmn:outgoing></bpmn:startEvent>
-    <bpmn:userTask id="AS_FillForm" name="Isi Google Form Minat Manual"><bpmn:incoming>a1</bpmn:incoming><bpmn:outgoing>a2</bpmn:outgoing><bpmn:dataOutputAssociation id="DOut_FormMinat"><bpmn:targetRef>DObjRef_FormMinat</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
-    <bpmn:userTask id="AS_SendDocs" name="Kirim Dokumen Akademik via Email"><bpmn:incoming>a2</bpmn:incoming><bpmn:outgoing>a3</bpmn:outgoing><bpmn:dataOutputAssociation id="DOut_EmailDocs"><bpmn:targetRef>DObjRef_EmailDocs</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
-    <bpmn:userTask id="AS_Recap" name="Rekap Dokumen ke Drive &amp; Spreadsheet"><bpmn:incoming>a3</bpmn:incoming><bpmn:outgoing>a4</bpmn:outgoing><bpmn:property id="Prop_AS_Recap_FormMinat" name="__targetRef_placeholder" /><bpmn:property id="Prop_AS_Recap_EmailDocs" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_FormMinat_AS_Recap"><bpmn:sourceRef>DObjRef_FormMinat</bpmn:sourceRef><bpmn:targetRef>Prop_AS_Recap_FormMinat</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataInputAssociation id="DIn_EmailDocs_AS_Recap"><bpmn:sourceRef>DObjRef_EmailDocs</bpmn:sourceRef><bpmn:targetRef>Prop_AS_Recap_EmailDocs</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_Spreadsheet"><bpmn:targetRef>DObjRef_Spreadsheet</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
-    <bpmn:userTask id="AS_Review" name="Tinjau Esai &amp; Transkrip Manual"><bpmn:incoming>a4</bpmn:incoming><bpmn:incoming>a8</bpmn:incoming><bpmn:outgoing>a5</bpmn:outgoing><bpmn:property id="Prop_AS_Review_EmailDocs" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_EmailDocs_AS_Review"><bpmn:sourceRef>DObjRef_EmailDocs</bpmn:sourceRef><bpmn:targetRef>Prop_AS_Review_EmailDocs</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_CatatanReview"><bpmn:targetRef>DObjRef_CatatanReview</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
-    <bpmn:exclusiveGateway id="AS_GwCheck" name="Dokumen Lengkap &amp; Layak?"><bpmn:incoming>a5</bpmn:incoming><bpmn:outgoing>a6</bpmn:outgoing><bpmn:outgoing>a9</bpmn:outgoing></bpmn:exclusiveGateway>
-    <bpmn:userTask id="AS_ReqRevisi" name="Kirim Permintaan Revisi via Email"><bpmn:incoming>a6</bpmn:incoming><bpmn:outgoing>a7</bpmn:outgoing><bpmn:property id="Prop_AS_ReqRevisi_CatatanReview" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_CatatanReview_AS_ReqRevisi"><bpmn:sourceRef>DObjRef_CatatanReview</bpmn:sourceRef><bpmn:targetRef>Prop_AS_ReqRevisi_CatatanReview</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_EmailRevisi"><bpmn:targetRef>DObjRef_EmailRevisi</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
-    <bpmn:userTask id="AS_FixDocs" name="Perbaiki &amp; Kirim Ulang Dokumen"><bpmn:incoming>a7</bpmn:incoming><bpmn:outgoing>a8</bpmn:outgoing><bpmn:property id="Prop_AS_FixDocs_EmailRevisi" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_EmailRevisi_AS_FixDocs"><bpmn:sourceRef>DObjRef_EmailRevisi</bpmn:sourceRef><bpmn:targetRef>Prop_AS_FixDocs_EmailRevisi</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:userTask>
-    <bpmn:userTask id="AS_BuildList" name="Susun Daftar Universitas Manual"><bpmn:incoming>a9</bpmn:incoming><bpmn:outgoing>a10</bpmn:outgoing><bpmn:property id="Prop_AS_BuildList_CatatanReview" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_CatatanReview_AS_BuildList"><bpmn:sourceRef>DObjRef_CatatanReview</bpmn:sourceRef><bpmn:targetRef>Prop_AS_BuildList_CatatanReview</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_DaftarUniv"><bpmn:targetRef>DObjRef_DaftarUniv</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
-    <bpmn:userTask id="AS_Approve" name="Setujui Daftar &amp; Isi Form Aplikasi Manual"><bpmn:incoming>a10</bpmn:incoming><bpmn:outgoing>a11</bpmn:outgoing><bpmn:property id="Prop_AS_Approve_DaftarUniv" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_DaftarUniv_AS_Approve"><bpmn:sourceRef>DObjRef_DaftarUniv</bpmn:sourceRef><bpmn:targetRef>Prop_AS_Approve_DaftarUniv</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:userTask>
-    <bpmn:userTask id="AS_SubmitManual" name="Submit Aplikasi Manual per Universitas"><bpmn:incoming>a11</bpmn:incoming><bpmn:outgoing>a12</bpmn:outgoing><bpmn:property id="Prop_AS_SubmitManual_DaftarUniv" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_DaftarUniv_AS_SubmitManual"><bpmn:sourceRef>DObjRef_DaftarUniv</bpmn:sourceRef><bpmn:targetRef>Prop_AS_SubmitManual_DaftarUniv</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_BuktiSubmit"><bpmn:targetRef>DObjRef_BuktiSubmit</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
-    <bpmn:userTask id="AS_UpdateSheet" name="Update Status di Spreadsheet"><bpmn:incoming>a12</bpmn:incoming><bpmn:outgoing>a13</bpmn:outgoing><bpmn:property id="Prop_AS_UpdateSheet_BuktiSubmit" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_BuktiSubmit_AS_UpdateSheet"><bpmn:sourceRef>DObjRef_BuktiSubmit</bpmn:sourceRef><bpmn:targetRef>Prop_AS_UpdateSheet_BuktiSubmit</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_StatusSheet"><bpmn:targetRef>DObjRef_StatusSheet</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
-    <bpmn:userTask id="AS_TrackResult" name="Lacak Hasil via Email Universitas"><bpmn:incoming>a13</bpmn:incoming><bpmn:outgoing>a14</bpmn:outgoing><bpmn:property id="Prop_AS_TrackResult_Spreadsheet" name="__targetRef_placeholder" /><bpmn:property id="Prop_AS_TrackResult_StatusSheet" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_Spreadsheet_AS_TrackResult"><bpmn:sourceRef>DObjRef_Spreadsheet</bpmn:sourceRef><bpmn:targetRef>Prop_AS_TrackResult_Spreadsheet</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataInputAssociation id="DIn_StatusSheet_AS_TrackResult"><bpmn:sourceRef>DObjRef_StatusSheet</bpmn:sourceRef><bpmn:targetRef>Prop_AS_TrackResult_StatusSheet</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_EmailHasil"><bpmn:targetRef>DObjRef_EmailHasil</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
-    <bpmn:exclusiveGateway id="AS_GwResult" name="Hasil Diterima?"><bpmn:incoming>a14</bpmn:incoming><bpmn:outgoing>a15</bpmn:outgoing><bpmn:outgoing>a18</bpmn:outgoing></bpmn:exclusiveGateway>
-    <bpmn:userTask id="AS_RecordLoA" name="Arsipkan Scan LoA Manual"><bpmn:incoming>a15</bpmn:incoming><bpmn:outgoing>a16</bpmn:outgoing><bpmn:property id="Prop_AS_RecordLoA_EmailHasil" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_EmailHasil_AS_RecordLoA"><bpmn:sourceRef>DObjRef_EmailHasil</bpmn:sourceRef><bpmn:targetRef>Prop_AS_RecordLoA_EmailHasil</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_ScanLoA"><bpmn:targetRef>DObjRef_ScanLoA</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
-    <bpmn:userTask id="AS_NotifyOk" name="Beri Tahu Mahasiswa (Diterima) via Email"><bpmn:incoming>a16</bpmn:incoming><bpmn:outgoing>a17</bpmn:outgoing></bpmn:userTask>
-    <bpmn:endEvent id="AS_EndOk" name="Aplikasi Diterima (Manual)"><bpmn:incoming>a17</bpmn:incoming></bpmn:endEvent>
-    <bpmn:userTask id="AS_NotifyNo" name="Beri Tahu Mahasiswa (Ditolak) via Email"><bpmn:incoming>a18</bpmn:incoming><bpmn:outgoing>a19</bpmn:outgoing><bpmn:property id="Prop_AS_NotifyNo_EmailHasil" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_EmailHasil_AS_NotifyNo"><bpmn:sourceRef>DObjRef_EmailHasil</bpmn:sourceRef><bpmn:targetRef>Prop_AS_NotifyNo_EmailHasil</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:userTask>
-    <bpmn:endEvent id="AS_EndNo" name="Aplikasi Tidak Diterima (Manual)"><bpmn:incoming>a19</bpmn:incoming></bpmn:endEvent>
+    <bpmn:userTask id="AS_Consult" name="Konsultasi Awal &amp; Pemetaan Minat"><bpmn:incoming>a1</bpmn:incoming><bpmn:outgoing>a2</bpmn:outgoing><bpmn:dataOutputAssociation id="DOut_HasilKonsultasi"><bpmn:targetRef>DObjRef_HasilKonsultasi</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:userTask id="AS_FillForm" name="Isi Google Form Minat Manual"><bpmn:incoming>a2</bpmn:incoming><bpmn:outgoing>a3</bpmn:outgoing><bpmn:dataOutputAssociation id="DOut_FormMinat"><bpmn:targetRef>DObjRef_FormMinat</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:userTask id="AS_SendDocs" name="Kirim Dokumen Akademik via Email"><bpmn:incoming>a3</bpmn:incoming><bpmn:outgoing>a4</bpmn:outgoing><bpmn:dataOutputAssociation id="DOut_EmailDocs"><bpmn:targetRef>DObjRef_EmailDocs</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:userTask id="AS_Recap" name="Rekap Dokumen ke Drive &amp; Spreadsheet"><bpmn:incoming>a4</bpmn:incoming><bpmn:outgoing>a5</bpmn:outgoing><bpmn:property id="Prop_AS_Recap_FormMinat" name="__targetRef_placeholder" /><bpmn:property id="Prop_AS_Recap_EmailDocs" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_FormMinat_AS_Recap"><bpmn:sourceRef>DObjRef_FormMinat</bpmn:sourceRef><bpmn:targetRef>Prop_AS_Recap_FormMinat</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataInputAssociation id="DIn_EmailDocs_AS_Recap"><bpmn:sourceRef>DObjRef_EmailDocs</bpmn:sourceRef><bpmn:targetRef>Prop_AS_Recap_EmailDocs</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_Spreadsheet"><bpmn:targetRef>DObjRef_Spreadsheet</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:userTask id="AS_VerifyDocs" name="Periksa Kelengkapan Dokumen Manual"><bpmn:incoming>a5</bpmn:incoming><bpmn:outgoing>a6</bpmn:outgoing><bpmn:property id="Prop_AS_VerifyDocs_EmailDocs" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_EmailDocs_AS_VerifyDocs"><bpmn:sourceRef>DObjRef_EmailDocs</bpmn:sourceRef><bpmn:targetRef>Prop_AS_VerifyDocs_EmailDocs</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_ChecklistDok"><bpmn:targetRef>DObjRef_ChecklistDok</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:userTask id="AS_Review" name="Tinjau Esai &amp; Transkrip Manual"><bpmn:incoming>a6</bpmn:incoming><bpmn:incoming>a10</bpmn:incoming><bpmn:outgoing>a7</bpmn:outgoing><bpmn:property id="Prop_AS_Review_EmailDocs" name="__targetRef_placeholder" /><bpmn:property id="Prop_AS_Review_ChecklistDok" name="__targetRef_placeholder" /><bpmn:property id="Prop_AS_Review_HasilKonsultasi" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_EmailDocs_AS_Review"><bpmn:sourceRef>DObjRef_EmailDocs</bpmn:sourceRef><bpmn:targetRef>Prop_AS_Review_EmailDocs</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataInputAssociation id="DIn_ChecklistDok_AS_Review"><bpmn:sourceRef>DObjRef_ChecklistDok</bpmn:sourceRef><bpmn:targetRef>Prop_AS_Review_ChecklistDok</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataInputAssociation id="DIn_HasilKonsultasi_AS_Review"><bpmn:sourceRef>DObjRef_HasilKonsultasi</bpmn:sourceRef><bpmn:targetRef>Prop_AS_Review_HasilKonsultasi</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_CatatanReview"><bpmn:targetRef>DObjRef_CatatanReview</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:exclusiveGateway id="AS_GwCheck" name="Dokumen Lengkap &amp; Layak?"><bpmn:incoming>a7</bpmn:incoming><bpmn:outgoing>a8</bpmn:outgoing><bpmn:outgoing>a11</bpmn:outgoing></bpmn:exclusiveGateway>
+    <bpmn:userTask id="AS_ReqRevisi" name="Kirim Permintaan Revisi via Email"><bpmn:incoming>a8</bpmn:incoming><bpmn:outgoing>a9</bpmn:outgoing><bpmn:property id="Prop_AS_ReqRevisi_CatatanReview" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_CatatanReview_AS_ReqRevisi"><bpmn:sourceRef>DObjRef_CatatanReview</bpmn:sourceRef><bpmn:targetRef>Prop_AS_ReqRevisi_CatatanReview</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_EmailRevisi"><bpmn:targetRef>DObjRef_EmailRevisi</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:userTask id="AS_FixDocs" name="Perbaiki &amp; Kirim Ulang Dokumen"><bpmn:incoming>a9</bpmn:incoming><bpmn:outgoing>a10</bpmn:outgoing><bpmn:property id="Prop_AS_FixDocs_EmailRevisi" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_EmailRevisi_AS_FixDocs"><bpmn:sourceRef>DObjRef_EmailRevisi</bpmn:sourceRef><bpmn:targetRef>Prop_AS_FixDocs_EmailRevisi</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:userTask>
+    <bpmn:userTask id="AS_Shortlist" name="Riset &amp; Shortlist Universitas Manual"><bpmn:incoming>a11</bpmn:incoming><bpmn:outgoing>a12</bpmn:outgoing><bpmn:property id="Prop_AS_Shortlist_CatatanReview" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_CatatanReview_AS_Shortlist"><bpmn:sourceRef>DObjRef_CatatanReview</bpmn:sourceRef><bpmn:targetRef>Prop_AS_Shortlist_CatatanReview</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:userTask>
+    <bpmn:userTask id="AS_BuildList" name="Susun Daftar Universitas Manual"><bpmn:incoming>a12</bpmn:incoming><bpmn:incoming>a15</bpmn:incoming><bpmn:outgoing>a13</bpmn:outgoing><bpmn:property id="Prop_AS_BuildList_CatatanReview" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_CatatanReview_AS_BuildList"><bpmn:sourceRef>DObjRef_CatatanReview</bpmn:sourceRef><bpmn:targetRef>Prop_AS_BuildList_CatatanReview</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_DaftarUniv"><bpmn:targetRef>DObjRef_DaftarUniv</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:userTask id="AS_Approve" name="Setujui Daftar &amp; Isi Form Aplikasi Manual"><bpmn:incoming>a13</bpmn:incoming><bpmn:outgoing>a14</bpmn:outgoing><bpmn:property id="Prop_AS_Approve_DaftarUniv" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_DaftarUniv_AS_Approve"><bpmn:sourceRef>DObjRef_DaftarUniv</bpmn:sourceRef><bpmn:targetRef>Prop_AS_Approve_DaftarUniv</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:userTask>
+    <bpmn:exclusiveGateway id="AS_GwApprove" name="Mahasiswa Setuju Daftar?"><bpmn:incoming>a14</bpmn:incoming><bpmn:outgoing>a15</bpmn:outgoing><bpmn:outgoing>a16</bpmn:outgoing></bpmn:exclusiveGateway>
+    <bpmn:userTask id="AS_PrepDocs" name="Siapkan Berkas Aplikasi per Universitas"><bpmn:incoming>a16</bpmn:incoming><bpmn:outgoing>a17</bpmn:outgoing><bpmn:property id="Prop_AS_PrepDocs_DaftarUniv" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_DaftarUniv_AS_PrepDocs"><bpmn:sourceRef>DObjRef_DaftarUniv</bpmn:sourceRef><bpmn:targetRef>Prop_AS_PrepDocs_DaftarUniv</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_BerkasAplikasi"><bpmn:targetRef>DObjRef_BerkasAplikasi</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:userTask id="AS_SubmitManual" name="Submit Aplikasi Manual per Universitas"><bpmn:incoming>a17</bpmn:incoming><bpmn:outgoing>a18</bpmn:outgoing><bpmn:property id="Prop_AS_SubmitManual_BerkasAplikasi" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_BerkasAplikasi_AS_SubmitManual"><bpmn:sourceRef>DObjRef_BerkasAplikasi</bpmn:sourceRef><bpmn:targetRef>Prop_AS_SubmitManual_BerkasAplikasi</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_BuktiSubmit"><bpmn:targetRef>DObjRef_BuktiSubmit</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:userTask id="AS_UpdateSheet" name="Update Status di Spreadsheet"><bpmn:incoming>a18</bpmn:incoming><bpmn:outgoing>a19</bpmn:outgoing><bpmn:property id="Prop_AS_UpdateSheet_BuktiSubmit" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_BuktiSubmit_AS_UpdateSheet"><bpmn:sourceRef>DObjRef_BuktiSubmit</bpmn:sourceRef><bpmn:targetRef>Prop_AS_UpdateSheet_BuktiSubmit</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_StatusSheet"><bpmn:targetRef>DObjRef_StatusSheet</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:userTask id="AS_TrackResult" name="Lacak Hasil via Email Universitas"><bpmn:incoming>a19</bpmn:incoming><bpmn:outgoing>a20</bpmn:outgoing><bpmn:property id="Prop_AS_TrackResult_Spreadsheet" name="__targetRef_placeholder" /><bpmn:property id="Prop_AS_TrackResult_StatusSheet" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_Spreadsheet_AS_TrackResult"><bpmn:sourceRef>DObjRef_Spreadsheet</bpmn:sourceRef><bpmn:targetRef>Prop_AS_TrackResult_Spreadsheet</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataInputAssociation id="DIn_StatusSheet_AS_TrackResult"><bpmn:sourceRef>DObjRef_StatusSheet</bpmn:sourceRef><bpmn:targetRef>Prop_AS_TrackResult_StatusSheet</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_EmailHasil"><bpmn:targetRef>DObjRef_EmailHasil</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:exclusiveGateway id="AS_GwResult" name="Hasil Diterima?"><bpmn:incoming>a20</bpmn:incoming><bpmn:outgoing>a21</bpmn:outgoing><bpmn:outgoing>a24</bpmn:outgoing></bpmn:exclusiveGateway>
+    <bpmn:userTask id="AS_RecordLoA" name="Arsipkan Scan LoA Manual"><bpmn:incoming>a21</bpmn:incoming><bpmn:outgoing>a22</bpmn:outgoing><bpmn:property id="Prop_AS_RecordLoA_EmailHasil" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_EmailHasil_AS_RecordLoA"><bpmn:sourceRef>DObjRef_EmailHasil</bpmn:sourceRef><bpmn:targetRef>Prop_AS_RecordLoA_EmailHasil</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_ScanLoA"><bpmn:targetRef>DObjRef_ScanLoA</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:userTask id="AS_NotifyOk" name="Beri Tahu Mahasiswa (Diterima) via Email"><bpmn:incoming>a22</bpmn:incoming><bpmn:outgoing>a23</bpmn:outgoing></bpmn:userTask>
+    <bpmn:endEvent id="AS_EndOk" name="Aplikasi Diterima (Manual)"><bpmn:incoming>a23</bpmn:incoming></bpmn:endEvent>
+    <bpmn:userTask id="AS_NotifyNo" name="Beri Tahu Mahasiswa (Ditolak) via Email"><bpmn:incoming>a24</bpmn:incoming><bpmn:outgoing>a25</bpmn:outgoing><bpmn:property id="Prop_AS_NotifyNo_EmailHasil" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_EmailHasil_AS_NotifyNo"><bpmn:sourceRef>DObjRef_EmailHasil</bpmn:sourceRef><bpmn:targetRef>Prop_AS_NotifyNo_EmailHasil</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:userTask>
+    <bpmn:endEvent id="AS_EndNo" name="Aplikasi Tidak Diterima (Manual)"><bpmn:incoming>a25</bpmn:incoming></bpmn:endEvent>
+    <bpmn:dataObjectReference id="DObjRef_HasilKonsultasi" name="Hasil Konsultasi (Catatan Manual)" dataObjectRef="DObj_HasilKonsultasi" />
+    <bpmn:dataObject id="DObj_HasilKonsultasi" />
     <bpmn:dataObjectReference id="DObjRef_FormMinat" name="Form Minat (Google Form)" dataObjectRef="DObj_FormMinat" />
     <bpmn:dataObject id="DObj_FormMinat" />
     <bpmn:dataObjectReference id="DObjRef_EmailDocs" name="Email Dokumen Akademik" dataObjectRef="DObj_EmailDocs" />
     <bpmn:dataObject id="DObj_EmailDocs" />
     <bpmn:dataObjectReference id="DObjRef_Spreadsheet" name="Spreadsheet Tracking Manual" dataObjectRef="DObj_Spreadsheet" />
     <bpmn:dataObject id="DObj_Spreadsheet" />
+    <bpmn:dataObjectReference id="DObjRef_ChecklistDok" name="Checklist Kelengkapan Dokumen" dataObjectRef="DObj_ChecklistDok" />
+    <bpmn:dataObject id="DObj_ChecklistDok" />
     <bpmn:dataObjectReference id="DObjRef_CatatanReview" name="Catatan Tinjauan Manual" dataObjectRef="DObj_CatatanReview" />
     <bpmn:dataObject id="DObj_CatatanReview" />
     <bpmn:dataObjectReference id="DObjRef_EmailRevisi" name="Email Permintaan Revisi" dataObjectRef="DObj_EmailRevisi" />
     <bpmn:dataObject id="DObj_EmailRevisi" />
-    <bpmn:dataObjectReference id="DObjRef_DaftarUniv" name="Daftar Universitas (Excel/Word)" dataObjectRef="DObj_DaftarUniv" />
-    <bpmn:dataObject id="DObj_DaftarUniv" />
-    <bpmn:dataObjectReference id="DObjRef_BuktiSubmit" name="Bukti Submit Manual" dataObjectRef="DObj_BuktiSubmit" />
-    <bpmn:dataObject id="DObj_BuktiSubmit" />
-    <bpmn:dataObjectReference id="DObjRef_StatusSheet" name="Spreadsheet Status Aplikasi" dataObjectRef="DObj_StatusSheet" />
-    <bpmn:dataObject id="DObj_StatusSheet" />
-    <bpmn:dataObjectReference id="DObjRef_EmailHasil" name="Email Hasil dari Universitas" dataObjectRef="DObj_EmailHasil" />
-    <bpmn:dataObject id="DObj_EmailHasil" />
-    <bpmn:dataObjectReference id="DObjRef_ScanLoA" name="Scan LoA (Arsip Manual)" dataObjectRef="DObj_ScanLoA" />
-    <bpmn:dataObject id="DObj_ScanLoA" />
-    <bpmn:sequenceFlow id="a1" sourceRef="AS_Start" targetRef="AS_FillForm" />
-    <bpmn:sequenceFlow id="a2" sourceRef="AS_FillForm" targetRef="AS_SendDocs" />
-    <bpmn:sequenceFlow id="a3" sourceRef="AS_SendDocs" targetRef="AS_Recap" />
-    <bpmn:sequenceFlow id="a4" sourceRef="AS_Recap" targetRef="AS_Review" />
-    <bpmn:sequenceFlow id="a5" sourceRef="AS_Review" targetRef="AS_GwCheck" />
-    <bpmn:sequenceFlow id="a6" sourceRef="AS_GwCheck" targetRef="AS_ReqRevisi" name="Tidak Lengkap" />
-    <bpmn:sequenceFlow id="a7" sourceRef="AS_ReqRevisi" targetRef="AS_FixDocs" />
-    <bpmn:sequenceFlow id="a8" sourceRef="AS_FixDocs" targetRef="AS_Review" name="Kirim Ulang" />
-    <bpmn:sequenceFlow id="a9" sourceRef="AS_GwCheck" targetRef="AS_BuildList" name="Lengkap &amp; Layak" />
-    <bpmn:sequenceFlow id="a10" sourceRef="AS_BuildList" targetRef="AS_Approve" />
-    <bpmn:sequenceFlow id="a11" sourceRef="AS_Approve" targetRef="AS_SubmitManual" />
-    <bpmn:sequenceFlow id="a12" sourceRef="AS_SubmitManual" targetRef="AS_UpdateSheet" />
-    <bpmn:sequenceFlow id="a13" sourceRef="AS_UpdateSheet" targetRef="AS_TrackResult" />
-    <bpmn:sequenceFlow id="a14" sourceRef="AS_TrackResult" targetRef="AS_GwResult" />
-    <bpmn:sequenceFlow id="a15" sourceRef="AS_GwResult" targetRef="AS_RecordLoA" name="Diterima" />
-    <bpmn:sequenceFlow id="a16" sourceRef="AS_RecordLoA" targetRef="AS_NotifyOk" />
-    <bpmn:sequenceFlow id="a17" sourceRef="AS_NotifyOk" targetRef="AS_EndOk" />
-    <bpmn:sequenceFlow id="a18" sourceRef="AS_GwResult" targetRef="AS_NotifyNo" name="Ditolak" />
-    <bpmn:sequenceFlow id="a19" sourceRef="AS_NotifyNo" targetRef="AS_EndNo" />
-  </bpmn:process>
-  <bpmndi:BPMNDiagram id="Diag_Process_AppUniv_AS">
-    <bpmndi:BPMNPlane id="Plane_Process_AppUniv_AS" bpmnElement="Collab_Process_AppUniv_AS">
-      <bpmndi:BPMNShape id="di_Part_Process_AppUniv_AS" bpmnElement="Part_Process_AppUniv_AS" isHorizontal="true"><dc:Bounds x="160" y="80" width="4000" height="780" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Student" bpmnElement="L_Student" isHorizontal="true"><dc:Bounds x="190" y="80" width="3970" height="260" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Mentor" bpmnElement="L_Mentor" isHorizontal="true"><dc:Bounds x="190" y="340" width="3970" height="260" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Admin" bpmnElement="L_Admin" isHorizontal="true"><dc:Bounds x="190" y="600" width="3970" height="260" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_Start" bpmnElement="AS_Start"><dc:Bounds x="342" y="192" width="36" height="36" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_FillForm" bpmnElement="AS_FillForm"><dc:Bounds x="520" y="170" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_SendDocs" bpmnElement="AS_SendDocs"><dc:Bounds x="740" y="170" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_Recap" bpmnElement="AS_Recap"><dc:Bounds x="960" y="690" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_Review" bpmnElement="AS_Review"><dc:Bounds x="1180" y="430" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_GwCheck" bpmnElement="AS_GwCheck"><dc:Bounds x="1435" y="445" width="50" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_ReqRevisi" bpmnElement="AS_ReqRevisi"><dc:Bounds x="1620" y="430" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_FixDocs" bpmnElement="AS_FixDocs"><dc:Bounds x="1840" y="170" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_BuildList" bpmnElement="AS_BuildList"><dc:Bounds x="2060" y="430" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_Approve" bpmnElement="AS_Approve"><dc:Bounds x="2280" y="170" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_SubmitManual" bpmnElement="AS_SubmitManual"><dc:Bounds x="2500" y="690" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_UpdateSheet" bpmnElement="AS_UpdateSheet"><dc:Bounds x="2720" y="690" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_TrackResult" bpmnElement="AS_TrackResult"><dc:Bounds x="2940" y="430" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_GwResult" bpmnElement="AS_GwResult"><dc:Bounds x="3195" y="445" width="50" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_RecordLoA" bpmnElement="AS_RecordLoA"><dc:Bounds x="3380" y="690" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_NotifyOk" bpmnElement="AS_NotifyOk"><dc:Bounds x="3600" y="430" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_EndOk" bpmnElement="AS_EndOk"><dc:Bounds x="3862" y="192" width="36" height="36" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_NotifyNo" bpmnElement="AS_NotifyNo"><dc:Bounds x="3380" y="430" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_AS_EndNo" bpmnElement="AS_EndNo"><dc:Bounds x="3642" y="192" width="36" height="36" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DObjRef_FormMinat" bpmnElement="DObjRef_FormMinat"><dc:Bounds x="610" y="86" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DObjRef_EmailDocs" bpmnElement="DObjRef_EmailDocs"><dc:Bounds x="830" y="86" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DObjRef_Spreadsheet" bpmnElement="DObjRef_Spreadsheet"><dc:Bounds x="1050" y="606" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DObjRef_CatatanReview" bpmnElement="DObjRef_CatatanReview"><dc:Bounds x="1270" y="346" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DObjRef_EmailRevisi" bpmnElement="DObjRef_EmailRevisi"><dc:Bounds x="1710" y="346" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DObjRef_DaftarUniv" bpmnElement="DObjRef_DaftarUniv"><dc:Bounds x="2150" y="346" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DObjRef_BuktiSubmit" bpmnElement="DObjRef_BuktiSubmit"><dc:Bounds x="2590" y="606" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DObjRef_StatusSheet" bpmnElement="DObjRef_StatusSheet"><dc:Bounds x="2810" y="606" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DObjRef_EmailHasil" bpmnElement="DObjRef_EmailHasil"><dc:Bounds x="3030" y="346" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DObjRef_ScanLoA" bpmnElement="DObjRef_ScanLoA"><dc:Bounds x="3470" y="606" width="36" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="di_a1" bpmnElement="a1"><di:waypoint x="378" y="210" /><di:waypoint x="520" y="210" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a2" bpmnElement="a2"><di:waypoint x="640" y="210" /><di:waypoint x="740" y="210" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a3" bpmnElement="a3"><di:waypoint x="860" y="210" /><di:waypoint x="910" y="210" /><di:waypoint x="910" y="730" /><di:waypoint x="960" y="730" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a4" bpmnElement="a4"><di:waypoint x="1080" y="730" /><di:waypoint x="1130" y="730" /><di:waypoint x="1130" y="470" /><di:waypoint x="1180" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a5" bpmnElement="a5"><di:waypoint x="1300" y="470" /><di:waypoint x="1435" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a6" bpmnElement="a6"><di:waypoint x="1485" y="470" /><di:waypoint x="1620" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a7" bpmnElement="a7"><di:waypoint x="1740" y="470" /><di:waypoint x="1790" y="470" /><di:waypoint x="1790" y="210" /><di:waypoint x="1840" y="210" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a8" bpmnElement="a8"><di:waypoint x="1900" y="170" /><di:waypoint x="1900" y="130" /><di:waypoint x="1240" y="130" /><di:waypoint x="1240" y="430" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a9" bpmnElement="a9"><di:waypoint x="1485" y="470" /><di:waypoint x="2060" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a10" bpmnElement="a10"><di:waypoint x="2180" y="470" /><di:waypoint x="2230" y="470" /><di:waypoint x="2230" y="210" /><di:waypoint x="2280" y="210" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a11" bpmnElement="a11"><di:waypoint x="2400" y="210" /><di:waypoint x="2450" y="210" /><di:waypoint x="2450" y="730" /><di:waypoint x="2500" y="730" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a12" bpmnElement="a12"><di:waypoint x="2620" y="730" /><di:waypoint x="2720" y="730" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a13" bpmnElement="a13"><di:waypoint x="2840" y="730" /><di:waypoint x="2890" y="730" /><di:waypoint x="2890" y="470" /><di:waypoint x="2940" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a14" bpmnElement="a14"><di:waypoint x="3060" y="470" /><di:waypoint x="3195" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a15" bpmnElement="a15"><di:waypoint x="3245" y="470" /><di:waypoint x="3312" y="470" /><di:waypoint x="3312" y="730" /><di:waypoint x="3380" y="730" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a16" bpmnElement="a16"><di:waypoint x="3500" y="730" /><di:waypoint x="3550" y="730" /><di:waypoint x="3550" y="470" /><di:waypoint x="3600" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a17" bpmnElement="a17"><di:waypoint x="3720" y="470" /><di:waypoint x="3791" y="470" /><di:waypoint x="3791" y="210" /><di:waypoint x="3862" y="210" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a18" bpmnElement="a18"><di:waypoint x="3245" y="470" /><di:waypoint x="3380" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_a19" bpmnElement="a19"><di:waypoint x="3500" y="470" /><di:waypoint x="3571" y="470" /><di:waypoint x="3571" y="210" /><di:waypoint x="3642" y="210" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_FormMinat" bpmnElement="DOut_FormMinat"><di:waypoint x="580" y="170" /><di:waypoint x="580" y="153" /><di:waypoint x="628" y="153" /><di:waypoint x="628" y="136" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_FormMinat_AS_Recap" bpmnElement="DIn_FormMinat_AS_Recap"><di:waypoint x="628" y="136" /><di:waypoint x="628" y="413" /><di:waypoint x="1020" y="413" /><di:waypoint x="1020" y="690" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_EmailDocs" bpmnElement="DOut_EmailDocs"><di:waypoint x="800" y="170" /><di:waypoint x="800" y="153" /><di:waypoint x="848" y="153" /><di:waypoint x="848" y="136" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_EmailDocs_AS_Recap" bpmnElement="DIn_EmailDocs_AS_Recap"><di:waypoint x="848" y="136" /><di:waypoint x="848" y="413" /><di:waypoint x="1020" y="413" /><di:waypoint x="1020" y="690" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_EmailDocs_AS_Review" bpmnElement="DIn_EmailDocs_AS_Review"><di:waypoint x="866" y="111" /><di:waypoint x="1023" y="111" /><di:waypoint x="1023" y="470" /><di:waypoint x="1180" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_Spreadsheet" bpmnElement="DOut_Spreadsheet"><di:waypoint x="1020" y="690" /><di:waypoint x="1020" y="673" /><di:waypoint x="1068" y="673" /><di:waypoint x="1068" y="656" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_Spreadsheet_AS_TrackResult" bpmnElement="DIn_Spreadsheet_AS_TrackResult"><di:waypoint x="1086" y="631" /><di:waypoint x="2013" y="631" /><di:waypoint x="2013" y="470" /><di:waypoint x="2940" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_CatatanReview" bpmnElement="DOut_CatatanReview"><di:waypoint x="1240" y="430" /><di:waypoint x="1240" y="413" /><di:waypoint x="1288" y="413" /><di:waypoint x="1288" y="396" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_CatatanReview_AS_ReqRevisi" bpmnElement="DIn_CatatanReview_AS_ReqRevisi"><di:waypoint x="1306" y="371" /><di:waypoint x="1463" y="371" /><di:waypoint x="1463" y="470" /><di:waypoint x="1620" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_CatatanReview_AS_BuildList" bpmnElement="DIn_CatatanReview_AS_BuildList"><di:waypoint x="1306" y="371" /><di:waypoint x="1683" y="371" /><di:waypoint x="1683" y="470" /><di:waypoint x="2060" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_EmailRevisi" bpmnElement="DOut_EmailRevisi"><di:waypoint x="1680" y="430" /><di:waypoint x="1680" y="413" /><di:waypoint x="1728" y="413" /><di:waypoint x="1728" y="396" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_EmailRevisi_AS_FixDocs" bpmnElement="DIn_EmailRevisi_AS_FixDocs"><di:waypoint x="1746" y="371" /><di:waypoint x="1793" y="371" /><di:waypoint x="1793" y="210" /><di:waypoint x="1840" y="210" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_DaftarUniv" bpmnElement="DOut_DaftarUniv"><di:waypoint x="2120" y="430" /><di:waypoint x="2120" y="413" /><di:waypoint x="2168" y="413" /><di:waypoint x="2168" y="396" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DaftarUniv_AS_Approve" bpmnElement="DIn_DaftarUniv_AS_Approve"><di:waypoint x="2186" y="371" /><di:waypoint x="2233" y="371" /><di:waypoint x="2233" y="210" /><di:waypoint x="2280" y="210" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DaftarUniv_AS_SubmitManual" bpmnElement="DIn_DaftarUniv_AS_SubmitManual"><di:waypoint x="2186" y="371" /><di:waypoint x="2343" y="371" /><di:waypoint x="2343" y="730" /><di:waypoint x="2500" y="730" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_BuktiSubmit" bpmnElement="DOut_BuktiSubmit"><di:waypoint x="2560" y="690" /><di:waypoint x="2560" y="673" /><di:waypoint x="2608" y="673" /><di:waypoint x="2608" y="656" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_BuktiSubmit_AS_UpdateSheet" bpmnElement="DIn_BuktiSubmit_AS_UpdateSheet"><di:waypoint x="2626" y="631" /><di:waypoint x="2673" y="631" /><di:waypoint x="2673" y="730" /><di:waypoint x="2720" y="730" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_StatusSheet" bpmnElement="DOut_StatusSheet"><di:waypoint x="2780" y="690" /><di:waypoint x="2780" y="673" /><di:waypoint x="2828" y="673" /><di:waypoint x="2828" y="656" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_StatusSheet_AS_TrackResult" bpmnElement="DIn_StatusSheet_AS_TrackResult"><di:waypoint x="2846" y="631" /><di:waypoint x="2893" y="631" /><di:waypoint x="2893" y="470" /><di:waypoint x="2940" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_EmailHasil" bpmnElement="DOut_EmailHasil"><di:waypoint x="3000" y="430" /><di:waypoint x="3000" y="413" /><di:waypoint x="3048" y="413" /><di:waypoint x="3048" y="396" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_EmailHasil_AS_RecordLoA" bpmnElement="DIn_EmailHasil_AS_RecordLoA"><di:waypoint x="3066" y="371" /><di:waypoint x="3223" y="371" /><di:waypoint x="3223" y="730" /><di:waypoint x="3380" y="730" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_EmailHasil_AS_NotifyNo" bpmnElement="DIn_EmailHasil_AS_NotifyNo"><di:waypoint x="3066" y="371" /><di:waypoint x="3223" y="371" /><di:waypoint x="3223" y="470" /><di:waypoint x="3380" y="470" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DOut_ScanLoA" bpmnElement="DOut_ScanLoA"><di:waypoint x="3440" y="690" /><di:waypoint x="3440" y="673" /><di:waypoint x="3488" y="673" /><di:waypoint x="3488" y="656" /></bpmndi:BPMNEdge>
-    </bpmndi:BPMNPlane>
-  </bpmndi:BPMNDiagram>
-</bpmn:definitions>
+    <bpmn:dataObjectReference id="DObjRef_DaftarUniv" name="Daftar Universitas (Excel/Word)
