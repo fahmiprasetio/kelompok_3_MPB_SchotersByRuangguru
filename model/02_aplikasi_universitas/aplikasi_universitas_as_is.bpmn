@@ -74,4 +74,142 @@
     <bpmn:dataObject id="DObj_CatatanReview" />
     <bpmn:dataObjectReference id="DObjRef_EmailRevisi" name="Email Permintaan Revisi" dataObjectRef="DObj_EmailRevisi" />
     <bpmn:dataObject id="DObj_EmailRevisi" />
-    <bpmn:dataObjectReference id="DObjRef_DaftarUniv" name="Daftar Universitas (Excel/Word)
+    <bpmn:dataObjectReference id="DObjRef_DaftarUniv" name="Daftar Universitas (Excel/Word)" dataObjectRef="DObj_DaftarUniv" />
+    <bpmn:dataObject id="DObj_DaftarUniv" />
+    <bpmn:dataObjectReference id="DObjRef_BerkasAplikasi" name="Berkas Aplikasi per Universitas" dataObjectRef="DObj_BerkasAplikasi" />
+    <bpmn:dataObject id="DObj_BerkasAplikasi" />
+    <bpmn:dataObjectReference id="DObjRef_BuktiSubmit" name="Bukti Submit Manual" dataObjectRef="DObj_BuktiSubmit" />
+    <bpmn:dataObject id="DObj_BuktiSubmit" />
+    <bpmn:dataObjectReference id="DObjRef_StatusSheet" name="Spreadsheet Status Aplikasi" dataObjectRef="DObj_StatusSheet" />
+    <bpmn:dataObject id="DObj_StatusSheet" />
+    <bpmn:dataObjectReference id="DObjRef_EmailHasil" name="Email Hasil dari Universitas" dataObjectRef="DObj_EmailHasil" />
+    <bpmn:dataObject id="DObj_EmailHasil" />
+    <bpmn:dataObjectReference id="DObjRef_ScanLoA" name="Scan LoA (Arsip Manual)" dataObjectRef="DObj_ScanLoA" />
+    <bpmn:dataObject id="DObj_ScanLoA" />
+    <bpmn:sequenceFlow id="a1" sourceRef="AS_Start" targetRef="AS_Consult" />
+    <bpmn:sequenceFlow id="a2" sourceRef="AS_Consult" targetRef="AS_FillForm" />
+    <bpmn:sequenceFlow id="a3" sourceRef="AS_FillForm" targetRef="AS_SendDocs" />
+    <bpmn:sequenceFlow id="a4" sourceRef="AS_SendDocs" targetRef="AS_Recap" />
+    <bpmn:sequenceFlow id="a5" sourceRef="AS_Recap" targetRef="AS_VerifyDocs" />
+    <bpmn:sequenceFlow id="a6" sourceRef="AS_VerifyDocs" targetRef="AS_Review" />
+    <bpmn:sequenceFlow id="a7" sourceRef="AS_Review" targetRef="AS_GwCheck" />
+    <bpmn:sequenceFlow id="a8" sourceRef="AS_GwCheck" targetRef="AS_ReqRevisi" name="Tidak Lengkap" />
+    <bpmn:sequenceFlow id="a9" sourceRef="AS_ReqRevisi" targetRef="AS_FixDocs" />
+    <bpmn:sequenceFlow id="a10" sourceRef="AS_FixDocs" targetRef="AS_Review" name="Kirim Ulang" />
+    <bpmn:sequenceFlow id="a11" sourceRef="AS_GwCheck" targetRef="AS_Shortlist" name="Lengkap &amp; Layak" />
+    <bpmn:sequenceFlow id="a12" sourceRef="AS_Shortlist" targetRef="AS_BuildList" />
+    <bpmn:sequenceFlow id="a13" sourceRef="AS_BuildList" targetRef="AS_Approve" />
+    <bpmn:sequenceFlow id="a14" sourceRef="AS_Approve" targetRef="AS_GwApprove" />
+    <bpmn:sequenceFlow id="a15" sourceRef="AS_GwApprove" targetRef="AS_BuildList" name="Belum Setuju" />
+    <bpmn:sequenceFlow id="a16" sourceRef="AS_GwApprove" targetRef="AS_PrepDocs" name="Setuju" />
+    <bpmn:sequenceFlow id="a17" sourceRef="AS_PrepDocs" targetRef="AS_SubmitManual" />
+    <bpmn:sequenceFlow id="a18" sourceRef="AS_SubmitManual" targetRef="AS_UpdateSheet" />
+    <bpmn:sequenceFlow id="a19" sourceRef="AS_UpdateSheet" targetRef="AS_TrackResult" />
+    <bpmn:sequenceFlow id="a20" sourceRef="AS_TrackResult" targetRef="AS_GwResult" />
+    <bpmn:sequenceFlow id="a21" sourceRef="AS_GwResult" targetRef="AS_RecordLoA" name="Diterima" />
+    <bpmn:sequenceFlow id="a22" sourceRef="AS_RecordLoA" targetRef="AS_NotifyOk" />
+    <bpmn:sequenceFlow id="a23" sourceRef="AS_NotifyOk" targetRef="AS_EndOk" />
+    <bpmn:sequenceFlow id="a24" sourceRef="AS_GwResult" targetRef="AS_NotifyNo" name="Ditolak" />
+    <bpmn:sequenceFlow id="a25" sourceRef="AS_NotifyNo" targetRef="AS_EndNo" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diag_Process_AppUniv_AS">
+    <bpmndi:BPMNPlane id="Plane_Process_AppUniv_AS" bpmnElement="Collab_Process_AppUniv_AS">
+      <bpmndi:BPMNShape id="di_Part_Process_AppUniv_AS" bpmnElement="Part_Process_AppUniv_AS" isHorizontal="true"><dc:Bounds x="160" y="80" width="4000" height="780" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Student" bpmnElement="L_Student" isHorizontal="true"><dc:Bounds x="190" y="80" width="3970" height="260" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Mentor" bpmnElement="L_Mentor" isHorizontal="true"><dc:Bounds x="190" y="340" width="3970" height="260" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Admin" bpmnElement="L_Admin" isHorizontal="true"><dc:Bounds x="190" y="600" width="3970" height="260" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Start" bpmnElement="AS_Start"><dc:Bounds x="242" y="192" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Consult" bpmnElement="AS_Consult"><dc:Bounds x="340" y="430" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_FillForm" bpmnElement="AS_FillForm"><dc:Bounds x="520" y="170" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_SendDocs" bpmnElement="AS_SendDocs"><dc:Bounds x="700" y="170" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Recap" bpmnElement="AS_Recap"><dc:Bounds x="880" y="690" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_VerifyDocs" bpmnElement="AS_VerifyDocs"><dc:Bounds x="1060" y="690" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Review" bpmnElement="AS_Review"><dc:Bounds x="1240" y="430" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_GwCheck" bpmnElement="AS_GwCheck"><dc:Bounds x="1435" y="445" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_ReqRevisi" bpmnElement="AS_ReqRevisi"><dc:Bounds x="1540" y="430" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_FixDocs" bpmnElement="AS_FixDocs"><dc:Bounds x="1720" y="170" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Shortlist" bpmnElement="AS_Shortlist"><dc:Bounds x="1920" y="430" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_BuildList" bpmnElement="AS_BuildList"><dc:Bounds x="2100" y="430" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_Approve" bpmnElement="AS_Approve"><dc:Bounds x="2280" y="170" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_GwApprove" bpmnElement="AS_GwApprove"><dc:Bounds x="2475" y="185" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_PrepDocs" bpmnElement="AS_PrepDocs"><dc:Bounds x="2580" y="690" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_SubmitManual" bpmnElement="AS_SubmitManual"><dc:Bounds x="2760" y="690" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_UpdateSheet" bpmnElement="AS_UpdateSheet"><dc:Bounds x="2940" y="690" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_TrackResult" bpmnElement="AS_TrackResult"><dc:Bounds x="3120" y="430" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_GwResult" bpmnElement="AS_GwResult"><dc:Bounds x="3315" y="445" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_RecordLoA" bpmnElement="AS_RecordLoA"><dc:Bounds x="3420" y="690" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_NotifyOk" bpmnElement="AS_NotifyOk"><dc:Bounds x="3600" y="430" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_EndOk" bpmnElement="AS_EndOk"><dc:Bounds x="3820" y="192" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_NotifyNo" bpmnElement="AS_NotifyNo"><dc:Bounds x="3420" y="430" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_AS_EndNo" bpmnElement="AS_EndNo"><dc:Bounds x="3602" y="192" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_HasilKonsultasi" bpmnElement="DObjRef_HasilKonsultasi"><dc:Bounds x="440" y="346" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_FormMinat" bpmnElement="DObjRef_FormMinat"><dc:Bounds x="610" y="86" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_EmailDocs" bpmnElement="DObjRef_EmailDocs"><dc:Bounds x="790" y="86" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_Spreadsheet" bpmnElement="DObjRef_Spreadsheet"><dc:Bounds x="970" y="606" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_ChecklistDok" bpmnElement="DObjRef_ChecklistDok"><dc:Bounds x="1150" y="606" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_CatatanReview" bpmnElement="DObjRef_CatatanReview"><dc:Bounds x="1340" y="346" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_EmailRevisi" bpmnElement="DObjRef_EmailRevisi"><dc:Bounds x="1630" y="346" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_DaftarUniv" bpmnElement="DObjRef_DaftarUniv"><dc:Bounds x="2190" y="346" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_BerkasAplikasi" bpmnElement="DObjRef_BerkasAplikasi"><dc:Bounds x="2670" y="606" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_BuktiSubmit" bpmnElement="DObjRef_BuktiSubmit"><dc:Bounds x="2850" y="606" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_StatusSheet" bpmnElement="DObjRef_StatusSheet"><dc:Bounds x="3030" y="606" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_EmailHasil" bpmnElement="DObjRef_EmailHasil"><dc:Bounds x="3210" y="346" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_ScanLoA" bpmnElement="DObjRef_ScanLoA"><dc:Bounds x="3510" y="606" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_a1" bpmnElement="a1"><di:waypoint x="278" y="210" /><di:waypoint x="309" y="210" /><di:waypoint x="309" y="470" /><di:waypoint x="340" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a2" bpmnElement="a2"><di:waypoint x="460" y="470" /><di:waypoint x="490" y="470" /><di:waypoint x="490" y="210" /><di:waypoint x="520" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a3" bpmnElement="a3"><di:waypoint x="640" y="210" /><di:waypoint x="700" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a4" bpmnElement="a4"><di:waypoint x="820" y="210" /><di:waypoint x="850" y="210" /><di:waypoint x="850" y="730" /><di:waypoint x="880" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a5" bpmnElement="a5"><di:waypoint x="1000" y="730" /><di:waypoint x="1060" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a6" bpmnElement="a6"><di:waypoint x="1180" y="730" /><di:waypoint x="1210" y="730" /><di:waypoint x="1210" y="470" /><di:waypoint x="1240" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a7" bpmnElement="a7"><di:waypoint x="1360" y="470" /><di:waypoint x="1435" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a8" bpmnElement="a8"><di:waypoint x="1485" y="470" /><di:waypoint x="1540" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a9" bpmnElement="a9"><di:waypoint x="1660" y="470" /><di:waypoint x="1690" y="470" /><di:waypoint x="1690" y="210" /><di:waypoint x="1720" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a10" bpmnElement="a10"><di:waypoint x="1780" y="170" /><di:waypoint x="1780" y="130" /><di:waypoint x="1300" y="130" /><di:waypoint x="1300" y="430" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a11" bpmnElement="a11"><di:waypoint x="1460" y="495" /><di:waypoint x="1460" y="560" /><di:waypoint x="1890" y="560" /><di:waypoint x="1890" y="470" /><di:waypoint x="1920" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a12" bpmnElement="a12"><di:waypoint x="2040" y="470" /><di:waypoint x="2100" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a13" bpmnElement="a13"><di:waypoint x="2220" y="470" /><di:waypoint x="2250" y="470" /><di:waypoint x="2250" y="210" /><di:waypoint x="2280" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a14" bpmnElement="a14"><di:waypoint x="2400" y="210" /><di:waypoint x="2475" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a15" bpmnElement="a15"><di:waypoint x="2500" y="185" /><di:waypoint x="2500" y="150" /><di:waypoint x="2160" y="150" /><di:waypoint x="2160" y="430" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a16" bpmnElement="a16"><di:waypoint x="2500" y="235" /><di:waypoint x="2500" y="730" /><di:waypoint x="2580" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a17" bpmnElement="a17"><di:waypoint x="2700" y="730" /><di:waypoint x="2760" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a18" bpmnElement="a18"><di:waypoint x="2880" y="730" /><di:waypoint x="2940" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a19" bpmnElement="a19"><di:waypoint x="3060" y="730" /><di:waypoint x="3090" y="730" /><di:waypoint x="3090" y="470" /><di:waypoint x="3120" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a20" bpmnElement="a20"><di:waypoint x="3240" y="470" /><di:waypoint x="3315" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a21" bpmnElement="a21"><di:waypoint x="3340" y="495" /><di:waypoint x="3340" y="730" /><di:waypoint x="3420" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a22" bpmnElement="a22"><di:waypoint x="3540" y="730" /><di:waypoint x="3570" y="730" /><di:waypoint x="3570" y="470" /><di:waypoint x="3600" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a23" bpmnElement="a23"><di:waypoint x="3720" y="470" /><di:waypoint x="3770" y="470" /><di:waypoint x="3770" y="210" /><di:waypoint x="3820" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a24" bpmnElement="a24"><di:waypoint x="3365" y="470" /><di:waypoint x="3420" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_a25" bpmnElement="a25"><di:waypoint x="3540" y="470" /><di:waypoint x="3571" y="470" /><di:waypoint x="3571" y="210" /><di:waypoint x="3602" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_HasilKonsultasi" bpmnElement="DOut_HasilKonsultasi"><di:waypoint x="400" y="430" /><di:waypoint x="400" y="410" /><di:waypoint x="458" y="410" /><di:waypoint x="458" y="396" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_HasilKonsultasi_AS_Review" bpmnElement="DIn_HasilKonsultasi_AS_Review"><di:waypoint x="476" y="371" /><di:waypoint x="1210" y="371" /><di:waypoint x="1210" y="450" /><di:waypoint x="1240" y="450" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_FormMinat" bpmnElement="DOut_FormMinat"><di:waypoint x="580" y="170" /><di:waypoint x="580" y="150" /><di:waypoint x="628" y="150" /><di:waypoint x="628" y="136" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_FormMinat_AS_Recap" bpmnElement="DIn_FormMinat_AS_Recap"><di:waypoint x="628" y="136" /><di:waypoint x="628" y="415" /><di:waypoint x="940" y="415" /><di:waypoint x="940" y="690" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_EmailDocs" bpmnElement="DOut_EmailDocs"><di:waypoint x="760" y="170" /><di:waypoint x="760" y="150" /><di:waypoint x="808" y="150" /><di:waypoint x="808" y="136" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_EmailDocs_AS_Recap" bpmnElement="DIn_EmailDocs_AS_Recap"><di:waypoint x="808" y="136" /><di:waypoint x="808" y="420" /><di:waypoint x="945" y="420" /><di:waypoint x="945" y="690" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_EmailDocs_AS_VerifyDocs" bpmnElement="DIn_EmailDocs_AS_VerifyDocs"><di:waypoint x="826" y="111" /><di:waypoint x="1120" y="111" /><di:waypoint x="1120" y="690" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_EmailDocs_AS_Review" bpmnElement="DIn_EmailDocs_AS_Review"><di:waypoint x="808" y="136" /><di:waypoint x="808" y="460" /><di:waypoint x="1240" y="460" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_ChecklistDok" bpmnElement="DOut_ChecklistDok"><di:waypoint x="1120" y="690" /><di:waypoint x="1120" y="670" /><di:waypoint x="1168" y="670" /><di:waypoint x="1168" y="656" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_ChecklistDok_AS_Review" bpmnElement="DIn_ChecklistDok_AS_Review"><di:waypoint x="1168" y="606" /><di:waypoint x="1168" y="480" /><di:waypoint x="1240" y="480" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_CatatanReview" bpmnElement="DOut_CatatanReview"><di:waypoint x="1300" y="430" /><di:waypoint x="1300" y="410" /><di:waypoint x="1358" y="410" /><di:waypoint x="1358" y="396" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_CatatanReview_AS_ReqRevisi" bpmnElement="DIn_CatatanReview_AS_ReqRevisi"><di:waypoint x="1376" y="371" /><di:waypoint x="1463" y="371" /><di:waypoint x="1463" y="470" /><di:waypoint x="1540" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_CatatanReview_AS_Shortlist" bpmnElement="DIn_CatatanReview_AS_Shortlist"><di:waypoint x="1376" y="371" /><di:waypoint x="1750" y="371" /><di:waypoint x="1750" y="470" /><di:waypoint x="1920" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_CatatanReview_AS_BuildList" bpmnElement="DIn_CatatanReview_AS_BuildList"><di:waypoint x="1376" y="371" /><di:waypoint x="2070" y="371" /><di:waypoint x="2070" y="470" /><di:waypoint x="2100" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_EmailRevisi" bpmnElement="DOut_EmailRevisi"><di:waypoint x="1600" y="430" /><di:waypoint x="1600" y="410" /><di:waypoint x="1648" y="410" /><di:waypoint x="1648" y="396" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_EmailRevisi_AS_FixDocs" bpmnElement="DIn_EmailRevisi_AS_FixDocs"><di:waypoint x="1666" y="371" /><di:waypoint x="1780" y="371" /><di:waypoint x="1780" y="250" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_DaftarUniv" bpmnElement="DOut_DaftarUniv"><di:waypoint x="2160" y="430" /><di:waypoint x="2160" y="410" /><di:waypoint x="2208" y="410" /><di:waypoint x="2208" y="396" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DaftarUniv_AS_Approve" bpmnElement="DIn_DaftarUniv_AS_Approve"><di:waypoint x="2226" y="371" /><di:waypoint x="2253" y="371" /><di:waypoint x="2253" y="210" /><di:waypoint x="2280" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DaftarUniv_AS_PrepDocs" bpmnElement="DIn_DaftarUniv_AS_PrepDocs"><di:waypoint x="2226" y="371" /><di:waypoint x="2530" y="371" /><di:waypoint x="2530" y="730" /><di:waypoint x="2580" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_BerkasAplikasi" bpmnElement="DOut_BerkasAplikasi"><di:waypoint x="2640" y="690" /><di:waypoint x="2640" y="670" /><di:waypoint x="2688" y="670" /><di:waypoint x="2688" y="656" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_BerkasAplikasi_AS_SubmitManual" bpmnElement="DIn_BerkasAplikasi_AS_SubmitManual"><di:waypoint x="2688" y="656" /><di:waypoint x="2688" y="730" /><di:waypoint x="2760" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_BuktiSubmit" bpmnElement="DOut_BuktiSubmit"><di:waypoint x="2820" y="690" /><di:waypoint x="2820" y="670" /><di:waypoint x="2868" y="670" /><di:waypoint x="2868" y="656" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_BuktiSubmit_AS_UpdateSheet" bpmnElement="DIn_BuktiSubmit_AS_UpdateSheet"><di:waypoint x="2868" y="656" /><di:waypoint x="2868" y="730" /><di:waypoint x="2940" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_StatusSheet" bpmnElement="DOut_StatusSheet"><di:waypoint x="3000" y="690" /><di:waypoint x="3000" y="670" /><di:waypoint x="3048" y="670" /><di:waypoint x="3048" y="656" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_Spreadsheet_AS_TrackResult" bpmnElement="DIn_Spreadsheet_AS_TrackResult"><di:waypoint x="1006" y="631" /><di:waypoint x="1006" y="660" /><di:waypoint x="3100" y="660" /><di:waypoint x="3100" y="450" /><di:waypoint x="3120" y="450" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_StatusSheet_AS_TrackResult" bpmnElement="DIn_StatusSheet_AS_TrackResult"><di:waypoint x="3048" y="606" /><di:waypoint x="3048" y="470" /><di:waypoint x="3120" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_EmailHasil" bpmnElement="DOut_EmailHasil"><di:waypoint x="3180" y="430" /><di:waypoint x="3180" y="410" /><di:waypoint x="3228" y="410" /><di:waypoint x="3228" y="396" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_EmailHasil_AS_RecordLoA" bpmnElement="DIn_EmailHasil_AS_RecordLoA"><di:waypoint x="3246" y="371" /><di:waypoint x="3303" y="371" /><di:waypoint x="3303" y="730" /><di:waypoint x="3420" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_EmailHasil_AS_NotifyNo" bpmnElement="DIn_EmailHasil_AS_NotifyNo"><di:waypoint x="3246" y="371" /><di:waypoint x="3380" y="371" /><di:waypoint x="3380" y="470" /><di:waypoint x="3420" y="470" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_ScanLoA" bpmnElement="DOut_ScanLoA"><di:waypoint x="3480" y="690" /><di:waypoint x="3480" y="670" /><di:waypoint x="3528" y="670" /><di:waypoint x="3528" y="656" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
