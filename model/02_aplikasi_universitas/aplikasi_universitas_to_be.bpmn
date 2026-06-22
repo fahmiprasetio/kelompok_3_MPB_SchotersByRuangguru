@@ -1,79 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Process_AppUniv_TB" targetNamespace="http://bpmn.io/schema/bpmn" exporter="manual" exporterVersion="2.0">
-  <bpmn:collaboration id="Collab_Process_AppUniv_TB">
-    <bpmn:participant id="Part_Process_AppUniv_TB" name="Schoters by Ruangguru - Pemrosesan Aplikasi Universitas (To-Be / Terdigitalisasi)" processRef="Process_AppUniv_TB" />
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Process_AppUniv_TB" targetNamespace="http://bpmn.io/schema/bpmn" exporter="manual" exporterVersion="3.0">
+  <bpmn:collaboration id="Collab_AppUniv_TB">
+    <bpmn:participant id="Part_AppUniv_TB" name="Schoters - Pemrosesan Aplikasi Universitas (To-Be)" processRef="Process_AppUniv_TB" />
   </bpmn:collaboration>
   <bpmn:process id="Process_AppUniv_TB" name="Pemrosesan Aplikasi Universitas (To-Be)" isExecutable="true" camunda:historyTimeToLive="P180D">
-    <bpmn:laneSet id="LaneSet_Process_AppUniv_TB">
-      <bpmn:lane id="L_Student" name="Calon Mahasiswa">
-        <bpmn:flowNodeRef>Start_App</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Sub_PrepBerkas</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_ReviseDocs</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="L_Mentor" name="Academic Mentor">
-        <bpmn:flowNodeRef>T_ReviewDocs</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_AdjustList</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_ApproveL1</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_L1</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_Track</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="L_Approval" name="Komite Kelayakan (Senior Counselor dan Manajer Program)">
-        <bpmn:flowNodeRef>T_ApproveL2</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_L2</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_ApproveL3</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_L3</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_HandleSubmitEscalation</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_SubmitRetry</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>End_SubmitFailed</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="L_System" name="Sistem Schoters (Otomasi)">
-        <bpmn:flowNodeRef>T_EvalApp</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_App</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_EscalateApproval</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>End_ApprovalReminder</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Sub_GenerateDossier</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_NotifySubmit</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_Submit</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_SubmitAck</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_RemindAdm</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>End_RemindAdm</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_Adm</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_RecordLoA</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_Notify</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>CA_Enroll</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>End_LoA</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_NotifyReject</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>End_NotAccepted</bpmn:flowNodeRef>
-      </bpmn:lane>
+    <bpmn:laneSet id="LaneSet_AppUniv">
+      <bpmn:lane id="L_Student" name="Calon Mahasiswa"><bpmn:flowNodeRef>Start_App</bpmn:flowNodeRef><bpmn:flowNodeRef>Sub_PrepBerkas</bpmn:flowNodeRef><bpmn:flowNodeRef>T_ReviseDocs</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="L_Mentor" name="Academic Mentor"><bpmn:flowNodeRef>T_ReviewDocs</bpmn:flowNodeRef><bpmn:flowNodeRef>T_ApproveL1</bpmn:flowNodeRef><bpmn:flowNodeRef>GW_L1</bpmn:flowNodeRef><bpmn:flowNodeRef>T_Track</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="L_Approval" name="Komite Kelayakan (Senior Counselor dan Manajer)"><bpmn:flowNodeRef>T_ApproveL2</bpmn:flowNodeRef><bpmn:flowNodeRef>GW_L2</bpmn:flowNodeRef><bpmn:flowNodeRef>T_ApproveL3</bpmn:flowNodeRef><bpmn:flowNodeRef>GW_L3</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="L_System" name="Sistem Schoters (Otomasi)"><bpmn:flowNodeRef>T_EvalApp</bpmn:flowNodeRef><bpmn:flowNodeRef>GW_App</bpmn:flowNodeRef><bpmn:flowNodeRef>T_EscalateApproval</bpmn:flowNodeRef><bpmn:flowNodeRef>End_ApprovalReminder</bpmn:flowNodeRef><bpmn:flowNodeRef>Sub_GenerateDossier</bpmn:flowNodeRef><bpmn:flowNodeRef>T_Submit</bpmn:flowNodeRef><bpmn:flowNodeRef>T_RemindAdm</bpmn:flowNodeRef><bpmn:flowNodeRef>End_RemindAdm</bpmn:flowNodeRef><bpmn:flowNodeRef>GW_Adm</bpmn:flowNodeRef><bpmn:flowNodeRef>T_Notify</bpmn:flowNodeRef><bpmn:flowNodeRef>End_LoA</bpmn:flowNodeRef><bpmn:flowNodeRef>T_NotifyReject</bpmn:flowNodeRef><bpmn:flowNodeRef>End_NotAccepted</bpmn:flowNodeRef></bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:startEvent id="Start_App" name="Ajukan Permintaan Aplikasi Universitas" camunda:formRef="form_app_request" camunda:formRefBinding="latest"><bpmn:outgoing>f1</bpmn:outgoing></bpmn:startEvent>
-    <bpmn:subProcess id="Sub_PrepBerkas" name="Persiapan dan Verifikasi Berkas (OCR Otomatis)"><bpmn:incoming>f1</bpmn:incoming><bpmn:outgoing>f2</bpmn:outgoing><bpmn:dataOutputAssociation id="DOut_Docs"><bpmn:targetRef>DObjRef_Docs</bpmn:targetRef></bpmn:dataOutputAssociation><bpmn:startEvent id="PB_Start"><bpmn:outgoing>pb1</bpmn:outgoing></bpmn:startEvent><bpmn:userTask id="PB_Collect" name="Unggah Dokumen Akademik dan Esai"><bpmn:incoming>pb1</bpmn:incoming><bpmn:outgoing>pb2</bpmn:outgoing></bpmn:userTask><bpmn:serviceTask id="PB_OCR" name="Validasi Kelengkapan dan Ekstraksi Data (OCR) Otomatis" camunda:expression="${true}"><bpmn:incoming>pb2</bpmn:incoming><bpmn:outgoing>pb3</bpmn:outgoing></bpmn:serviceTask><bpmn:endEvent id="PB_End"><bpmn:incoming>pb3</bpmn:incoming></bpmn:endEvent><bpmn:sequenceFlow id="pb1" sourceRef="PB_Start" targetRef="PB_Collect" /><bpmn:sequenceFlow id="pb2" sourceRef="PB_Collect" targetRef="PB_OCR" /><bpmn:sequenceFlow id="pb3" sourceRef="PB_OCR" targetRef="PB_End" /></bpmn:subProcess>
-    <bpmn:userTask id="T_ReviewDocs" name="Tinjau Kualitas Dokumen dan Esai" camunda:formRef="form_review_docs" camunda:formRefBinding="latest"><bpmn:incoming>f2</bpmn:incoming><bpmn:incoming>f_rev2</bpmn:incoming><bpmn:incoming>f_adj2</bpmn:incoming><bpmn:outgoing>f3</bpmn:outgoing><bpmn:property id="Prop_T_ReviewDocs_Docs" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_Docs_T_ReviewDocs"><bpmn:sourceRef>DObjRef_Docs</bpmn:sourceRef><bpmn:targetRef>Prop_T_ReviewDocs_Docs</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_Review"><bpmn:targetRef>DObjRef_Review</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
-    <bpmn:businessRuleTask id="T_EvalApp" name="Evaluasi Kesiapan Aplikasi (DMN)" camunda:decisionRef="Decision_Aplikasi" camunda:mapDecisionResult="singleEntry" camunda:resultVariable="appDecision"><bpmn:incoming>f3</bpmn:incoming><bpmn:outgoing>f4</bpmn:outgoing><bpmn:property id="Prop_T_EvalApp_Review" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_Review_T_EvalApp"><bpmn:sourceRef>DObjRef_Review</bpmn:sourceRef><bpmn:targetRef>Prop_T_EvalApp_Review</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:businessRuleTask>
-    <bpmn:exclusiveGateway id="GW_App" name="Kesiapan Aplikasi?" default="f_ok"><bpmn:incoming>f4</bpmn:incoming><bpmn:outgoing>f_rev</bpmn:outgoing><bpmn:outgoing>f_adj</bpmn:outgoing><bpmn:outgoing>f_ok</bpmn:outgoing></bpmn:exclusiveGateway>
-    <bpmn:userTask id="T_ReviseDocs" name="Perbaiki Dokumen Aplikasi"><bpmn:incoming>f_rev</bpmn:incoming><bpmn:incoming>fL1n</bpmn:incoming><bpmn:incoming>fL2n</bpmn:incoming><bpmn:incoming>fL3n</bpmn:incoming><bpmn:outgoing>f_rev2</bpmn:outgoing></bpmn:userTask>
-    <bpmn:userTask id="T_AdjustList" name="Sesuaikan Daftar Universitas Target"><bpmn:incoming>f_adj</bpmn:incoming><bpmn:outgoing>f_adj2</bpmn:outgoing></bpmn:userTask>
-    <bpmn:userTask id="T_ApproveL1" name="Approval L1: Verifikasi Akhir Berkas (Academic Mentor)"><bpmn:extensionElements><camunda:formData><camunda:formField id="l1Approved" label="Setujui di tingkat L1?" type="boolean" /></camunda:formData></bpmn:extensionElements><bpmn:incoming>f_ok</bpmn:incoming><bpmn:outgoing>fL1</bpmn:outgoing><bpmn:property id="Prop_T_ApproveL1_Review" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_Review_T_ApproveL1"><bpmn:sourceRef>DObjRef_Review</bpmn:sourceRef><bpmn:targetRef>Prop_T_ApproveL1_Review</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:userTask>
+    <bpmn:startEvent id="Start_App" name="Ajukan Aplikasi Universitas" camunda:formRef="form_app_request" camunda:formRefBinding="latest"><bpmn:outgoing>f1</bpmn:outgoing></bpmn:startEvent>
+    <bpmn:subProcess id="Sub_PrepBerkas" name="Persiapan dan Verifikasi Berkas (OCR Otomatis)"><bpmn:incoming>f1</bpmn:incoming><bpmn:outgoing>f2</bpmn:outgoing><bpmn:dataOutputAssociation id="DOut_Docs"><bpmn:targetRef>DObjRef_Docs</bpmn:targetRef></bpmn:dataOutputAssociation><bpmn:startEvent id="PB_Start"><bpmn:outgoing>pb1</bpmn:outgoing></bpmn:startEvent><bpmn:userTask id="PB_Collect" name="Unggah Dokumen dan Esai"><bpmn:incoming>pb1</bpmn:incoming><bpmn:outgoing>pb2</bpmn:outgoing></bpmn:userTask><bpmn:serviceTask id="PB_OCR" name="Validasi Kelengkapan dan OCR Otomatis" camunda:expression="${true}"><bpmn:incoming>pb2</bpmn:incoming><bpmn:outgoing>pb3</bpmn:outgoing></bpmn:serviceTask><bpmn:endEvent id="PB_End"><bpmn:incoming>pb3</bpmn:incoming></bpmn:endEvent><bpmn:sequenceFlow id="pb1" sourceRef="PB_Start" targetRef="PB_Collect" /><bpmn:sequenceFlow id="pb2" sourceRef="PB_Collect" targetRef="PB_OCR" /><bpmn:sequenceFlow id="pb3" sourceRef="PB_OCR" targetRef="PB_End" /></bpmn:subProcess>
+    <bpmn:userTask id="T_ReviewDocs" name="Tinjau Kualitas Dokumen" camunda:formRef="form_review_docs" camunda:formRefBinding="latest"><bpmn:incoming>f2</bpmn:incoming><bpmn:incoming>f_rev2</bpmn:incoming><bpmn:outgoing>f3</bpmn:outgoing><bpmn:property id="Prop_Rev_Docs" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_Docs_Rev"><bpmn:sourceRef>DObjRef_Docs</bpmn:sourceRef><bpmn:targetRef>Prop_Rev_Docs</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:userTask>
+    <bpmn:businessRuleTask id="T_EvalApp" name="Evaluasi Kesiapan Aplikasi (DMN)" camunda:decisionRef="Decision_Aplikasi" camunda:mapDecisionResult="singleEntry" camunda:resultVariable="appDecision"><bpmn:incoming>f3</bpmn:incoming><bpmn:outgoing>f4</bpmn:outgoing></bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="GW_App" name="Siap Diajukan?" default="f_ok"><bpmn:incoming>f4</bpmn:incoming><bpmn:outgoing>f_rev</bpmn:outgoing><bpmn:outgoing>f_ok</bpmn:outgoing></bpmn:exclusiveGateway>
+    <bpmn:userTask id="T_ReviseDocs" name="Perbaiki Dokumen"><bpmn:incoming>f_rev</bpmn:incoming><bpmn:incoming>fL1n</bpmn:incoming><bpmn:incoming>fL2n</bpmn:incoming><bpmn:incoming>fL3n</bpmn:incoming><bpmn:outgoing>f_rev2</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="T_ApproveL1" name="Approval L1: Verifikasi Berkas (Mentor)"><bpmn:extensionElements><camunda:formData><camunda:formField id="l1Approved" label="Setujui L1?" type="boolean" /></camunda:formData></bpmn:extensionElements><bpmn:incoming>f_ok</bpmn:incoming><bpmn:outgoing>fL1</bpmn:outgoing></bpmn:userTask>
     <bpmn:boundaryEvent id="Bnd_L1SLA" name="SLA 1 Hari" attachedToRef="T_ApproveL1" cancelActivity="false"><bpmn:outgoing>fe1</bpmn:outgoing><bpmn:timerEventDefinition><bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P1D</bpmn:timeDuration></bpmn:timerEventDefinition></bpmn:boundaryEvent>
     <bpmn:exclusiveGateway id="GW_L1" name="L1 Setuju?" default="fL1n"><bpmn:incoming>fL1</bpmn:incoming><bpmn:outgoing>fL1y</bpmn:outgoing><bpmn:outgoing>fL1n</bpmn:outgoing></bpmn:exclusiveGateway>
-    <bpmn:userTask id="T_ApproveL2" name="Approval L2: Validasi Kelayakan (Senior Counselor)"><bpmn:extensionElements><camunda:formData><camunda:formField id="l2Approved" label="Setujui di tingkat L2?" type="boolean" /></camunda:formData></bpmn:extensionElements><bpmn:incoming>fL1y</bpmn:incoming><bpmn:outgoing>fL2</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="T_ApproveL2" name="Approval L2: Validasi Kelayakan (Senior Counselor)"><bpmn:extensionElements><camunda:formData><camunda:formField id="l2Approved" label="Setujui L2?" type="boolean" /></camunda:formData></bpmn:extensionElements><bpmn:incoming>fL1y</bpmn:incoming><bpmn:outgoing>fL2</bpmn:outgoing></bpmn:userTask>
     <bpmn:boundaryEvent id="Bnd_L2SLA" name="SLA 1 Hari" attachedToRef="T_ApproveL2" cancelActivity="false"><bpmn:outgoing>fe2</bpmn:outgoing><bpmn:timerEventDefinition><bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P1D</bpmn:timeDuration></bpmn:timerEventDefinition></bpmn:boundaryEvent>
     <bpmn:exclusiveGateway id="GW_L2" name="L2 Setuju?" default="fL2n"><bpmn:incoming>fL2</bpmn:incoming><bpmn:outgoing>fL2y</bpmn:outgoing><bpmn:outgoing>fL2n</bpmn:outgoing></bpmn:exclusiveGateway>
-    <bpmn:userTask id="T_ApproveL3" name="Approval L3: Persetujuan Final (Manajer Program)"><bpmn:extensionElements><camunda:formData><camunda:formField id="l3Approved" label="Setujui di tingkat L3 (final)?" type="boolean" /></camunda:formData></bpmn:extensionElements><bpmn:incoming>fL2y</bpmn:incoming><bpmn:outgoing>fL3</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="T_ApproveL3" name="Approval L3: Persetujuan Final (Manajer Program)"><bpmn:extensionElements><camunda:formData><camunda:formField id="l3Approved" label="Setujui L3 final?" type="boolean" /></camunda:formData></bpmn:extensionElements><bpmn:incoming>fL2y</bpmn:incoming><bpmn:outgoing>fL3</bpmn:outgoing></bpmn:userTask>
     <bpmn:boundaryEvent id="Bnd_L3SLA" name="SLA 1 Hari" attachedToRef="T_ApproveL3" cancelActivity="false"><bpmn:outgoing>fe3</bpmn:outgoing><bpmn:timerEventDefinition><bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P1D</bpmn:timeDuration></bpmn:timerEventDefinition></bpmn:boundaryEvent>
     <bpmn:exclusiveGateway id="GW_L3" name="L3 Setuju?" default="fL3n"><bpmn:incoming>fL3</bpmn:incoming><bpmn:outgoing>fL3y</bpmn:outgoing><bpmn:outgoing>fL3n</bpmn:outgoing></bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="T_EscalateApproval" name="Kirim Eskalasi: Approval Tertunda"><bpmn:extensionElements><camunda:connector><camunda:connectorId>http-connector</camunda:connectorId><camunda:inputOutput><camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter><camunda:inputParameter name="method">POST</camunda:inputParameter><camunda:inputParameter name="headers"><camunda:map><camunda:entry key="Content-Type">application/json</camunda:entry></camunda:map></camunda:inputParameter><camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\u23F0 [ESKALASI] Approval aplikasi melewati SLA 1 hari. Pengingat otomatis dikirim ke approver berikutnya."}</camunda:inputParameter><camunda:outputParameter name="logEscalate">${statusCode}</camunda:outputParameter></camunda:inputOutput></camunda:connector></bpmn:extensionElements><bpmn:incoming>fe1</bpmn:incoming><bpmn:incoming>fe2</bpmn:incoming><bpmn:incoming>fe3</bpmn:incoming><bpmn:outgoing>fe4</bpmn:outgoing></bpmn:serviceTask>
+    <bpmn:serviceTask id="T_EscalateApproval" name="Kirim Eskalasi Approval Tertunda" camunda:expression="${true}"><bpmn:incoming>fe1</bpmn:incoming><bpmn:incoming>fe2</bpmn:incoming><bpmn:incoming>fe3</bpmn:incoming><bpmn:outgoing>fe4</bpmn:outgoing></bpmn:serviceTask>
     <bpmn:endEvent id="End_ApprovalReminder" name="Pengingat Approval Terkirim"><bpmn:incoming>fe4</bpmn:incoming></bpmn:endEvent>
-    <bpmn:subProcess id="Sub_GenerateDossier" name="Generate Dokumen dan Tanda Tangan Digital (Auto-PDF)"><bpmn:incoming>fL3y</bpmn:incoming><bpmn:outgoing>fG</bpmn:outgoing><bpmn:dataOutputAssociation id="DOut_SignedPDF"><bpmn:targetRef>DObjRef_SignedPDF</bpmn:targetRef></bpmn:dataOutputAssociation><bpmn:startEvent id="GD_Start"><bpmn:outgoing>gd1</bpmn:outgoing></bpmn:startEvent><bpmn:serviceTask id="GD_Render" name="Render Paket Aplikasi ke PDF Otomatis" camunda:expression="${true}"><bpmn:incoming>gd1</bpmn:incoming><bpmn:outgoing>gd2</bpmn:outgoing></bpmn:serviceTask><bpmn:serviceTask id="GD_Sign" name="Terapkan Tanda Tangan Digital (e-Signature)" camunda:expression="${true}"><bpmn:incoming>gd2</bpmn:incoming><bpmn:outgoing>gd3</bpmn:outgoing></bpmn:serviceTask><bpmn:endEvent id="GD_End"><bpmn:incoming>gd3</bpmn:incoming></bpmn:endEvent><bpmn:sequenceFlow id="gd1" sourceRef="GD_Start" targetRef="GD_Render" /><bpmn:sequenceFlow id="gd2" sourceRef="GD_Render" targetRef="GD_Sign" /><bpmn:sequenceFlow id="gd3" sourceRef="GD_Sign" targetRef="GD_End" /></bpmn:subProcess>
-    <bpmn:serviceTask id="T_NotifySubmit" name="Beritahu Mahasiswa: Submit Dimulai"><bpmn:extensionElements><camunda:connector><camunda:connectorId>http-connector</camunda:connectorId><camunda:inputOutput><camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter><camunda:inputParameter name="method">POST</camunda:inputParameter><camunda:inputParameter name="headers"><camunda:map><camunda:entry key="Content-Type">application/json</camunda:entry></camunda:map></camunda:inputParameter><camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83D\uDCE8 [SISTEM] Berkas disetujui 3 tingkat dan ditandatangani digital. Memulai submit otomatis ke portal universitas."}</camunda:inputParameter><camunda:outputParameter name="logNotifySubmit">${statusCode}</camunda:outputParameter></camunda:inputOutput></camunda:connector></bpmn:extensionElements><bpmn:incoming>fG</bpmn:incoming><bpmn:outgoing>f_ns</bpmn:outgoing></bpmn:serviceTask>
-    <bpmn:serviceTask id="T_Submit" name="Submit Aplikasi ke Portal Universitas"><bpmn:extensionElements><camunda:connector><camunda:connectorId>http-connector</camunda:connectorId><camunda:inputOutput><camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter><camunda:inputParameter name="method">POST</camunda:inputParameter><camunda:inputParameter name="headers"><camunda:map><camunda:entry key="Content-Type">application/json</camunda:entry></camunda:map></camunda:inputParameter><camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83C\uDFDB\uFE0F [SISTEM] Aplikasi telah dikirim otomatis ke portal universitas tujuan."}</camunda:inputParameter><camunda:outputParameter name="logSubmit">${statusCode}</camunda:outputParameter><camunda:outputParameter name="submitAck">${statusCode == 200}</camunda:outputParameter></camunda:inputOutput></camunda:connector></bpmn:extensionElements><bpmn:incoming>f_ns</bpmn:incoming><bpmn:incoming>f_retry</bpmn:incoming><bpmn:outgoing>f10</bpmn:outgoing><bpmn:property id="Prop_T_Submit_SignedPDF" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_SignedPDF_T_Submit"><bpmn:sourceRef>DObjRef_SignedPDF</bpmn:sourceRef><bpmn:targetRef>Prop_T_Submit_SignedPDF</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:serviceTask>
-    <bpmn:exclusiveGateway id="GW_SubmitAck" name="Submit Berhasil?" default="f_ack_ok"><bpmn:incoming>f10</bpmn:incoming><bpmn:outgoing>f_ack_ok</bpmn:outgoing><bpmn:outgoing>f_ack_fail</bpmn:outgoing></bpmn:exclusiveGateway>
-    <bpmn:userTask id="T_HandleSubmitEscalation" name="Tangani Kegagalan Submit (Cek Portal)"><bpmn:extensionElements><camunda:executionListener event="end" expression="${execution.setVariable('submitRetryCount', (submitRetryCount == null ? 0 : submitRetryCount) + 1)}" /></bpmn:extensionElements><bpmn:incoming>f_ack_fail</bpmn:incoming><bpmn:outgoing>f_esc</bpmn:outgoing></bpmn:userTask>
-    <bpmn:exclusiveGateway id="GW_SubmitRetry" name="Coba Submit Lagi?" default="f_fail"><bpmn:incoming>f_esc</bpmn:incoming><bpmn:outgoing>f_retry</bpmn:outgoing><bpmn:outgoing>f_fail</bpmn:outgoing></bpmn:exclusiveGateway>
-    <bpmn:endEvent id="End_SubmitFailed" name="Submit Gagal Permanen (Eskalasi)"><bpmn:incoming>f_fail</bpmn:incoming></bpmn:endEvent>
-    <bpmn:userTask id="T_Track" name="Lacak Hasil Penerimaan" camunda:formRef="form_admission" camunda:formRefBinding="latest"><bpmn:incoming>f_ack_ok</bpmn:incoming><bpmn:outgoing>f11</bpmn:outgoing></bpmn:userTask>
+    <bpmn:subProcess id="Sub_GenerateDossier" name="Generate Dokumen dan Tanda Tangan Digital (Auto-PDF)"><bpmn:incoming>fL3y</bpmn:incoming><bpmn:outgoing>fG</bpmn:outgoing><bpmn:dataOutputAssociation id="DOut_PDF"><bpmn:targetRef>DObjRef_SignedPDF</bpmn:targetRef></bpmn:dataOutputAssociation><bpmn:startEvent id="GD_Start"><bpmn:outgoing>gd1</bpmn:outgoing></bpmn:startEvent><bpmn:serviceTask id="GD_Render" name="Render Paket Aplikasi ke PDF Otomatis" camunda:expression="${true}"><bpmn:incoming>gd1</bpmn:incoming><bpmn:outgoing>gd2</bpmn:outgoing></bpmn:serviceTask><bpmn:serviceTask id="GD_Sign" name="Terapkan Tanda Tangan Digital (e-Signature)" camunda:expression="${true}"><bpmn:incoming>gd2</bpmn:incoming><bpmn:outgoing>gd3</bpmn:outgoing></bpmn:serviceTask><bpmn:endEvent id="GD_End"><bpmn:incoming>gd3</bpmn:incoming></bpmn:endEvent><bpmn:sequenceFlow id="gd1" sourceRef="GD_Start" targetRef="GD_Render" /><bpmn:sequenceFlow id="gd2" sourceRef="GD_Render" targetRef="GD_Sign" /><bpmn:sequenceFlow id="gd3" sourceRef="GD_Sign" targetRef="GD_End" /></bpmn:subProcess>
+    <bpmn:serviceTask id="T_Submit" name="Submit Aplikasi ke Portal Universitas"><bpmn:extensionElements><camunda:connector><camunda:connectorId>http-connector</camunda:connectorId><camunda:inputOutput><camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter><camunda:inputParameter name="method">POST</camunda:inputParameter><camunda:inputParameter name="headers"><camunda:map><camunda:entry key="Content-Type">application/json</camunda:entry></camunda:map></camunda:inputParameter><camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83C\uDFDB\uFE0F [SISTEM] Berkas disetujui 3 tingkat dan ditandatangani digital. Aplikasi dikirim otomatis ke portal universitas."}</camunda:inputParameter><camunda:outputParameter name="logSubmit">${statusCode}</camunda:outputParameter></camunda:inputOutput></camunda:connector></bpmn:extensionElements><bpmn:incoming>fG</bpmn:incoming><bpmn:outgoing>f5</bpmn:outgoing><bpmn:property id="Prop_Sub_PDF" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_PDF_Sub"><bpmn:sourceRef>DObjRef_SignedPDF</bpmn:sourceRef><bpmn:targetRef>Prop_Sub_PDF</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:serviceTask>
+    <bpmn:userTask id="T_Track" name="Lacak Hasil Penerimaan" camunda:formRef="form_admission" camunda:formRefBinding="latest"><bpmn:incoming>f5</bpmn:incoming><bpmn:outgoing>f11</bpmn:outgoing></bpmn:userTask>
     <bpmn:boundaryEvent id="Bnd_TrackSLA" name="3 Hari Tanpa Hasil" attachedToRef="T_Track" cancelActivity="false"><bpmn:outgoing>fb1</bpmn:outgoing><bpmn:timerEventDefinition><bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P3D</bpmn:timeDuration></bpmn:timerEventDefinition></bpmn:boundaryEvent>
-    <bpmn:serviceTask id="T_RemindAdm" name="Kirim Pengingat Status Aplikasi"><bpmn:extensionElements><camunda:connector><camunda:connectorId>http-connector</camunda:connectorId><camunda:inputOutput><camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter><camunda:inputParameter name="method">POST</camunda:inputParameter><camunda:inputParameter name="headers"><camunda:map><camunda:entry key="Content-Type">application/json</camunda:entry></camunda:map></camunda:inputParameter><camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\u23F0 [PENGINGAT] Hasil penerimaan belum diperoleh. Pengingat status aplikasi dikirim otomatis."}</camunda:inputParameter><camunda:outputParameter name="logRemindAdm">${statusCode}</camunda:outputParameter></camunda:inputOutput></camunda:connector></bpmn:extensionElements><bpmn:incoming>fb1</bpmn:incoming><bpmn:outgoing>fb2</bpmn:outgoing></bpmn:serviceTask>
-    <bpmn:endEvent id="End_RemindAdm" name="Pengingat Aplikasi Terkirim"><bpmn:incoming>fb2</bpmn:incoming></bpmn:endEvent>
+    <bpmn:serviceTask id="T_RemindAdm" name="Kirim Pengingat Status" camunda:expression="${true}"><bpmn:incoming>fb1</bpmn:incoming><bpmn:outgoing>fb2</bpmn:outgoing></bpmn:serviceTask>
+    <bpmn:endEvent id="End_RemindAdm" name="Pengingat Terkirim"><bpmn:incoming>fb2</bpmn:incoming></bpmn:endEvent>
     <bpmn:exclusiveGateway id="GW_Adm" name="Hasil Penerimaan?" default="f_reject"><bpmn:incoming>f11</bpmn:incoming><bpmn:outgoing>f12</bpmn:outgoing><bpmn:outgoing>f_reject</bpmn:outgoing></bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="T_RecordLoA" name="Catat Letter of Acceptance"><bpmn:extensionElements><camunda:connector><camunda:connectorId>http-connector</camunda:connectorId><camunda:inputOutput><camunda:inputParameter name="url">https://api.tel
+    <bpmn:serviceTask id="T_Notify" name="Kirim Notifikasi Diterima"><bpmn:extensionElements><camunda:connector><camunda:connectorId>http-connector</camunda:connectorId><camunda:inputOutput><camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter><camunda:inputParameter name="method">POST</camunda:inputParameter><camunda:inputParameter name="headers"><camunda:map><camunda:entry key="Content-Type">application/json</camunda:entry></camunda:map></camunda:inputParameter><camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83C\uDF89 Selamat! Aplikasi diterima. Notifikasi hasil dikirim ke mahasiswa."}</camunda:inputParameter><camunda:outputParameter name="logNotify">${statusCode}</camunda:outputParameter></camunda:inputOutput></camunda:connector></bpmn:extensionElements><bpmn:incoming>f12</bpmn:incoming><bpmn:outgoing>f13</bpmn:outgoing></bpmn:serviceTask>
+    <bpmn:endEvent id="End_LoA" name="LoA Diterima"><bpmn:incoming>f13</bpmn:incoming></bpmn:endEvent>
+    <bpmn:serviceTask id="T_NotifyReject" name="Kirim Notifikasi Penolakan dan Tindak Lanjut" camunda:expression="${true}"><bpmn:incoming>f_reject</bpmn:incoming><bpmn:outgoing>f_rej2</bpmn:outgoing></bpmn:serviceTask>
+    <bpmn:endEvent id="End_NotAccepted" name="Aplikasi Tidak Diterima"><bpmn:incoming>f_rej2</bpmn:incoming></bpmn:endEvent>
+    <bpmn:dataObjectReference id="DObjRef_Docs" name="Dokumen Akademik Tervalidasi" dataObjectRef="DObj_Docs" /><bpmn:dataObject id="DObj_Docs" />
+    <bpmn:dataObjectReference id="DObjRef_SignedPDF" name="Dokumen Aplikasi Bertanda Tangan Digital (PDF)" dataObjectRef="DObj_PDF" /><bpmn:dataObject id="DObj_PDF" />
+    <bpmn:sequenceFlow id="f1" sourceRef="Start_App" targetRef="Sub_PrepBerkas" />
+    <bpmn:sequenceFlow id="f2" sourceRef="Sub_PrepBerkas" targetRef="T_ReviewDocs" />
+    <bpmn:sequenceFlow id="f3" sourceRef="T_ReviewDocs" targetRef="T_EvalApp" />
+    <bpmn:sequenceFlow id="f4" sourceRef="T_EvalApp" targetRef="GW_App" />
+    <bpmn:sequenceFlow id="f_rev" sourceRef="GW_App" targetRef="T_ReviseDocs" name="Revisi"><bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${appDecision==&quot;Revise Documents&quot;}</bpmn:conditionExpression></bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f_rev2" sourceRef="T_ReviseDocs" targetRef="T_ReviewDocs" />
+    <bpmn:sequenceFlow id="f_ok" sourceRef="GW_App" targetRef="T_ApproveL1" name="Siap" />
+    <bpmn:sequenceFlow id="fL1" sourceRef="T_ApproveL1" targetRef="GW_L1" />
+    <bpmn:sequenceFlow id="fL1y" sourceRef="GW_L1" targetRef="T_ApproveL2" name="Setuju"><bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${l1Approved==true}</bpmn:conditionExpression></bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fL1n" sourceRef="GW_L1" targetRef="T_ReviseDocs" name="Revisi" />
+    <bpmn:sequenceFlow id="fL2" sourceRef="T_ApproveL2" targetRef="GW_L2" />
+    <bpmn:sequenceFlow id="fL2y" sourceRef="GW_L2" targetRef="T_ApproveL3" name="Setuju"><bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${l2Approved==true}</bpmn:conditionExpression></bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fL2n" sourceRef="GW_L2" targetRef="T_ReviseDocs" name="Revisi" />
+    <bpmn:sequenceFlow id="fL3" sourceRef="T_ApproveL3" targetRef="GW_L3" />
+    <bpmn:sequenceFlow id="fL3y" sourceRef="GW_L3" targetRef="Sub_GenerateDossier" name="Setuju"><bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${l3Approved==true}</bpmn:conditionExpression></bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fL3n" sourceRef="GW_L3" targetRef="T_ReviseDocs" name="Revisi" />
+    <bpmn:sequenceFlow id="fe1" sourceRef="Bnd_L1SLA" targetRef="T_EscalateApproval" />
+    <bpmn:sequenceFlow id="fe2" sourceRef="Bnd_L2SLA" targetRef="T_EscalateApproval" />
+    <bpmn:sequenceFlow id="fe3" sourceRef="Bnd_L3SLA" targetRef="T_EscalateApproval" />
+    <bpmn:sequenceFlow id="fe4" sourceRef="T_EscalateApproval" targetRef="End_ApprovalReminder" />
+    <bpmn:sequenceFlow id="fG" sourceRef="Sub_GenerateDossier" targetRef="T_Submit" />
+    <bpmn:sequenceFlow id="f5" sourceRef="T_Submit" targetRef="T_Track" />
+    <bpmn:sequenceFlow id="f11" sourceRef="T_Track" targetRef="GW_Adm" />
+    <bpmn:sequenceFlow id="fb1" sourceRef="Bnd_TrackSLA" targetRef="T_RemindAdm" />
+    <bpmn:sequenceFlow id="fb2" sourceRef="T_RemindAdm" targetRef="End_RemindAdm" />
+    <bpmn:sequenceFlow id="f12" sourceRef="GW_Adm" targetRef="T_Notify" name="Diterima"><bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${admissionResult==&quot;Accepted&quot;}</bpmn:conditionExpression></bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f13" sourceRef="T_Notify" targetRef="End_LoA" />
+    <bpmn:sequenceFlow id="f_reject" sourceRef="GW_Adm" targetRef="T_NotifyReject" name="Ditolak" />
+    <bpmn:sequenceFlow id="f_rej2" sourceRef="T_NotifyReject" targetRef="End_NotAccepted" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diag">
+    <bpmndi:BPMNPlane id="Plane" bpmnElement="Collab_AppUniv_TB">
+      <bpmndi:BPMNShape id="di_Part" bpmnElement="Part_AppUniv_TB" isHorizontal="true"><dc:Bounds x="160" y="80" width="3050" height="860" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Student" bpmnElement="L_Student" isHorizontal="true"><dc:Bounds x="190" y="80" width="3020" height="200" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Mentor" bpmnElement="L_Mentor" isHorizontal="true"><dc:Bounds x="190" y="280" width="3020" height="200" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Approval" bpmnElement="L_Approval" isHorizontal="true"><dc:Bounds x="190" y="480" width="3020" height="200" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_System" bpmnElement="L_System" isHorizontal="true"><dc:Bounds x="190" y="680" width="3020" height="260" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_Start_App" bpmnElement="Start_App"><dc:Bounds x="230" y="162" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_Sub_PrepBerkas" bpmnElement="Sub_PrepBerkas"><dc:Bounds x="320" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ReviseDocs" bpmnElement="T_ReviseDocs"><dc:Bounds x="700" y="140" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ReviewDocs" bpmnElement="T_ReviewDocs"><dc:Bounds x="320" y="340" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ApproveL1" bpmnElement="T_ApproveL1"><dc:Bounds x="900" y="340" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_Bnd_L1SLA" bpmnElement="Bnd_L1SLA"><dc:Bounds x="942" y="402" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_L1" bpmnElement="GW_L1"><dc:Bounds x="1080" y="355" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Track" bpmnElement="T_Track"><dc:Bounds x="2200" y="340" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_Bnd_TrackSLA" bpmnElement="Bnd_TrackSLA"><dc:Bounds x="2242" y="402" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ApproveL2" bpmnElement="T_ApproveL2"><dc:Bounds x="1240" y="540" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_Bnd_L2SLA" bpmnElement="Bnd_L2SLA"><dc:Bounds x="1282" y="602" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_L2" bpmnElement="GW_L2"><dc:Bounds x="1420" y="555" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ApproveL3" bpmnElement="T_ApproveL3"><dc:Bounds x="1560" y="540" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_Bnd_L3SLA" bpmnElement="Bnd_L3SLA"><dc:Bounds x="1602" y="602" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_L3" bpmnElement="GW_L3"><dc:Bounds x="1740" y="555" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_EvalApp" bpmnElement="T_EvalApp"><dc:Bounds x="320" y="740" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_App" bpmnElement="GW_App"><dc:Bounds x="540" y="755" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_EscalateApproval" bpmnElement="T_EscalateApproval"><dc:Bounds x="1240" y="740" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_End_ApprovalReminder" bpmnElement="End_ApprovalReminder"><dc:Bounds x="1420" y="762" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_Sub_GenerateDossier" bpmnElement="Sub_GenerateDossier"><dc:Bounds x="1900" y="740" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Submit" bpmnElement="T_Submit"><dc:Bounds x="2080" y="740" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_Adm" bpmnElement="GW_Adm"><dc:Bounds x="2380" y="755" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Notify" bpmnElement="T_Notify"><dc:Bounds x="2540" y="740" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_End_LoA" bpmnElement="End_LoA"><dc:Bounds x="2740" y="762" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_RemindAdm" bpmnElement="T_RemindAdm"><dc:Bounds x="2380" y="860" width="120" height="60" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_End_RemindAdm" bpmnElement="End_RemindAdm"><dc:Bounds x="2560" y="872" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_NotifyReject" bpmnElement="T_NotifyReject"><dc:Bounds x="2540" y="860" width="120" height="60" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_End_NotAccepted" bpmnElement="End_NotAccepted"><dc:Bounds x="2740" y="872" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_Docs" bpmnElement="DObjRef_Docs"><dc:Bounds x="400" y="86" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DObjRef_SignedPDF" bpmnElement="DObjRef_SignedPDF"><dc:Bounds x="1860" y="640" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_f1" bpmnElement="f1"><di:waypoint x="266" y="180" /><di:waypoint x="320" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f2" bpmnElement="f2"><di:waypoint x="380" y="220" /><di:waypoint x="380" y="340" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f3" bpmnElement="f3"><di:waypoint x="440" y="380" /><di:waypoint x="490" y="380" /><di:waypoint x="490" y="780" /><di:waypoint x="540" y="780" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f4" bpmnElement="f4"><di:waypoint x="440" y="780" /><di:waypoint x="540" y="780" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f_rev" bpmnElement="f_rev"><di:waypoint x="565" y="755" /><di:waypoint x="565" y="180" /><di:waypoint x="700" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f_rev2" bpmnElement="f_rev2"><di:waypoint x="760" y="220" /><di:waypoint x="760" y="260" /><di:waypoint x="380" y="260" /><di:waypoint x="380" y="340" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f_ok" bpmnElement="f_ok"><di:waypoint x="590" y="780" /><di:waypoint x="840" y="780" /><di:waypoint x="840" y="380" /><di:waypoint x="900" y="380" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fL1" bpmnElement="fL1"><di:waypoint x="1020" y="380" /><di:waypoint x="1080" y="380" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fL1y" bpmnElement="fL1y"><di:waypoint x="1105" y="405" /><di:waypoint x="1105" y="580" /><di:waypoint x="1240" y="580" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fL1n" bpmnElement="fL1n"><di:waypoint x="1105" y="355" /><di:waypoint x="1105" y="120" /><di:waypoint x="760" y="120" /><di:waypoint x="760" y="140" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fL2" bpmnElement="fL2"><di:waypoint x="1360" y="580" /><di:waypoint x="1420" y="580" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fL2y" bpmnElement="fL2y"><di:waypoint x="1470" y="580" /><di:waypoint x="1560" y="580" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fL2n" bpmnElement="fL2n"><di:waypoint x="1445" y="555" /><di:waypoint x="1445" y="110" /><di:waypoint x="760" y="110" /><di:waypoint x="760" y="140" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fL3" bpmnElement="fL3"><di:waypoint x="1680" y="580" /><di:waypoint x="1740" y="580" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fL3y" bpmnElement="fL3y"><di:waypoint x="1790" y="580" /><di:waypoint x="1960" y="580" /><di:waypoint x="1960" y="740" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fL3n" bpmnElement="fL3n"><di:waypoint x="1765" y="555" /><di:waypoint x="1765" y="100" /><di:waypoint x="760" y="100" /><di:waypoint x="760" y="140" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fe1" bpmnElement="fe1"><di:waypoint x="960" y="438" /><di:waypoint x="960" y="780" /><di:waypoint x="1240" y="780" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fe2" bpmnElement="fe2"><di:waypoint x="1300" y="638" /><di:waypoint x="1300" y="740" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fe3" bpmnElement="fe3"><di:waypoint x="1620" y="638" /><di:waypoint x="1620" y="700" /><di:waypoint x="1360" y="700" /><di:waypoint x="1360" y="780" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fe4" bpmnElement="fe4"><di:waypoint x="1360" y="780" /><di:waypoint x="1420" y="780" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fG" bpmnElement="fG"><di:waypoint x="2020" y="780" /><di:waypoint x="2080" y="780" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f5" bpmnElement="f5"><di:waypoint x="2200" y="780" /><di:waypoint x="2260" y="780" /><di:waypoint x="2260" y="420" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f11" bpmnElement="f11"><di:waypoint x="2320" y="380" /><di:waypoint x="2405" y="380" /><di:waypoint x="2405" y="755" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fb1" bpmnElement="fb1"><di:waypoint x="2260" y="438" /><di:waypoint x="2260" y="890" /><di:waypoint x="2380" y="890" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fb2" bpmnElement="fb2"><di:waypoint x="2500" y="890" /><di:waypoint x="2560" y="890" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f12" bpmnElement="f12"><di:waypoint x="2430" y="780" /><di:waypoint x="2540" y="780" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f13" bpmnElement="f13"><di:waypoint x="2660" y="780" /><di:waypoint x="2740" y="780" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f_reject" bpmnElement="f_reject"><di:waypoint x="2405" y="805" /><di:waypoint x="2405" y="890" /><di:waypoint x="2540" y="890" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f_rej2" bpmnElement="f_rej2"><di:waypoint x="2660" y="890" /><di:waypoint x="2740" y="890" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_Docs" bpmnElement="DOut_Docs"><di:waypoint x="400" y="160" /><di:waypoint x="400" y="136" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_Docs_Rev" bpmnElement="DIn_Docs_Rev"><di:waypoint x="418" y="136" /><di:waypoint x="418" y="320" /><di:waypoint x="380" y="320" /><di:waypoint x="380" y="340" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DOut_PDF" bpmnElement="DOut_PDF"><di:waypoint x="1940" y="740" /><di:waypoint x="1940" y="690" /><di:waypoint x="1896" y="690" /><di:waypoint x="1896" y="665" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_PDF_Sub" bpmnElement="DIn_PDF_Sub"><di:waypoint x="1878" y="690" /><di:waypoint x="1878" y="720" /><di:waypoint x="2140" y="720" /><di:waypoint x="2140" y="740" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
