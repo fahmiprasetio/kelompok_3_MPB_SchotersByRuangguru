@@ -22,6 +22,8 @@
     {
       "label": "IPK / GPA",
       "type": "number",
+      "decimalDigits": 2,
+      "increment": "0.01",
       "layout": {
         "row": "Row_gpa",
         "columns": null
