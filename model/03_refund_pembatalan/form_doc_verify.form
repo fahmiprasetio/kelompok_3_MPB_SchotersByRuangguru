@@ -1,0 +1,42 @@
+{
+  "components": [
+    {
+      "text": "# Form Verifikasi Dokumen Pendukung",
+      "type": "text",
+      "layout": {
+        "row": "Row_intro",
+        "columns": null
+      },
+      "id": "Field_intro_form_doc_verify"
+    },
+    {
+      "label": "Dokumen Pendukung Lengkap",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_dokumenLengkap",
+        "columns": null
+      },
+      "id": "Field_dokumenLengkap",
+      "key": "dokumenLengkap"
+    },
+    {
+      "label": "Catatan Verifikasi",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_catatanVerifikasi",
+        "columns": null
+      },
+      "id": "Field_catatanVerifikasi",
+      "key": "catatanVerifikasi"
+    }
+  ],
+  "type": "default",
+  "id": "form_doc_verify",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.20.0"
+  },
+  "schemaVersion": 11
+}

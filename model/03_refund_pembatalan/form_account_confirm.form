@@ -1,0 +1,61 @@
+{
+  "components": [
+    {
+      "text": "# Form Konfirmasi Rekening Tujuan",
+      "type": "text",
+      "layout": {
+        "row": "Row_intro",
+        "columns": null
+      },
+      "id": "Field_intro_form_account_confirm"
+    },
+    {
+      "label": "Nama Bank",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_bankName",
+        "columns": null
+      },
+      "id": "Field_bankName",
+      "key": "bankName",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Nomor Rekening",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_accountNumber",
+        "columns": null
+      },
+      "id": "Field_accountNumber",
+      "key": "accountNumber",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Nama Pemilik Rekening",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_accountHolder",
+        "columns": null
+      },
+      "id": "Field_accountHolder",
+      "key": "accountHolder",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "form_account_confirm",
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.20.0"
+  },
+  "schemaVersion": 11
+}
