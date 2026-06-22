@@ -1,52 +1,28 @@
 {
   "components": [
-    {
-      "text": "# Form Permintaan Aplikasi Universitas",
-      "type": "text",
-      "layout": {
-        "row": "Row_intro",
-        "columns": null
-      },
-      "id": "Field_intro_form_app_request"
-    },
-    {
-      "label": "Nama Lengkap",
-      "type": "textfield",
-      "layout": {
-        "row": "Row_fullName",
-        "columns": null
-      },
-      "id": "Field_fullName",
-      "key": "fullName"
-    },
-    {
-      "label": "Negara Tujuan",
-      "type": "textfield",
-      "layout": {
-        "row": "Row_targetCountry",
-        "columns": null
-      },
-      "id": "Field_targetCountry",
-      "key": "targetCountry"
-    },
-    {
-      "label": "Intake / Periode Masuk",
-      "type": "textfield",
-      "layout": {
-        "row": "Row_intakeTerm",
-        "columns": null
-      },
-      "id": "Field_intakeTerm",
-      "key": "intakeTerm"
-    }
+    { "text": "# Form Permintaan Aplikasi Universitas\nLengkapi data diri, target studi, dan kelengkapan awal untuk memulai proses aplikasi ke universitas tujuan.", "type": "text", "layout": { "row": "Row_intro", "columns": null }, "id": "Field_intro_form_app_request" },
+    { "text": "## A. Data Pribadi", "type": "text", "layout": { "row": "Row_sec_pribadi", "columns": null }, "id": "Field_sec_pribadi" },
+    { "label": "Nama Lengkap", "type": "textfield", "layout": { "row": "Row_fullName", "columns": null }, "id": "Field_fullName", "key": "fullName", "validate": { "required": true } },
+    { "label": "Email", "type": "textfield", "layout": { "row": "Row_email", "columns": null }, "id": "Field_email", "key": "email", "validate": { "required": true, "validationType": "email" } },
+    { "label": "Nomor WhatsApp", "type": "textfield", "layout": { "row": "Row_phone", "columns": null }, "id": "Field_phone", "key": "phone", "validate": { "required": true } },
+    { "label": "Jenjang Pendidikan Saat Ini", "type": "select", "layout": { "row": "Row_currentEducation", "columns": null }, "id": "Field_currentEducation", "key": "currentEducation", "values": [ {"label":"SMA/SMK","value":"SMA"}, {"label":"Diploma (D3)","value":"D3"}, {"label":"Sarjana (S1)","value":"S1"}, {"label":"Magister (S2)","value":"S2"} ], "validate": { "required": true } },
+    { "text": "## B. Target Studi", "type": "text", "layout": { "row": "Row_sec_target", "columns": null }, "id": "Field_sec_target" },
+    { "label": "Negara Tujuan", "type": "textfield", "layout": { "row": "Row_targetCountry", "columns": null }, "id": "Field_targetCountry", "key": "targetCountry", "validate": { "required": true } },
+    { "label": "Jenjang Program yang Dituju", "type": "select", "layout": { "row": "Row_programLevel", "columns": null }, "id": "Field_programLevel", "key": "programLevel", "values": [ {"label":"Foundation","value":"Foundation"}, {"label":"Bachelor","value":"Bachelor"}, {"label":"Master","value":"Master"} ], "validate": { "required": true } },
+    { "label": "Bidang Studi / Jurusan", "type": "textfield", "layout": { "row": "Row_fieldOfStudy", "columns": null }, "id": "Field_fieldOfStudy", "key": "fieldOfStudy" },
+    { "label": "Daftar Universitas Target", "type": "textarea", "layout": { "row": "Row_targetUniversities", "columns": null }, "id": "Field_targetUniversities", "key": "targetUniversities" },
+    { "label": "Jumlah Universitas Target", "type": "number", "layout": { "row": "Row_targetCount", "columns": null }, "id": "Field_targetCount", "key": "targetCount", "validate": { "min": 1, "max": 20 } },
+    { "label": "Intake / Periode Masuk", "type": "select", "layout": { "row": "Row_intakeTerm", "columns": null }, "id": "Field_intakeTerm", "key": "intakeTerm", "values": [ {"label":"2026 - Fall","value":"2026-Fall"}, {"label":"2027 - Spring","value":"2027-Spring"}, {"label":"2027 - Fall","value":"2027-Fall"} ], "validate": { "required": true } },
+    { "text": "## C. Kelengkapan Awal & Layanan", "type": "text", "layout": { "row": "Row_sec_layanan", "columns": null }, "id": "Field_sec_layanan" },
+    { "label": "Sudah punya draf esai / personal statement", "type": "checkbox", "layout": { "row": "Row_hasEssayDraft", "columns": null }, "id": "Field_hasEssayDraft", "key": "hasEssayDraft" },
+    { "label": "Sudah punya sertifikat bahasa (IELTS/TOEFL)", "type": "checkbox", "layout": { "row": "Row_hasLanguageCert", "columns": null }, "id": "Field_hasLanguageCert", "key": "hasLanguageCert" },
+    { "label": "Paket Layanan Schoters", "type": "radio", "layout": { "row": "Row_servicePackage", "columns": null }, "id": "Field_servicePackage", "key": "servicePackage", "values": [ {"label":"Basic","value":"Basic"}, {"label":"Premium","value":"Premium"}, {"label":"Guaranteed","value":"Guaranteed"} ] },
+    { "label": "Catatan / Pertanyaan Tambahan", "type": "textarea", "layout": { "row": "Row_notes", "columns": null }, "id": "Field_notes", "key": "applicantNotes" }
   ],
   "type": "default",
   "id": "form_app_request",
   "executionPlatform": "Camunda Platform",
   "executionPlatformVersion": "7.20.0",
-  "exporter": {
-    "name": "Camunda Modeler",
-    "version": "5.20.0"
-  },
+  "exporter": { "name": "Camunda Modeler", "version": "5.20.0" },
   "schemaVersion": 11
 }
