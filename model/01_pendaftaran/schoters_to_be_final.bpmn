@@ -47,11 +47,11 @@
     <bpmn:serviceTask id="T_AutoLog" name="Auto-Log Application in CRM" camunda:expression="${true}">
       <bpmn:dataOutputAssociation id="dout_T_AutoLog_D_LeadRecord"><bpmn:targetRef>D_LeadRecord</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
-    <bpmn:userTask id="T_VerifyLead" name="Verify &amp; Qualify Lead" />
-    <bpmn:userTask id="T_Consult" name="Conduct Online Consultation">
+    <bpmn:userTask id="T_VerifyLead" name="Verify &amp; Qualify Lead" camunda:candidateGroups="konsultan" />
+    <bpmn:userTask id="T_Consult" name="Conduct Online Consultation" camunda:candidateGroups="konsultan">
       <bpmn:dataOutputAssociation id="dout_T_Consult_D_ConsultNotes"><bpmn:targetRef>D_ConsultNotes</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:userTask>
-    <bpmn:userTask id="T_UploadDocs" name="Upload Supporting Documents" camunda:formRef="form_verifikasi" camunda:formRefBinding="latest">
+    <bpmn:userTask id="T_UploadDocs" name="Upload Supporting Documents" camunda:formRef="form_verifikasi" camunda:formRefBinding="latest" camunda:candidateGroups="mahasiswa">
       <bpmn:dataOutputAssociation id="dout_T_UploadDocs_D_Documents"><bpmn:targetRef>D_Documents</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:userTask>
     <bpmn:serviceTask id="T_HashDocs" name="Hash &amp; Register Documents on Blockchain" camunda:expression="${true}">
@@ -62,28 +62,28 @@
       <bpmn:property id="Prop_din_D_DocHash_T_VerifyHash" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="din_D_DocHash_T_VerifyHash"><bpmn:sourceRef>D_DocHash</bpmn:sourceRef><bpmn:targetRef>Prop_din_D_DocHash_T_VerifyHash</bpmn:targetRef></bpmn:dataInputAssociation>
       <bpmn:dataOutputAssociation id="dout_T_VerifyHash_D_VerifResult"><bpmn:targetRef>D_VerifResult</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
-    <bpmn:businessRuleTask id="T_Eligibility" name="Evaluate Eligibility (DMN)" camunda:decisionRef="Decision_Kelayakan" camunda:mapDecisionResult="singleEntry" camunda:resultVariable="decision">
+    <bpmn:businessRuleTask id="T_Eligibility" name="Evaluate Eligibility (DMN)" camunda:decisionRef="Decision_Kelayakan" camunda:mapDecisionResult="singleResult" camunda:resultVariable="eligibility">
       <bpmn:property id="Prop_din_D_VerifResult_T_Eligibility" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="din_D_VerifResult_T_Eligibility"><bpmn:sourceRef>D_VerifResult</bpmn:sourceRef><bpmn:targetRef>Prop_din_D_VerifResult_T_Eligibility</bpmn:targetRef></bpmn:dataInputAssociation>
       <bpmn:dataOutputAssociation id="dout_T_Eligibility_D_Decision"><bpmn:targetRef>D_Decision</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:businessRuleTask>
     <bpmn:exclusiveGateway id="GW_Eligibility" name="Eligibility Decision?" default="s12" />
-    <bpmn:userTask id="T_Revise" name="Revise &amp; Resubmit Application Data" />
+    <bpmn:userTask id="T_Revise" name="Revise &amp; Resubmit Application Data" camunda:candidateGroups="mahasiswa" />
     <bpmn:endEvent id="End_Rejected" name="Application Rejected" />
-    <bpmn:userTask id="T_PrepProgram" name="Prepare Program Recommendation">
+    <bpmn:userTask id="T_PrepProgram" name="Prepare Program Recommendation" camunda:candidateGroups="konsultan">
       <bpmn:property id="Prop_din_D_ConsultNotes_T_PrepProgram" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="din_D_ConsultNotes_T_PrepProgram"><bpmn:sourceRef>D_ConsultNotes</bpmn:sourceRef><bpmn:targetRef>Prop_din_D_ConsultNotes_T_PrepProgram</bpmn:targetRef></bpmn:dataInputAssociation>
       <bpmn:dataOutputAssociation id="dout_T_PrepProgram_D_OfferLetter"><bpmn:targetRef>D_OfferLetter</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:userTask>
     <bpmn:serviceTask id="T_SendOffer" name="Auto-Send Digital Offer Letter" camunda:expression="${true}">
       <bpmn:property id="Prop_din_D_OfferLetter_T_SendOffer" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="din_D_OfferLetter_T_SendOffer"><bpmn:sourceRef>D_OfferLetter</bpmn:sourceRef><bpmn:targetRef>Prop_din_D_OfferLetter_T_SendOffer</bpmn:targetRef></bpmn:dataInputAssociation>
     </bpmn:serviceTask>
-    <bpmn:userTask id="T_ReviewOffer" name="Review Digital Offer Letter" camunda:formRef="form_review_penawaran" camunda:formRefBinding="latest">
+    <bpmn:userTask id="T_ReviewOffer" name="Review Digital Offer Letter" camunda:formRef="form_review_penawaran" camunda:formRefBinding="latest" camunda:candidateGroups="mahasiswa">
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="GW_Proceed" name="Proceed with Enrollment?" default="s17" />
     <bpmn:endEvent id="End_Declined" name="Enrollment Declined" />
     <bpmn:serviceTask id="T_GenInvoice" name="Auto-Generate Invoice" camunda:expression="${true}">
       <bpmn:dataOutputAssociation id="dout_T_GenInvoice_D_Invoice"><bpmn:targetRef>D_Invoice</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
-    <bpmn:userTask id="T_Pay" name="Complete Online Payment">
+    <bpmn:userTask id="T_Pay" name="Complete Online Payment" camunda:candidateGroups="mahasiswa">
       <bpmn:property id="Prop_din_D_Invoice_T_Pay" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="din_D_Invoice_T_Pay"><bpmn:sourceRef>D_Invoice</bpmn:sourceRef><bpmn:targetRef>Prop_din_D_Invoice_T_Pay</bpmn:targetRef></bpmn:dataInputAssociation>
       <bpmn:dataOutputAssociation id="dout_T_Pay_D_PaymentData"><bpmn:targetRef>D_PaymentData</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:userTask>
@@ -91,13 +91,13 @@
       <bpmn:property id="Prop_din_D_PaymentData_T_RecordPayment" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="din_D_PaymentData_T_RecordPayment"><bpmn:sourceRef>D_PaymentData</bpmn:sourceRef><bpmn:targetRef>Prop_din_D_PaymentData_T_RecordPayment</bpmn:targetRef></bpmn:dataInputAssociation>
       <bpmn:dataOutputAssociation id="dout_T_RecordPayment_D_PaymentChain"><bpmn:targetRef>D_PaymentChain</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
-    <bpmn:userTask id="T_ConfirmPay" name="Confirm Payment Settlement">
+    <bpmn:userTask id="T_ConfirmPay" name="Confirm Payment Settlement" camunda:candidateGroups="finance">
       <bpmn:property id="Prop_din_D_PaymentChain_T_ConfirmPay" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="din_D_PaymentChain_T_ConfirmPay"><bpmn:sourceRef>D_PaymentChain</bpmn:sourceRef><bpmn:targetRef>Prop_din_D_PaymentChain_T_ConfirmPay</bpmn:targetRef></bpmn:dataInputAssociation>
     </bpmn:userTask>
     <bpmn:serviceTask id="T_GenAgreement" name="Auto-Generate Digital Agreement" camunda:expression="${true}">
       <bpmn:dataOutputAssociation id="dout_T_GenAgreement_D_Agreement"><bpmn:targetRef>D_Agreement</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
-    <bpmn:userTask id="T_SignDigital" name="Sign Digital Agreement (e-Signature)" camunda:formRef="form_tanda_tangan" camunda:formRefBinding="latest">
+    <bpmn:userTask id="T_SignDigital" name="Sign Digital Agreement (e-Signature)" camunda:formRef="form_tanda_tangan" camunda:formRefBinding="latest" camunda:candidateGroups="mahasiswa">
       <bpmn:property id="Prop_din_D_Agreement_T_SignDigital" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="din_D_Agreement_T_SignDigital"><bpmn:sourceRef>D_Agreement</bpmn:sourceRef><bpmn:targetRef>Prop_din_D_Agreement_T_SignDigital</bpmn:targetRef></bpmn:dataInputAssociation>
     </bpmn:userTask>
     <bpmn:boundaryEvent id="Bnd_Sign" name="3 Days Elapsed" attachedToRef="T_SignDigital" cancelActivity="false">
@@ -105,10 +105,44 @@
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P3D</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
-    <bpmn:serviceTask id="T_Remind" name="Send Signing Reminder" camunda:expression="${true}" />
+    <bpmn:serviceTask id="T_Remind" name="Send Signing Reminder">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">https://REPLACE-WITH-YOUR-WEBHOOK-URL</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"content":"Pengingat: dokumen perjanjian digital Anda belum ditandatangani. Mohon segera tandatangani."}</camunda:inputParameter>
+            <camunda:outputParameter name="remindStatus">${statusCode}</camunda:outputParameter>
+          </camunda:inputOutput>
+        </camunda:connector>
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
     <bpmn:endEvent id="End_SLA" name="Signing SLA Escalated" />
     <bpmn:callActivity id="T_Onboarding" name="Run Student Onboarding" calledElement="Process_Onboarding_Sub" />
-    <bpmn:serviceTask id="T_NotifyEnrolled" name="Send Enrollment Confirmation Notifications" camunda:expression="${true}" />
+    <bpmn:serviceTask id="T_NotifyEnrolled" name="Send Enrollment Confirmation Notifications">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">https://REPLACE-WITH-YOUR-WEBHOOK-URL</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"content":"Selamat! Pendaftaran telah selesai dan mahasiswa resmi enrolled di Schoters."}</camunda:inputParameter>
+            <camunda:outputParameter name="notifyStatus">${statusCode}</camunda:outputParameter>
+          </camunda:inputOutput>
+        </camunda:connector>
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
     <bpmn:endEvent id="End_Enrolled" name="Student Successfully Enrolled" />
     <bpmn:dataObjectReference id="D_LeadRecord" name="Lead Record" dataObjectRef="DO_D_LeadRecord" />
     <bpmn:dataObject id="DO_D_LeadRecord" />
@@ -141,11 +175,11 @@
     <bpmn:sequenceFlow id="s7" sourceRef="T_VerifyHash" targetRef="T_Eligibility" />
     <bpmn:sequenceFlow id="s8" sourceRef="T_Eligibility" targetRef="GW_Eligibility" />
     <bpmn:sequenceFlow id="s9" sourceRef="GW_Eligibility" targetRef="T_Revise" name="Revision">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${decision==&quot;Revision&quot;}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${eligibility.decision==&quot;Revision&quot;}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="s10" sourceRef="T_Revise" targetRef="T_UploadDocs" />
     <bpmn:sequenceFlow id="s11" sourceRef="GW_Eligibility" targetRef="End_Rejected" name="Rejected">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${decision==&quot;Rejected&quot;}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${eligibility.decision==&quot;Rejected&quot;}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="s12" sourceRef="GW_Eligibility" targetRef="T_PrepProgram" name="Approved" />
     <bpmn:sequenceFlow id="s13" sourceRef="T_PrepProgram" targetRef="T_SendOffer" />
@@ -168,7 +202,7 @@
   </bpmn:process>
   <bpmn:process id="Process_Onboarding_Sub" name="Student Onboarding" isExecutable="true" camunda:historyTimeToLive="P180D">
     <bpmn:startEvent id="OB_Start" name="Onboarding Started" />
-    <bpmn:userTask id="OB_Video" name="Schedule Onboarding Video Call" />
+    <bpmn:userTask id="OB_Video" name="Schedule Onboarding Video Call" camunda:candidateGroups="program" />
     <bpmn:serviceTask id="OB_LMS" name="Provision LMS Access" camunda:expression="${true}" />
     <bpmn:serviceTask id="OB_Welcome" name="Send Welcome Kit" camunda:expression="${true}" />
     <bpmn:endEvent id="OB_End" name="Onboarding Completed" />
@@ -252,24 +286,4 @@
       <bpmndi:BPMNEdge id="di_s27" bpmnElement="s27"><di:waypoint x="4635" y="680" /><di:waypoint x="4698" y="680" /><di:waypoint x="4698" y="920" /><di:waypoint x="4762" y="920" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_dout_T_AutoLog_D_LeadRecord" bpmnElement="dout_T_AutoLog_D_LeadRecord"><di:waypoint x="475" y="640" /><di:waypoint x="475" y="610" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_dout_T_Consult_D_ConsultNotes" bpmnElement="dout_T_Consult_D_ConsultNotes"><di:waypoint x="885" y="400" /><di:waypoint x="885" y="370" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_dout_T_UploadDocs_D_Documents" bpmnElement="dout_T_UploadDocs_D_Documents"><di:waypoint x="1090" y="240" /><di:waypoint x="1090" y="270" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_din_D_Documents_T_HashDocs" bpmnElement="din_D_Documents_T_HashDocs"><di:waypoint x="1108" y="295" /><di:waypoint x="1172" y="295" /><di:waypoint x="1172" y="680" /><di:waypoint x="1235" y="680" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_dout_T_HashDocs_D_DocHash" bpmnElement="dout_T_HashDocs_D_DocHash"><di:waypoint x="1295" y="640" /><di:waypoint x="1295" y="610" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_din_D_DocHash_T_VerifyHash" bpmnElement="din_D_DocHash_T_VerifyHash"><di:waypoint x="1313" y="585" /><di:waypoint x="1376" y="585" /><di:waypoint x="1376" y="680" /><di:waypoint x="1440" y="680" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_dout_T_VerifyHash_D_VerifResult" bpmnElement="dout_T_VerifyHash_D_VerifResult"><di:waypoint x="1500" y="640" /><di:waypoint x="1500" y="610" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_din_D_VerifResult_T_Eligibility" bpmnElement="din_D_VerifResult_T_Eligibility"><di:waypoint x="1518" y="585" /><di:waypoint x="1582" y="585" /><di:waypoint x="1582" y="680" /><di:waypoint x="1645" y="680" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_dout_T_Eligibility_D_Decision" bpmnElement="dout_T_Eligibility_D_Decision"><di:waypoint x="1705" y="640" /><di:waypoint x="1705" y="610" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_din_D_ConsultNotes_T_PrepProgram" bpmnElement="din_D_ConsultNotes_T_PrepProgram"><di:waypoint x="903" y="345" /><di:waypoint x="1479" y="345" /><di:waypoint x="1479" y="440" /><di:waypoint x="2055" y="440" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_dout_T_PrepProgram_D_OfferLetter" bpmnElement="dout_T_PrepProgram_D_OfferLetter"><di:waypoint x="2115" y="400" /><di:waypoint x="2115" y="370" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_din_D_OfferLetter_T_SendOffer" bpmnElement="din_D_OfferLetter_T_SendOffer"><di:waypoint x="2133" y="345" /><di:waypoint x="2196" y="345" /><di:waypoint x="2196" y="680" /><di:waypoint x="2260" y="680" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_dout_T_GenInvoice_D_Invoice" bpmnElement="dout_T_GenInvoice_D_Invoice"><di:waypoint x="2935" y="640" /><di:waypoint x="2935" y="610" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_din_D_Invoice_T_Pay" bpmnElement="din_D_Invoice_T_Pay"><di:waypoint x="2953" y="585" /><di:waypoint x="3016" y="585" /><di:waypoint x="3016" y="200" /><di:waypoint x="3080" y="200" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_dout_T_Pay_D_PaymentData" bpmnElement="dout_T_Pay_D_PaymentData"><di:waypoint x="3140" y="240" /><di:waypoint x="3140" y="270" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_din_D_PaymentData_T_RecordPayment" bpmnElement="din_D_PaymentData_T_RecordPayment"><di:waypoint x="3158" y="295" /><di:waypoint x="3222" y="295" /><di:waypoint x="3222" y="680" /><di:waypoint x="3285" y="680" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_dout_T_RecordPayment_D_PaymentChain" bpmnElement="dout_T_RecordPayment_D_PaymentChain"><di:waypoint x="3345" y="640" /><di:waypoint x="3345" y="610" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_din_D_PaymentChain_T_ConfirmPay" bpmnElement="din_D_PaymentChain_T_ConfirmPay"><di:waypoint x="3363" y="585" /><di:waypoint x="3426" y="585" /><di:waypoint x="3426" y="920" /><di:waypoint x="3490" y="920" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_dout_T_GenAgreement_D_Agreement" bpmnElement="dout_T_GenAgreement_D_Agreement"><di:waypoint x="3755" y="640" /><di:waypoint x="3755" y="610" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_din_D_Agreement_T_SignDigital" bpmnElement="din_D_Agreement_T_SignDigital"><di:waypoint x="3773" y="585" /><di:waypoint x="3836" y="585" /><di:waypoint x="3836" y="200" /><di:waypoint x="3900" y="200" /></bpmndi:BPMNEdge>
-    </bpmndi:BPMNPlane>
-  </bpmndi:BPMNDiagram>
-</bpmn:definitions>
+      <bpmndi:BPMNEdge id="di_dout_T_UploadDocs_D_
