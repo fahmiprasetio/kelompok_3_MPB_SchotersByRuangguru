@@ -1,31 +1,20 @@
 {
   "components": [
-    {
-      "text": "# Form Verifikasi Dokumen & Risiko (Upload Supporting Documents)\nTandai kelengkapan dokumen dan tentukan tingkat risiko pemohon.",
-      "type": "text",
-      "layout": { "row": "Row_intro", "columns": null },
-      "id": "Field_intro_ver"
-    },
-    {
-      "label": "Documents Complete",
-      "type": "checkbox",
-      "layout": { "row": "Row_documentsComplete", "columns": null },
-      "id": "Field_documentsComplete",
-      "key": "documentsComplete"
-    },
-    {
-      "label": "Risk Level",
-      "type": "select",
-      "layout": { "row": "Row_riskLevel", "columns": null },
-      "id": "Field_riskLevel",
-      "key": "riskLevel",
-      "values": [
-        { "label": "Low", "value": "Low" },
-        { "label": "Medium", "value": "Medium" },
-        { "label": "High", "value": "High" }
-      ],
-      "validate": { "required": true }
-    }
+    { "text": "# Form Verifikasi Dokumen & Risiko (Upload Supporting Documents)\nPeriksa kelengkapan tiap dokumen, beri catatan, dan tentukan tingkat risiko pemohon.", "type": "text", "layout": { "row": "Row_intro", "columns": null }, "id": "Field_intro_ver" },
+    { "text": "## A. Checklist Dokumen", "type": "text", "layout": { "row": "Row_sec_doc", "columns": null }, "id": "Field_sec_doc" },
+    { "label": "Paspor / KTP", "type": "checkbox", "layout": { "row": "Row_docPassport", "columns": null }, "id": "Field_docPassport", "key": "docPassport" },
+    { "label": "Transkrip Akademik", "type": "checkbox", "layout": { "row": "Row_docTranscript", "columns": null }, "id": "Field_docTranscript", "key": "docTranscript" },
+    { "label": "Ijazah / Sertifikat", "type": "checkbox", "layout": { "row": "Row_docCertificate", "columns": null }, "id": "Field_docCertificate", "key": "docCertificate" },
+    { "label": "Surat Rekomendasi", "type": "checkbox", "layout": { "row": "Row_docRecommendation", "columns": null }, "id": "Field_docRecommendation", "key": "docRecommendation" },
+    { "label": "Bukti Keuangan / Sponsor", "type": "checkbox", "layout": { "row": "Row_docFinancial", "columns": null }, "id": "Field_docFinancial", "key": "docFinancial" },
+    { "label": "Sertifikat Bahasa Inggris", "type": "checkbox", "layout": { "row": "Row_docEnglish", "columns": null }, "id": "Field_docEnglish", "key": "docEnglish" },
+    { "text": "## B. Hasil Verifikasi", "type": "text", "layout": { "row": "Row_sec_hasil", "columns": null }, "id": "Field_sec_hasil" },
+    { "label": "Semua dokumen lengkap & valid", "type": "checkbox", "layout": { "row": "Row_documentsComplete", "columns": null }, "id": "Field_documentsComplete", "key": "documentsComplete" },
+    { "label": "Persentase Kelengkapan (%)", "type": "number", "layout": { "row": "Row_completenessPct", "columns": null }, "id": "Field_completenessPct", "key": "completenessPct", "validate": { "min": 0, "max": 100 } },
+    { "label": "Risk Level", "type": "select", "layout": { "row": "Row_riskLevel", "columns": null }, "id": "Field_riskLevel", "key": "riskLevel", "values": [ {"label":"Low","value":"Low"}, {"label":"Medium","value":"Medium"}, {"label":"High","value":"High"} ], "validate": { "required": true } },
+    { "label": "Catatan Verifikasi", "type": "textarea", "layout": { "row": "Row_riskNotes", "columns": null }, "id": "Field_riskNotes", "key": "riskNotes" },
+    { "label": "Diverifikasi oleh", "type": "textfield", "layout": { "row": "Row_verifiedBy", "columns": null }, "id": "Field_verifiedBy", "key": "verifiedBy" },
+    { "label": "Tanggal Verifikasi", "type": "datetime", "subtype": "date", "dateLabel": "Tanggal Verifikasi", "layout": { "row": "Row_verificationDate", "columns": null }, "id": "Field_verificationDate", "key": "verificationDate" }
   ],
   "type": "default",
   "id": "form_verifikasi",

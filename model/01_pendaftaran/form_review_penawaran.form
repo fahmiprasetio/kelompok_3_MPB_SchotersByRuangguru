@@ -1,19 +1,15 @@
 {
   "components": [
-    {
-      "text": "# Form Review Penawaran (Review Digital Offer Letter)\nTinjau surat penawaran digital, lalu konfirmasi penerimaan.",
-      "type": "text",
-      "layout": { "row": "Row_intro", "columns": null },
-      "id": "Field_intro_offer"
-    },
-    {
-      "label": "Offer Accepted",
-      "type": "checkbox",
-      "layout": { "row": "Row_offerAccepted", "columns": null },
-      "id": "Field_offerAccepted",
-      "key": "offerAccepted",
-      "validate": { "required": true }
-    }
+    { "text": "# Form Review Penawaran (Review Digital Offer Letter)\nTinjau detail surat penawaran digital, lalu konfirmasi keputusan Anda.", "type": "text", "layout": { "row": "Row_intro", "columns": null }, "id": "Field_intro_offer" },
+    { "text": "## A. Detail Penawaran", "type": "text", "layout": { "row": "Row_sec_detail", "columns": null }, "id": "Field_sec_detail" },
+    { "label": "Program yang Ditawarkan", "type": "textfield", "layout": { "row": "Row_offerProgram", "columns": null }, "id": "Field_offerProgram", "key": "offerProgram" },
+    { "label": "Universitas / Institusi", "type": "textfield", "layout": { "row": "Row_offerUniversity", "columns": null }, "id": "Field_offerUniversity", "key": "offerUniversity" },
+    { "label": "Estimasi Biaya (IDR)", "type": "number", "layout": { "row": "Row_offerTuition", "columns": null }, "id": "Field_offerTuition", "key": "offerTuition", "validate": { "min": 0 } },
+    { "label": "Berlaku Sampai", "type": "datetime", "subtype": "date", "dateLabel": "Berlaku Sampai", "layout": { "row": "Row_offerValidUntil", "columns": null }, "id": "Field_offerValidUntil", "key": "offerValidUntil" },
+    { "text": "## B. Keputusan", "type": "text", "layout": { "row": "Row_sec_keputusan", "columns": null }, "id": "Field_sec_keputusan" },
+    { "label": "Saya menerima penawaran ini", "type": "checkbox", "layout": { "row": "Row_offerAccepted", "columns": null }, "id": "Field_offerAccepted", "key": "offerAccepted", "validate": { "required": true } },
+    { "label": "Alasan / Catatan", "type": "textarea", "layout": { "row": "Row_decisionReason", "columns": null }, "id": "Field_decisionReason", "key": "decisionReason" },
+    { "label": "Preferensi Tanggal Mulai", "type": "datetime", "subtype": "date", "dateLabel": "Preferensi Tanggal Mulai", "layout": { "row": "Row_preferredStartDate", "columns": null }, "id": "Field_preferredStartDate", "key": "preferredStartDate" }
   ],
   "type": "default",
   "id": "form_review_penawaran",

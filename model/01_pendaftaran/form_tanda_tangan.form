@@ -1,29 +1,15 @@
 {
   "components": [
-    {
-      "text": "# Form Tanda Tangan Digital (Sign Digital Agreement)\nKonfirmasi penandatanganan perjanjian digital (e-Signature).",
-      "type": "text",
-      "layout": { "row": "Row_intro", "columns": null },
-      "id": "Field_intro_sign"
-    },
-    {
-      "label": "Signature Confirmed",
-      "type": "checkbox",
-      "layout": { "row": "Row_signatureConfirmed", "columns": null },
-      "id": "Field_signatureConfirmed",
-      "key": "signatureConfirmed",
-      "validate": { "required": true }
-    },
-    {
-      "label": "Sign Date",
-      "type": "datetime",
-      "subtype": "date",
-      "dateLabel": "Sign Date",
-      "layout": { "row": "Row_signDate", "columns": null },
-      "id": "Field_signDate",
-      "key": "signDate",
-      "validate": { "required": true }
-    }
+    { "text": "# Form Tanda Tangan Digital (Sign Digital Agreement)\nLengkapi identitas dan konfirmasi penandatanganan perjanjian digital (e-Signature).", "type": "text", "layout": { "row": "Row_intro", "columns": null }, "id": "Field_intro_sign" },
+    { "text": "## A. Identitas Penandatangan", "type": "text", "layout": { "row": "Row_sec_id", "columns": null }, "id": "Field_sec_id" },
+    { "label": "Nama Lengkap (sesuai dokumen resmi)", "type": "textfield", "layout": { "row": "Row_legalName", "columns": null }, "id": "Field_legalName", "key": "legalName", "validate": { "required": true } },
+    { "label": "Nomor Identitas (KTP/Paspor)", "type": "textfield", "layout": { "row": "Row_idNumber", "columns": null }, "id": "Field_idNumber", "key": "idNumber" },
+    { "text": "## B. Persetujuan", "type": "text", "layout": { "row": "Row_sec_setuju", "columns": null }, "id": "Field_sec_setuju" },
+    { "label": "Saya telah membaca & menyetujui syarat dan ketentuan", "type": "checkbox", "layout": { "row": "Row_agreeTerms", "columns": null }, "id": "Field_agreeTerms", "key": "agreeTerms", "validate": { "required": true } },
+    { "label": "Konfirmasi Tanda Tangan Digital", "type": "checkbox", "layout": { "row": "Row_signatureConfirmed", "columns": null }, "id": "Field_signatureConfirmed", "key": "signatureConfirmed", "validate": { "required": true } },
+    { "label": "Metode Tanda Tangan", "type": "select", "layout": { "row": "Row_signMethod", "columns": null }, "id": "Field_signMethod", "key": "signMethod", "values": [ {"label":"e-Signature","value":"eSignature"}, {"label":"Sertifikat Digital","value":"DigitalCert"} ] },
+    { "label": "Tempat Penandatanganan", "type": "textfield", "layout": { "row": "Row_signPlace", "columns": null }, "id": "Field_signPlace", "key": "signPlace" },
+    { "label": "Sign Date", "type": "datetime", "subtype": "date", "dateLabel": "Sign Date", "layout": { "row": "Row_signDate", "columns": null }, "id": "Field_signDate", "key": "signDate", "validate": { "required": true } }
   ],
   "type": "default",
   "id": "form_tanda_tangan",

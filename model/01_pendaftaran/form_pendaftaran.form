@@ -1,56 +1,23 @@
 {
   "components": [
-    {
-      "text": "# Form Pendaftaran (Submit Enrollment Application)\nLengkapi data pemohon untuk memulai proses pendaftaran Schoters.",
-      "type": "text",
-      "layout": { "row": "Row_intro", "columns": null },
-      "id": "Field_intro_reg"
-    },
-    {
-      "label": "Full Name",
-      "type": "textfield",
-      "layout": { "row": "Row_fullName", "columns": null },
-      "id": "Field_fullName",
-      "key": "fullName",
-      "validate": { "required": true }
-    },
-    {
-      "label": "Email",
-      "type": "textfield",
-      "layout": { "row": "Row_email", "columns": null },
-      "id": "Field_email",
-      "key": "email",
-      "validate": { "required": true, "validationType": "email" }
-    },
-    {
-      "label": "Program Level",
-      "type": "select",
-      "layout": { "row": "Row_programLevel", "columns": null },
-      "id": "Field_programLevel",
-      "key": "programLevel",
-      "values": [
-        { "label": "Foundation", "value": "Foundation" },
-        { "label": "Bachelor", "value": "Bachelor" },
-        { "label": "Master", "value": "Master" }
-      ],
-      "validate": { "required": true }
-    },
-    {
-      "label": "Target Country",
-      "type": "textfield",
-      "layout": { "row": "Row_targetCountry", "columns": null },
-      "id": "Field_targetCountry",
-      "key": "targetCountry",
-      "validate": { "required": true }
-    },
-    {
-      "label": "Program Value (IDR)",
-      "type": "number",
-      "layout": { "row": "Row_programValue", "columns": null },
-      "id": "Field_programValue",
-      "key": "programValue",
-      "validate": { "required": true, "min": 0 }
-    }
+    { "text": "# Form Pendaftaran (Submit Enrollment Application)\nLengkapi data diri, latar belakang akademik, dan rencana studi untuk memulai proses pendaftaran Schoters.", "type": "text", "layout": { "row": "Row_intro", "columns": null }, "id": "Field_intro_reg" },
+    { "text": "## A. Data Pribadi", "type": "text", "layout": { "row": "Row_sec_pribadi", "columns": null }, "id": "Field_sec_pribadi" },
+    { "label": "Full Name", "type": "textfield", "layout": { "row": "Row_fullName", "columns": null }, "id": "Field_fullName", "key": "fullName", "validate": { "required": true } },
+    { "label": "Email", "type": "textfield", "layout": { "row": "Row_email", "columns": null }, "id": "Field_email", "key": "email", "validate": { "required": true, "validationType": "email" } },
+    { "label": "Phone Number (WhatsApp)", "type": "textfield", "layout": { "row": "Row_phone", "columns": null }, "id": "Field_phone", "key": "phone", "validate": { "required": true } },
+    { "label": "Date of Birth", "type": "datetime", "subtype": "date", "dateLabel": "Date of Birth", "layout": { "row": "Row_dob", "columns": null }, "id": "Field_dob", "key": "dateOfBirth" },
+    { "text": "## B. Latar Belakang Akademik", "type": "text", "layout": { "row": "Row_sec_akademik", "columns": null }, "id": "Field_sec_akademik" },
+    { "label": "Current Education Level", "type": "select", "layout": { "row": "Row_currentEducation", "columns": null }, "id": "Field_currentEducation", "key": "currentEducation", "values": [ {"label":"SMA/SMK","value":"SMA"}, {"label":"Diploma (D3)","value":"D3"}, {"label":"Sarjana (S1)","value":"S1"}, {"label":"Magister (S2)","value":"S2"} ], "validate": { "required": true } },
+    { "label": "GPA / IPK (skala 4.0)", "type": "number", "decimalDigits": 2, "layout": { "row": "Row_gpa", "columns": null }, "id": "Field_gpa", "key": "gpa", "validate": { "min": 0, "max": 4 } },
+    { "label": "English Test", "type": "select", "layout": { "row": "Row_englishTest", "columns": null }, "id": "Field_englishTest", "key": "englishTest", "values": [ {"label":"IELTS","value":"IELTS"}, {"label":"TOEFL","value":"TOEFL"}, {"label":"Duolingo","value":"Duolingo"}, {"label":"Belum ada","value":"None"} ] },
+    { "label": "English Score", "type": "number", "layout": { "row": "Row_englishScore", "columns": null }, "id": "Field_englishScore", "key": "englishScore" },
+    { "text": "## C. Rencana Studi", "type": "text", "layout": { "row": "Row_sec_studi", "columns": null }, "id": "Field_sec_studi" },
+    { "label": "Program Level", "type": "select", "layout": { "row": "Row_programLevel", "columns": null }, "id": "Field_programLevel", "key": "programLevel", "values": [ {"label":"Foundation","value":"Foundation"}, {"label":"Bachelor","value":"Bachelor"}, {"label":"Master","value":"Master"} ], "validate": { "required": true } },
+    { "label": "Target Country", "type": "textfield", "layout": { "row": "Row_targetCountry", "columns": null }, "id": "Field_targetCountry", "key": "targetCountry", "validate": { "required": true } },
+    { "label": "Target University", "type": "textfield", "layout": { "row": "Row_targetUniversity", "columns": null }, "id": "Field_targetUniversity", "key": "targetUniversity" },
+    { "label": "Intended Intake", "type": "select", "layout": { "row": "Row_intake", "columns": null }, "id": "Field_intake", "key": "intendedIntake", "values": [ {"label":"2026 - Fall","value":"2026-Fall"}, {"label":"2027 - Spring","value":"2027-Spring"}, {"label":"2027 - Fall","value":"2027-Fall"} ] },
+    { "label": "Funding Source", "type": "radio", "layout": { "row": "Row_funding", "columns": null }, "id": "Field_funding", "key": "fundingSource", "values": [ {"label":"Biaya Sendiri","value":"Self"}, {"label":"Beasiswa","value":"Scholarship"}, {"label":"Pinjaman/Loan","value":"Loan"} ] },
+    { "label": "Program Value (IDR)", "type": "number", "layout": { "row": "Row_programValue", "columns": null }, "id": "Field_programValue", "key": "programValue", "validate": { "required": true, "min": 0 } }
   ],
   "type": "default",
   "id": "form_pendaftaran",
