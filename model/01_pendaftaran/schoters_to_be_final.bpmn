@@ -20,6 +20,8 @@
         <bpmn:flowNodeRef>T_Consult</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>T_PrepProgram</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Declined</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_HandleSignEscalation</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_SignRetry</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="L_System" name="System Automation">
         <bpmn:flowNodeRef>T_AutoLog</bpmn:flowNodeRef>
@@ -41,7 +43,23 @@
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Req" name="Submit Enrollment Application" camunda:formRef="form_pendaftaran" camunda:formRefBinding="latest">
     </bpmn:startEvent>
-    <bpmn:serviceTask id="T_AutoLog" name="Auto-Log Application in CRM" camunda:expression="${true}">
+    <bpmn:serviceTask id="T_AutoLog" name="Auto-Log Application in CRM">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83D\uDCE5 [LOG SISTEM] Aplikasi pendaftaran baru diterima dan tercatat otomatis di CRM Schoters."}</camunda:inputParameter>
+            <camunda:outputParameter name="logAutoLog">${statusCode}</camunda:outputParameter>
+          </camunda:inputOutput>
+        </camunda:connector>
+      </bpmn:extensionElements>
       <bpmn:dataOutputAssociation id="dout_T_AutoLog_D_LeadRecord"><bpmn:targetRef>D_LeadRecord</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:userTask id="T_VerifyLead" name="Verify &amp; Qualify Lead" camunda:candidateGroups="konsultan" />
@@ -62,14 +80,46 @@
       <bpmn:property id="Prop_din_D_ConsultNotes_T_PrepProgram" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="din_D_ConsultNotes_T_PrepProgram"><bpmn:sourceRef>D_ConsultNotes</bpmn:sourceRef><bpmn:targetRef>Prop_din_D_ConsultNotes_T_PrepProgram</bpmn:targetRef></bpmn:dataInputAssociation>
       <bpmn:dataOutputAssociation id="dout_T_PrepProgram_D_OfferLetter"><bpmn:targetRef>D_OfferLetter</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:userTask>
-    <bpmn:serviceTask id="T_SendOffer" name="Auto-Send Digital Offer Letter" camunda:expression="${true}">
+    <bpmn:serviceTask id="T_SendOffer" name="Auto-Send Digital Offer Letter">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83D\uDCE8 [LOG SISTEM] Surat penawaran digital (offer letter) telah dikirim otomatis ke calon mahasiswa."}</camunda:inputParameter>
+            <camunda:outputParameter name="logSendOffer">${statusCode}</camunda:outputParameter>
+          </camunda:inputOutput>
+        </camunda:connector>
+      </bpmn:extensionElements>
       <bpmn:property id="Prop_din_D_OfferLetter_T_SendOffer" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="din_D_OfferLetter_T_SendOffer"><bpmn:sourceRef>D_OfferLetter</bpmn:sourceRef><bpmn:targetRef>Prop_din_D_OfferLetter_T_SendOffer</bpmn:targetRef></bpmn:dataInputAssociation>
     </bpmn:serviceTask>
     <bpmn:userTask id="T_ReviewOffer" name="Review Digital Offer Letter" camunda:formRef="form_review_penawaran" camunda:formRefBinding="latest" camunda:candidateGroups="mahasiswa">
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="GW_Proceed" name="Proceed with Enrollment?" default="s17" />
     <bpmn:endEvent id="End_Declined" name="Enrollment Declined" />
-    <bpmn:serviceTask id="T_GenInvoice" name="Auto-Generate Invoice" camunda:expression="${true}">
+    <bpmn:serviceTask id="T_GenInvoice" name="Auto-Generate Invoice">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83E\uDDFE [LOG SISTEM] Invoice pembayaran telah dibuat otomatis oleh sistem."}</camunda:inputParameter>
+            <camunda:outputParameter name="logGenInvoice">${statusCode}</camunda:outputParameter>
+          </camunda:inputOutput>
+        </camunda:connector>
+      </bpmn:extensionElements>
       <bpmn:dataOutputAssociation id="dout_T_GenInvoice_D_Invoice"><bpmn:targetRef>D_Invoice</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:userTask id="T_Pay" name="Complete Online Payment" camunda:candidateGroups="mahasiswa">
@@ -79,13 +129,29 @@
     <bpmn:userTask id="T_ConfirmPay" name="Confirm Payment Settlement" camunda:candidateGroups="finance">
       <bpmn:property id="Prop_din_D_PaymentData_T_ConfirmPay" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="din_D_PaymentData_T_ConfirmPay"><bpmn:sourceRef>D_PaymentData</bpmn:sourceRef><bpmn:targetRef>Prop_din_D_PaymentData_T_ConfirmPay</bpmn:targetRef></bpmn:dataInputAssociation>
     </bpmn:userTask>
-    <bpmn:serviceTask id="T_GenAgreement" name="Auto-Generate Digital Agreement" camunda:expression="${true}">
+    <bpmn:serviceTask id="T_GenAgreement" name="Auto-Generate Digital Agreement">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83D\uDCC4 [LOG SISTEM] Dokumen perjanjian digital telah dibuat otomatis dan siap ditandatangani."}</camunda:inputParameter>
+            <camunda:outputParameter name="logGenAgreement">${statusCode}</camunda:outputParameter>
+          </camunda:inputOutput>
+        </camunda:connector>
+      </bpmn:extensionElements>
       <bpmn:dataOutputAssociation id="dout_T_GenAgreement_D_Agreement"><bpmn:targetRef>D_Agreement</bpmn:targetRef></bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
     <bpmn:userTask id="T_SignDigital" name="Sign Digital Agreement (e-Signature)" camunda:formRef="form_tanda_tangan" camunda:formRefBinding="latest" camunda:candidateGroups="mahasiswa">
       <bpmn:property id="Prop_din_D_Agreement_T_SignDigital" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="din_D_Agreement_T_SignDigital"><bpmn:sourceRef>D_Agreement</bpmn:sourceRef><bpmn:targetRef>Prop_din_D_Agreement_T_SignDigital</bpmn:targetRef></bpmn:dataInputAssociation>
     </bpmn:userTask>
-    <bpmn:boundaryEvent id="Bnd_Sign" name="3 Days Elapsed" attachedToRef="T_SignDigital" cancelActivity="false">
+    <bpmn:boundaryEvent id="Bnd_Sign" name="3 Days Elapsed (No Signature)" attachedToRef="T_SignDigital" cancelActivity="true">
       <bpmn:timerEventDefinition>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P3D</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
@@ -102,13 +168,19 @@
                 <camunda:entry key="Content-Type">application/json</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
-            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"Pengingat: dokumen perjanjian digital Anda belum ditandatangani. Mohon segera tandatangani."}</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\u23F0 [PENGINGAT] Dokumen perjanjian digital Anda belum ditandatangani. Mohon segera tandatangani."}</camunda:inputParameter>
             <camunda:outputParameter name="remindStatus">${statusCode}</camunda:outputParameter>
           </camunda:inputOutput>
         </camunda:connector>
       </bpmn:extensionElements>
     </bpmn:serviceTask>
-    <bpmn:endEvent id="End_SLA" name="Signing SLA Escalated" />
+    <bpmn:userTask id="T_HandleSignEscalation" name="Handle Signing Escalation (Contact Student)" camunda:candidateGroups="konsultan">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="end" expression="${execution.setVariable('signRetryCount', (signRetryCount == null ? 0 : signRetryCount) + 1)}" />
+      </bpmn:extensionElements>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_SignRetry" name="Retry Signing?" default="s30" />
+    <bpmn:endEvent id="End_SLA" name="Signing SLA Escalated (Failed)" />
     <bpmn:callActivity id="T_Onboarding" name="Run Student Onboarding" calledElement="Process_Onboarding_Sub" />
     <bpmn:serviceTask id="T_NotifyEnrolled" name="Send Enrollment Confirmation Notifications">
       <bpmn:extensionElements>
@@ -122,7 +194,7 @@
                 <camunda:entry key="Content-Type">application/json</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
-            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"Selamat! Pendaftaran telah selesai dan mahasiswa resmi enrolled di Schoters."}</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83C\uDF89 Selamat! Pendaftaran telah selesai dan mahasiswa resmi enrolled di Schoters."}</camunda:inputParameter>
             <camunda:outputParameter name="notifyStatus">${statusCode}</camunda:outputParameter>
           </camunda:inputOutput>
         </camunda:connector>
@@ -172,7 +244,12 @@
     <bpmn:sequenceFlow id="s22" sourceRef="T_GenAgreement" targetRef="T_SignDigital" />
     <bpmn:sequenceFlow id="s23" sourceRef="T_SignDigital" targetRef="T_Onboarding" />
     <bpmn:sequenceFlow id="s24" sourceRef="Bnd_Sign" targetRef="T_Remind" />
-    <bpmn:sequenceFlow id="s25" sourceRef="T_Remind" targetRef="End_SLA" />
+    <bpmn:sequenceFlow id="s25" sourceRef="T_Remind" targetRef="T_HandleSignEscalation" />
+    <bpmn:sequenceFlow id="s28" sourceRef="T_HandleSignEscalation" targetRef="GW_SignRetry" />
+    <bpmn:sequenceFlow id="s29" sourceRef="GW_SignRetry" targetRef="T_SignDigital" name="Retry (&lt; 3x)">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${signRetryCount &lt; 3}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="s30" sourceRef="GW_SignRetry" targetRef="End_SLA" name="Failed (&gt;= 3x)" />
     <bpmn:sequenceFlow id="s26" sourceRef="T_Onboarding" targetRef="T_NotifyEnrolled" />
     <bpmn:sequenceFlow id="s27" sourceRef="T_NotifyEnrolled" targetRef="End_Enrolled" />
   </bpmn:process>
@@ -215,6 +292,8 @@
       <bpmndi:BPMNShape id="di_T_SignDigital" bpmnElement="T_SignDigital"><dc:Bounds x="3900" y="160" width="120" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_Bnd_Sign" bpmnElement="Bnd_Sign"><dc:Bounds x="3942" y="222" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_Remind" bpmnElement="T_Remind"><dc:Bounds x="4105" y="640" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_HandleSignEscalation" bpmnElement="T_HandleSignEscalation"><dc:Bounds x="4105" y="400" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_SignRetry" bpmnElement="GW_SignRetry"><dc:Bounds x="4290" y="415" width="50" height="50" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_End_SLA" bpmnElement="End_SLA"><dc:Bounds x="4352" y="662" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_Onboarding" bpmnElement="T_Onboarding"><dc:Bounds x="4310" y="880" width="120" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_NotifyEnrolled" bpmnElement="T_NotifyEnrolled"><dc:Bounds x="4515" y="640" width="120" height="80" /></bpmndi:BPMNShape>
@@ -247,8 +326,11 @@
       <bpmndi:BPMNEdge id="di_s21" bpmnElement="s21"><di:waypoint x="3550" y="880" /><di:waypoint x="3550" y="680" /><di:waypoint x="3695" y="680" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_s22" bpmnElement="s22"><di:waypoint x="3815" y="680" /><di:waypoint x="3858" y="680" /><di:waypoint x="3858" y="200" /><di:waypoint x="3900" y="200" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_s23" bpmnElement="s23"><di:waypoint x="4020" y="200" /><di:waypoint x="4165" y="200" /><di:waypoint x="4165" y="920" /><di:waypoint x="4310" y="920" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_s24" bpmnElement="s24"><di:waypoint x="3978" y="240" /><di:waypoint x="4042" y="240" /><di:waypoint x="4042" y="680" /><di:waypoint x="4105" y="680" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_s25" bpmnElement="s25"><di:waypoint x="4225" y="680" /><di:waypoint x="4352" y="680" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_s24" bpmnElement="s24"><di:waypoint x="3960" y="258" /><di:waypoint x="3960" y="600" /><di:waypoint x="4060" y="600" /><di:waypoint x="4060" y="680" /><di:waypoint x="4105" y="680" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_s25" bpmnElement="s25"><di:waypoint x="4165" y="640" /><di:waypoint x="4165" y="480" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_s28" bpmnElement="s28"><di:waypoint x="4225" y="440" /><di:waypoint x="4290" y="440" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_s29" bpmnElement="s29"><di:waypoint x="4315" y="415" /><di:waypoint x="4315" y="130" /><di:waypoint x="3960" y="130" /><di:waypoint x="3960" y="160" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_s30" bpmnElement="s30"><di:waypoint x="4315" y="465" /><di:waypoint x="4315" y="680" /><di:waypoint x="4352" y="680" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_s26" bpmnElement="s26"><di:waypoint x="4430" y="920" /><di:waypoint x="4472" y="920" /><di:waypoint x="4472" y="680" /><di:waypoint x="4515" y="680" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_s27" bpmnElement="s27"><di:waypoint x="4635" y="680" /><di:waypoint x="4698" y="680" /><di:waypoint x="4698" y="920" /><di:waypoint x="4762" y="920" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_dout_T_AutoLog_D_LeadRecord" bpmnElement="dout_T_AutoLog_D_LeadRecord"><di:waypoint x="475" y="640" /><di:waypoint x="475" y="610" /></bpmndi:BPMNEdge>
