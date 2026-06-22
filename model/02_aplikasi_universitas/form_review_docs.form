@@ -1,71 +1,27 @@
 {
   "components": [
-    {
-      "text": "# Form Tinjauan Kualitas Dokumen",
-      "type": "text",
-      "layout": {
-        "row": "Row_intro",
-        "columns": null
-      },
-      "id": "Field_intro_form_review_docs"
-    },
-    {
-      "label": "Esai & Dokumen Siap",
-      "type": "checkbox",
-      "layout": {
-        "row": "Row_essayReady",
-        "columns": null
-      },
-      "id": "Field_essayReady",
-      "key": "essayReady"
-    },
-    {
-      "label": "IPK / GPA",
-      "type": "number",
-      "decimalDigits": 2,
-      "increment": "0.01",
-      "layout": {
-        "row": "Row_gpa",
-        "columns": null
-      },
-      "id": "Field_gpa",
-      "key": "gpa"
-    },
-    {
-      "label": "Tier Universitas Target",
-      "type": "select",
-      "layout": {
-        "row": "Row_targetTier",
-        "columns": null
-      },
-      "id": "Field_targetTier",
-      "key": "targetTier",
-      "values": [
-        {
-          "label": "Top",
-          "value": "Top"
-        },
-        {
-          "label": "Mid",
-          "value": "Mid"
-        },
-        {
-          "label": "Safe",
-          "value": "Safe"
-        }
-      ],
-      "validate": {
-        "required": true
-      }
-    }
+    { "text": "# Form Tinjauan Kualitas Dokumen & Esai\nMentor menilai kelengkapan dan kualitas berkas aplikasi, lalu menentukan input keputusan otomatis (DMN).", "type": "text", "layout": { "row": "Row_intro", "columns": null }, "id": "Field_intro_form_review_docs" },
+    { "text": "## A. Checklist Kelengkapan Berkas", "type": "text", "layout": { "row": "Row_sec_checklist", "columns": null }, "id": "Field_sec_checklist" },
+    { "label": "Personal Statement / Esai", "type": "checkbox", "layout": { "row": "Row_docEssay", "columns": null }, "id": "Field_docEssay", "key": "docEssay" },
+    { "label": "CV / Resume", "type": "checkbox", "layout": { "row": "Row_docCV", "columns": null }, "id": "Field_docCV", "key": "docCV" },
+    { "label": "Transkrip Akademik", "type": "checkbox", "layout": { "row": "Row_docTranscript", "columns": null }, "id": "Field_docTranscript", "key": "docTranscript" },
+    { "label": "Surat Rekomendasi", "type": "checkbox", "layout": { "row": "Row_docRecommendation", "columns": null }, "id": "Field_docRecommendation", "key": "docRecommendation" },
+    { "label": "Portfolio / Bukti Prestasi", "type": "checkbox", "layout": { "row": "Row_docPortfolio", "columns": null }, "id": "Field_docPortfolio", "key": "docPortfolio" },
+    { "text": "## B. Penilaian Akademik", "type": "text", "layout": { "row": "Row_sec_akademik", "columns": null }, "id": "Field_sec_akademik" },
+    { "label": "IPK / GPA (skala 4.0)", "type": "number", "decimalDigits": 2, "increment": "0.01", "layout": { "row": "Row_gpa", "columns": null }, "id": "Field_gpa", "key": "gpa", "validate": { "required": true, "min": 0, "max": 4 } },
+    { "label": "Skor Kualitas Esai (1-10)", "type": "number", "layout": { "row": "Row_essayScore", "columns": null }, "id": "Field_essayScore", "key": "essayScore", "validate": { "min": 1, "max": 10 } },
+    { "label": "Skor Bahasa Inggris (IELTS/TOEFL)", "type": "number", "layout": { "row": "Row_languageScore", "columns": null }, "id": "Field_languageScore", "key": "languageScore" },
+    { "label": "Esai & Dokumen Siap untuk Disubmit", "type": "checkbox", "layout": { "row": "Row_essayReady", "columns": null }, "id": "Field_essayReady", "key": "essayReady" },
+    { "text": "## C. Strategi Universitas Target", "type": "text", "layout": { "row": "Row_sec_strategi", "columns": null }, "id": "Field_sec_strategi" },
+    { "label": "Tier Universitas Target", "type": "select", "layout": { "row": "Row_targetTier", "columns": null }, "id": "Field_targetTier", "key": "targetTier", "values": [ { "label": "Top (Reach)", "value": "Top" }, { "label": "Mid (Match)", "value": "Mid" }, { "label": "Safe (Safety)", "value": "Safe" } ], "validate": { "required": true } },
+    { "label": "Rekomendasi Tindakan Mentor", "type": "radio", "layout": { "row": "Row_mentorRecommendation", "columns": null }, "id": "Field_mentorRecommendation", "key": "mentorRecommendation", "values": [ {"label":"Lanjut Submit","value":"Submit"}, {"label":"Revisi Dokumen","value":"Revise"}, {"label":"Sesuaikan Target","value":"Adjust"} ] },
+    { "label": "Catatan Mentor", "type": "textarea", "layout": { "row": "Row_mentorNotes", "columns": null }, "id": "Field_mentorNotes", "key": "mentorNotes" },
+    { "label": "Ditinjau oleh (Nama Mentor)", "type": "textfield", "layout": { "row": "Row_reviewerName", "columns": null }, "id": "Field_reviewerName", "key": "reviewerName" }
   ],
   "type": "default",
   "id": "form_review_docs",
   "executionPlatform": "Camunda Platform",
   "executionPlatformVersion": "7.20.0",
-  "exporter": {
-    "name": "Camunda Modeler",
-    "version": "5.20.0"
-  },
+  "exporter": { "name": "Camunda Modeler", "version": "5.20.0" },
   "schemaVersion": 11
 }
