@@ -20,7 +20,6 @@
         <bpmn:flowNodeRef>T_ApprovePartial</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Join</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>T_ProcessPayment</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Bnd_PaySLA</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="L_Mgr" name="Manajer Finance">
         <bpmn:flowNodeRef>T_ApproveFull</bpmn:flowNodeRef>
@@ -33,10 +32,7 @@
         <bpmn:flowNodeRef>End_Reject</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>T_Record</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>T_NotifyDone</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>CA_Audit</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Done</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_RemindPay</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>End_RemindPay</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Refund" name="Ajukan Permintaan Refund" camunda:formRef="form_refund_request" camunda:formRefBinding="latest">
@@ -153,19 +149,6 @@
         <bpmn:targetRef>DRB_Bukti</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:userTask>
-    <bpmn:boundaryEvent id="Bnd_PaySLA" name="2 Hari Tanpa Pembayaran" attachedToRef="T_ProcessPayment" cancelActivity="false">
-      <bpmn:outgoing>fb1</bpmn:outgoing>
-      <bpmn:timerEventDefinition>
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P2D</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:boundaryEvent>
-    <bpmn:serviceTask id="T_RemindPay" name="Kirim Pengingat Pembayaran Refund" camunda:expression="${true}">
-      <bpmn:incoming>fb1</bpmn:incoming>
-      <bpmn:outgoing>fb2</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:endEvent id="End_RemindPay" name="Pengingat Pembayaran Terkirim">
-      <bpmn:incoming>fb2</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:serviceTask id="T_Record" name="Catat Transaksi Refund" camunda:expression="${true}">
       <bpmn:incoming>f16</bpmn:incoming>
       <bpmn:outgoing>f17</bpmn:outgoing>
@@ -194,12 +177,8 @@
         <bpmn:targetRef>DRB_Konfirmasi</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
-    <bpmn:callActivity id="CA_Audit" name="Jalankan Audit &amp; Arsip Refund" calledElement="Process_RefundAudit">
-      <bpmn:incoming>f19</bpmn:incoming>
-      <bpmn:outgoing>f21</bpmn:outgoing>
-    </bpmn:callActivity>
     <bpmn:endEvent id="End_Done" name="Refund Selesai">
-      <bpmn:incoming>f21</bpmn:incoming>
+      <bpmn:incoming>f19</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="f1" sourceRef="Start_Refund" targetRef="T_Validate"/>
     <bpmn:sequenceFlow id="f2" sourceRef="T_Validate" targetRef="T_VerifyDocs"/>
@@ -225,10 +204,7 @@
     <bpmn:sequenceFlow id="f16" sourceRef="T_ProcessPayment" targetRef="T_Record"/>
     <bpmn:sequenceFlow id="f17" sourceRef="T_Record" targetRef="T_ConfirmReceipt"/>
     <bpmn:sequenceFlow id="f18" sourceRef="T_ConfirmReceipt" targetRef="T_NotifyDone"/>
-    <bpmn:sequenceFlow id="f19" sourceRef="T_NotifyDone" targetRef="CA_Audit"/>
-    <bpmn:sequenceFlow id="f21" sourceRef="CA_Audit" targetRef="End_Done"/>
-    <bpmn:sequenceFlow id="fb1" sourceRef="Bnd_PaySLA" targetRef="T_RemindPay"/>
-    <bpmn:sequenceFlow id="fb2" sourceRef="T_RemindPay" targetRef="End_RemindPay"/>
+    <bpmn:sequenceFlow id="f19" sourceRef="T_NotifyDone" targetRef="End_Done"/>
     <bpmn:sequenceFlow id="f20" sourceRef="T_NotifyReject" targetRef="End_Reject"/>
     <bpmn:dataObjectReference id="DRB_Tiket" name="Tiket Refund" dataObjectRef="DOB_Tiket"/>
     <bpmn:dataObject id="DOB_Tiket"/>
@@ -249,34 +225,25 @@
     <bpmn:dataObjectReference id="DRB_Konfirmasi" name="Email Konfirmasi Selesai" dataObjectRef="DOB_Konfirmasi"/>
     <bpmn:dataObject id="DOB_Konfirmasi"/>
   </bpmn:process>
-  <bpmn:process id="Process_RefundAudit" name="Audit &amp; Arsip Refund" isExecutable="true" camunda:historyTimeToLive="P180D">
-    <bpmn:startEvent id="RA_Start" name="Audit Dimulai"><bpmn:outgoing>ra1</bpmn:outgoing></bpmn:startEvent>
-    <bpmn:userTask id="RA_Review" name="Tinjau Kesesuaian Transaksi"><bpmn:incoming>ra1</bpmn:incoming><bpmn:outgoing>ra2</bpmn:outgoing></bpmn:userTask>
-    <bpmn:serviceTask id="RA_Archive" name="Arsipkan Bukti Refund" camunda:expression="${true}"><bpmn:incoming>ra2</bpmn:incoming><bpmn:outgoing>ra3</bpmn:outgoing></bpmn:serviceTask>
-    <bpmn:endEvent id="RA_End" name="Audit Selesai"><bpmn:incoming>ra3</bpmn:incoming></bpmn:endEvent>
-    <bpmn:sequenceFlow id="ra1" sourceRef="RA_Start" targetRef="RA_Review"/>
-    <bpmn:sequenceFlow id="ra2" sourceRef="RA_Review" targetRef="RA_Archive"/>
-    <bpmn:sequenceFlow id="ra3" sourceRef="RA_Archive" targetRef="RA_End"/>
-  </bpmn:process>
   <bpmndi:BPMNDiagram id="Diag">
     <bpmndi:BPMNPlane id="Plane" bpmnElement="Collab_Refund_TB">
       <bpmndi:BPMNShape id="di_Part_Refund_TB" bpmnElement="Part_Refund_TB" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="2960" height="800"/>
+        <dc:Bounds x="160" y="80" width="2760" height="800"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_L_Sys" bpmnElement="L_Sys" isHorizontal="true">
-        <dc:Bounds x="190" y="720" width="2930" height="160"/>
+        <dc:Bounds x="190" y="720" width="2730" height="160"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_L_Mgr" bpmnElement="L_Mgr" isHorizontal="true">
-        <dc:Bounds x="190" y="560" width="2930" height="160"/>
+        <dc:Bounds x="190" y="560" width="2730" height="160"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_L_Fin" bpmnElement="L_Fin" isHorizontal="true">
-        <dc:Bounds x="190" y="400" width="2930" height="160"/>
+        <dc:Bounds x="190" y="400" width="2730" height="160"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_L_CS" bpmnElement="L_CS" isHorizontal="true">
-        <dc:Bounds x="190" y="240" width="2930" height="160"/>
+        <dc:Bounds x="190" y="240" width="2730" height="160"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_L_Mhs" bpmnElement="L_Mhs" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="2930" height="160"/>
+        <dc:Bounds x="190" y="80" width="2730" height="160"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_Start_Refund" bpmnElement="Start_Refund">
         <dc:Bounds x="232" y="142" width="36" height="36"/>
@@ -323,15 +290,6 @@
       <bpmndi:BPMNShape id="di_T_ProcessPayment" bpmnElement="T_ProcessPayment">
         <dc:Bounds x="2040" y="440" width="120" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_Bnd_PaySLA" bpmnElement="Bnd_PaySLA">
-        <dc:Bounds x="2022" y="502" width="36" height="36"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_RemindPay" bpmnElement="T_RemindPay">
-        <dc:Bounds x="1980" y="760" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_End_RemindPay" bpmnElement="End_RemindPay">
-        <dc:Bounds x="2120" y="782" width="36" height="36"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_Record" bpmnElement="T_Record">
         <dc:Bounds x="2220" y="760" width="120" height="80"/>
       </bpmndi:BPMNShape>
@@ -341,11 +299,8 @@
       <bpmndi:BPMNShape id="di_T_NotifyDone" bpmnElement="T_NotifyDone">
         <dc:Bounds x="2580" y="760" width="120" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_CA_Audit" bpmnElement="CA_Audit">
-        <dc:Bounds x="2720" y="760" width="120" height="80"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_End_Done" bpmnElement="End_Done">
-        <dc:Bounds x="2980" y="782" width="36" height="36"/>
+        <dc:Bounds x="2802" y="782" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_DRB_Tiket" bpmnElement="DRB_Tiket">
         <dc:Bounds x="362" y="670" width="36" height="50"/>
@@ -397,9 +352,10 @@
         <di:waypoint x="760" y="160"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_f5" bpmnElement="f5">
-        <di:waypoint x="700" y="160"/>
-        <di:waypoint x="680" y="160"/>
-        <di:waypoint x="680" y="280"/>
+        <di:waypoint x="640" y="160"/>
+        <di:waypoint x="630" y="160"/>
+        <di:waypoint x="630" y="320"/>
+        <di:waypoint x="620" y="320"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_f6" bpmnElement="f6">
         <di:waypoint x="750" y="320"/>
@@ -475,19 +431,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_f19" bpmnElement="f19">
         <di:waypoint x="2700" y="800"/>
-        <di:waypoint x="2720" y="800"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f21" bpmnElement="f21">
-        <di:waypoint x="2840" y="800"/>
-        <di:waypoint x="2980" y="800"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_fb1" bpmnElement="fb1">
-        <di:waypoint x="2040" y="538"/>
-        <di:waypoint x="2040" y="760"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_fb2" bpmnElement="fb2">
-        <di:waypoint x="2100" y="800"/>
-        <di:waypoint x="2120" y="800"/>
+        <di:waypoint x="2802" y="800"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_f20" bpmnElement="f20">
         <di:waypoint x="1600" y="800"/>
