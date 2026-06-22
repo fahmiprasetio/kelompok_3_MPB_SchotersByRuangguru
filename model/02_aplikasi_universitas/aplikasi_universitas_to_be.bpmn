@@ -14,6 +14,7 @@
         <bpmn:flowNodeRef>T_ReviewDocs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>T_AdjustList</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>T_Track</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Bnd_TrackSLA</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_NotAccepted</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="L_System" name="Sistem Schoters">
@@ -24,7 +25,10 @@
         <bpmn:flowNodeRef>GW_Adm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>T_RecordLoA</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>T_Notify</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>CA_Enroll</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_LoA</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_RemindAdm</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_RemindAdm</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_App" name="Ajukan Permintaan Aplikasi Universitas" camunda:formRef="form_app_request" camunda:formRefBinding="latest"><bpmn:outgoing>f1</bpmn:outgoing></bpmn:startEvent>
@@ -37,10 +41,14 @@
     <bpmn:userTask id="T_AdjustList" name="Sesuaikan Daftar Universitas Target"><bpmn:incoming>f8</bpmn:incoming><bpmn:outgoing>f9</bpmn:outgoing><bpmn:dataOutputAssociation id="DOut_UnivList"><bpmn:targetRef>DObjRef_UnivList</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
     <bpmn:serviceTask id="T_Submit" name="Submit Aplikasi ke Universitas" camunda:expression="${true}"><bpmn:incoming>f_submit</bpmn:incoming><bpmn:outgoing>f10</bpmn:outgoing><bpmn:property id="Prop_T_Submit_Decision" name="__targetRef_placeholder" /><bpmn:property id="Prop_T_Submit_UnivList" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_Decision_T_Submit"><bpmn:sourceRef>DObjRef_Decision</bpmn:sourceRef><bpmn:targetRef>Prop_T_Submit_Decision</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataInputAssociation id="DIn_UnivList_T_Submit"><bpmn:sourceRef>DObjRef_UnivList</bpmn:sourceRef><bpmn:targetRef>Prop_T_Submit_UnivList</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="DOut_AppPackage"><bpmn:targetRef>DObjRef_AppPackage</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:serviceTask>
     <bpmn:userTask id="T_Track" name="Lacak Hasil Penerimaan" camunda:formRef="form_admission" camunda:formRefBinding="latest"><bpmn:incoming>f10</bpmn:incoming><bpmn:outgoing>f11</bpmn:outgoing><bpmn:property id="Prop_T_Track_AppPackage" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_AppPackage_T_Track"><bpmn:sourceRef>DObjRef_AppPackage</bpmn:sourceRef><bpmn:targetRef>Prop_T_Track_AppPackage</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:userTask>
+    <bpmn:boundaryEvent id="Bnd_TrackSLA" name="3 Hari Tanpa Hasil" attachedToRef="T_Track" cancelActivity="false"><bpmn:outgoing>fb1</bpmn:outgoing><bpmn:timerEventDefinition><bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P3D</bpmn:timeDuration></bpmn:timerEventDefinition></bpmn:boundaryEvent>
+    <bpmn:serviceTask id="T_RemindAdm" name="Kirim Pengingat Status Aplikasi" camunda:expression="${true}"><bpmn:incoming>fb1</bpmn:incoming><bpmn:outgoing>fb2</bpmn:outgoing></bpmn:serviceTask>
+    <bpmn:endEvent id="End_RemindAdm" name="Pengingat Aplikasi Terkirim"><bpmn:incoming>fb2</bpmn:incoming></bpmn:endEvent>
     <bpmn:exclusiveGateway id="GW_Adm" name="Hasil Penerimaan?" default="f_reject"><bpmn:incoming>f11</bpmn:incoming><bpmn:outgoing>f12</bpmn:outgoing><bpmn:outgoing>f_reject</bpmn:outgoing></bpmn:exclusiveGateway>
     <bpmn:serviceTask id="T_RecordLoA" name="Catat Letter of Acceptance" camunda:expression="${true}"><bpmn:incoming>f12</bpmn:incoming><bpmn:outgoing>f13</bpmn:outgoing><bpmn:dataOutputAssociation id="DOut_LoA"><bpmn:targetRef>DObjRef_LoA</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:serviceTask>
     <bpmn:serviceTask id="T_Notify" name="Kirim Notifikasi Hasil ke Mahasiswa" camunda:expression="${true}"><bpmn:incoming>f13</bpmn:incoming><bpmn:outgoing>f14</bpmn:outgoing></bpmn:serviceTask>
-    <bpmn:endEvent id="End_LoA" name="LoA Diterima"><bpmn:incoming>f14</bpmn:incoming></bpmn:endEvent>
+    <bpmn:callActivity id="CA_Enroll" name="Jalankan Onboarding Mahasiswa" calledElement="Process_Onboarding_AppUniv"><bpmn:incoming>f14</bpmn:incoming><bpmn:outgoing>f15b</bpmn:outgoing></bpmn:callActivity>
+    <bpmn:endEvent id="End_LoA" name="LoA Diterima"><bpmn:incoming>f15b</bpmn:incoming></bpmn:endEvent>
     <bpmn:endEvent id="End_NotAccepted" name="Aplikasi Tidak Diterima"><bpmn:incoming>f_reject</bpmn:incoming></bpmn:endEvent>
     <bpmn:dataObjectReference id="DObjRef_Docs" name="Dokumen Akademik" dataObjectRef="DObj_Docs" />
     <bpmn:dataObject id="DObj_Docs" />
@@ -76,15 +84,27 @@
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${admissionResult==&quot;Accepted&quot;}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="f13" sourceRef="T_RecordLoA" targetRef="T_Notify" />
-    <bpmn:sequenceFlow id="f14" sourceRef="T_Notify" targetRef="End_LoA" />
+    <bpmn:sequenceFlow id="f14" sourceRef="T_Notify" targetRef="CA_Enroll" />
+    <bpmn:sequenceFlow id="f15b" sourceRef="CA_Enroll" targetRef="End_LoA" />
     <bpmn:sequenceFlow id="f_reject" sourceRef="GW_Adm" targetRef="End_NotAccepted" name="Ditolak" />
+    <bpmn:sequenceFlow id="fb1" sourceRef="Bnd_TrackSLA" targetRef="T_RemindAdm" />
+    <bpmn:sequenceFlow id="fb2" sourceRef="T_RemindAdm" targetRef="End_RemindAdm" />
+  </bpmn:process>
+  <bpmn:process id="Process_Onboarding_AppUniv" name="Onboarding Mahasiswa Baru" isExecutable="true" camunda:historyTimeToLive="P180D">
+    <bpmn:startEvent id="OBA_Start" name="Onboarding Dimulai"><bpmn:outgoing>oba1</bpmn:outgoing></bpmn:startEvent>
+    <bpmn:userTask id="OBA_Welcome" name="Jadwalkan Sesi Orientasi"><bpmn:incoming>oba1</bpmn:incoming><bpmn:outgoing>oba2</bpmn:outgoing></bpmn:userTask>
+    <bpmn:serviceTask id="OBA_Account" name="Aktifkan Akun Mahasiswa" camunda:expression="${true}"><bpmn:incoming>oba2</bpmn:incoming><bpmn:outgoing>oba3</bpmn:outgoing></bpmn:serviceTask>
+    <bpmn:endEvent id="OBA_End" name="Onboarding Selesai"><bpmn:incoming>oba3</bpmn:incoming></bpmn:endEvent>
+    <bpmn:sequenceFlow id="oba1" sourceRef="OBA_Start" targetRef="OBA_Welcome" />
+    <bpmn:sequenceFlow id="oba2" sourceRef="OBA_Welcome" targetRef="OBA_Account" />
+    <bpmn:sequenceFlow id="oba3" sourceRef="OBA_Account" targetRef="OBA_End" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diag_Process_AppUniv_TB">
     <bpmndi:BPMNPlane id="Plane_Process_AppUniv_TB" bpmnElement="Collab_Process_AppUniv_TB">
-      <bpmndi:BPMNShape id="di_Part_Process_AppUniv_TB" bpmnElement="Part_Process_AppUniv_TB" isHorizontal="true"><dc:Bounds x="160" y="80" width="3120" height="780" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Student" bpmnElement="L_Student" isHorizontal="true"><dc:Bounds x="190" y="80" width="3090" height="260" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Mentor" bpmnElement="L_Mentor" isHorizontal="true"><dc:Bounds x="190" y="340" width="3090" height="260" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_System" bpmnElement="L_System" isHorizontal="true"><dc:Bounds x="190" y="600" width="3090" height="260" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_Part_Process_AppUniv_TB" bpmnElement="Part_Process_AppUniv_TB" isHorizontal="true"><dc:Bounds x="160" y="80" width="3300" height="780" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Student" bpmnElement="L_Student" isHorizontal="true"><dc:Bounds x="190" y="80" width="3300" height="260" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Mentor" bpmnElement="L_Mentor" isHorizontal="true"><dc:Bounds x="190" y="340" width="3300" height="260" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_System" bpmnElement="L_System" isHorizontal="true"><dc:Bounds x="190" y="600" width="3300" height="260" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_Start_App" bpmnElement="Start_App"><dc:Bounds x="342" y="192" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_CollectDocs" bpmnElement="T_CollectDocs"><dc:Bounds x="520" y="170" width="120" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_AutoCheck" bpmnElement="T_AutoCheck"><dc:Bounds x="740" y="690" width="120" height="80" /></bpmndi:BPMNShape>
@@ -98,7 +118,11 @@
       <bpmndi:BPMNShape id="di_GW_Adm" bpmnElement="GW_Adm"><dc:Bounds x="2315" y="705" width="50" height="50" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_RecordLoA" bpmnElement="T_RecordLoA"><dc:Bounds x="2500" y="690" width="120" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_T_Notify" bpmnElement="T_Notify"><dc:Bounds x="2720" y="690" width="120" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_End_LoA" bpmnElement="End_LoA"><dc:Bounds x="2982" y="712" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_CA_Enroll" bpmnElement="CA_Enroll"><dc:Bounds x="2900" y="690" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_End_LoA" bpmnElement="End_LoA"><dc:Bounds x="3160" y="712" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_Bnd_TrackSLA" bpmnElement="Bnd_TrackSLA"><dc:Bounds x="2082" y="492" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_RemindAdm" bpmnElement="T_RemindAdm"><dc:Bounds x="2040" y="690" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_End_RemindAdm" bpmnElement="End_RemindAdm"><dc:Bounds x="2180" y="712" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_End_NotAccepted" bpmnElement="End_NotAccepted"><dc:Bounds x="2762" y="452" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_DObjRef_Docs" bpmnElement="DObjRef_Docs"><dc:Bounds x="610" y="86" width="36" height="50" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="di_DObjRef_Validation" bpmnElement="DObjRef_Validation"><dc:Bounds x="830" y="606" width="36" height="50" /></bpmndi:BPMNShape>
@@ -121,7 +145,10 @@
       <bpmndi:BPMNEdge id="di_f11" bpmnElement="f11"><di:waypoint x="2180" y="470" /><di:waypoint x="2248" y="470" /><di:waypoint x="2248" y="730" /><di:waypoint x="2315" y="730" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_f12" bpmnElement="f12"><di:waypoint x="2365" y="730" /><di:waypoint x="2500" y="730" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_f13" bpmnElement="f13"><di:waypoint x="2620" y="730" /><di:waypoint x="2720" y="730" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f14" bpmnElement="f14"><di:waypoint x="2840" y="730" /><di:waypoint x="2982" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f14" bpmnElement="f14"><di:waypoint x="2840" y="730" /><di:waypoint x="2900" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f15b" bpmnElement="f15b"><di:waypoint x="3020" y="730" /><di:waypoint x="3160" y="730" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fb1" bpmnElement="fb1"><di:waypoint x="2100" y="528" /><di:waypoint x="2100" y="690" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_fb2" bpmnElement="fb2"><di:waypoint x="2160" y="730" /><di:waypoint x="2180" y="730" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_f_reject" bpmnElement="f_reject"><di:waypoint x="2365" y="730" /><di:waypoint x="2564" y="730" /><di:waypoint x="2564" y="470" /><di:waypoint x="2762" y="470" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_DOut_Docs" bpmnElement="DOut_Docs"><di:waypoint x="580" y="170" /><di:waypoint x="580" y="153" /><di:waypoint x="628" y="153" /><di:waypoint x="628" y="136" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_DIn_Docs_T_AutoCheck" bpmnElement="DIn_Docs_T_AutoCheck"><di:waypoint x="628" y="136" /><di:waypoint x="628" y="413" /><di:waypoint x="800" y="413" /><di:waypoint x="800" y="690" /></bpmndi:BPMNEdge>
