@@ -1,38 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Refund_AS" targetNamespace="http://bpmn.io/schema/bpmn" exporter="manual" exporterVersion="1.0">
-  <bpmn:collaboration id="Collab_Refund_AS">
-    <bpmn:participant id="Part_Refund_AS" name="Schoters by Ruangguru - Refund / Pembatalan (As-Is / Manual + Notifikasi Telegram)" processRef="Process_Refund_AS" />
-  </bpmn:collaboration>
+  <bpmn:collaboration id="Collab_Refund_AS"><bpmn:participant id="Part_Refund_AS" name="Schoters by Ruangguru - Refund / Pembatalan (As-Is / Manual + Notifikasi Telegram)" processRef="Process_Refund_AS" /></bpmn:collaboration>
   <bpmn:process id="Process_Refund_AS" name="Refund / Pembatalan Program (As-Is)" isExecutable="true" camunda:historyTimeToLive="P180D">
     <bpmn:laneSet id="LaneSet_Process_Refund_AS">
-      <bpmn:lane id="L_Student" name="Mahasiswa">
-        <bpmn:flowNodeRef>RAS_Start</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_AskMore</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_ConfirmAccount</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_EndReject</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_EndDone</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="L_CS" name="Customer Service">
-        <bpmn:flowNodeRef>RAS_AutoAck</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_Receive</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_Verify</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_Doc</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_RequestDocs</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_CheckPolicy</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_RejectNotify</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_ResultNotify</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="L_Finance" name="Tim Finance">
-        <bpmn:flowNodeRef>RAS_Calc</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_Discuss</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_Transfer</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_UpdateSheet</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>RAS_Reconcile</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="L_Manager" name="Manager">
-        <bpmn:flowNodeRef>RAS_MgrReview</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_Dec</bpmn:flowNodeRef>
-      </bpmn:lane>
+      <bpmn:lane id="L_Student" name="Mahasiswa"><bpmn:flowNodeRef>RAS_Start</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_AskMore</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_ConfirmAccount</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_EndReject</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_EndDone</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="L_CS" name="Customer Service"><bpmn:flowNodeRef>RAS_AutoAck</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_Receive</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_Verify</bpmn:flowNodeRef><bpmn:flowNodeRef>GW_Doc</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_RequestDocs</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_CheckPolicy</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_RejectNotify</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_ResultNotify</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="L_Finance" name="Tim Finance"><bpmn:flowNodeRef>RAS_Calc</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_Discuss</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_Transfer</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_UpdateSheet</bpmn:flowNodeRef><bpmn:flowNodeRef>RAS_Reconcile</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="L_Manager" name="Manager"><bpmn:flowNodeRef>RAS_MgrReview</bpmn:flowNodeRef><bpmn:flowNodeRef>GW_Dec</bpmn:flowNodeRef></bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="RAS_Start" name="Mahasiswa Mengirim Permintaan Refund (Email/WA)" camunda:formRef="form_refund_request" camunda:formRefBinding="latest"><bpmn:outgoing>ra1</bpmn:outgoing></bpmn:startEvent>
     <bpmn:serviceTask id="RAS_AutoAck" name="Kirim Konfirmasi Penerimaan Permintaan"><bpmn:extensionElements><camunda:connector><camunda:connectorId>http-connector</camunda:connectorId><camunda:inputOutput><camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter><camunda:inputParameter name="method">POST</camunda:inputParameter><camunda:inputParameter name="headers"><camunda:map><camunda:entry key="Content-Type">application/json</camunda:entry></camunda:map></camunda:inputParameter><camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83D\uDCE5 [CS] Permintaan refund Anda telah kami terima dan sedang diproses secara manual oleh tim kami."}</camunda:inputParameter><camunda:outputParameter name="logAutoAck">${statusCode}</camunda:outputParameter></camunda:inputOutput></camunda:connector></bpmn:extensionElements><bpmn:incoming>ra1</bpmn:incoming><bpmn:outgoing>ra2</bpmn:outgoing></bpmn:serviceTask>
@@ -74,24 +48,15 @@
     <bpmn:sequenceFlow id="ra17" sourceRef="RAS_UpdateSheet" targetRef="RAS_Reconcile" />
     <bpmn:sequenceFlow id="ra18" sourceRef="RAS_Reconcile" targetRef="RAS_ResultNotify" />
     <bpmn:sequenceFlow id="ra19" sourceRef="RAS_ResultNotify" targetRef="RAS_EndDone" />
-    <bpmn:dataObjectReference id="DR_Catatan" name="Catatan Permintaan (Spreadsheet)" dataObjectRef="DO_Catatan" />
-    <bpmn:dataObject id="DO_Catatan" />
-    <bpmn:dataObjectReference id="DR_Lembar" name="Lembar Cek Kelayakan" dataObjectRef="DO_Lembar" />
-    <bpmn:dataObject id="DO_Lembar" />
-    <bpmn:dataObjectReference id="DR_Hitung" name="Perhitungan Refund (Excel)" dataObjectRef="DO_Hitung" />
-    <bpmn:dataObject id="DO_Hitung" />
-    <bpmn:dataObjectReference id="DR_Rekening" name="Data Rekening Tujuan" dataObjectRef="DO_Rekening" />
-    <bpmn:dataObject id="DO_Rekening" />
-    <bpmn:dataObjectReference id="DR_Bukti" name="Bukti Transfer Bank" dataObjectRef="DO_Bukti" />
-    <bpmn:dataObject id="DO_Bukti" />
-    <bpmn:dataObjectReference id="DR_Status" name="Status Spreadsheet" dataObjectRef="DO_Status" />
-    <bpmn:dataObject id="DO_Status" />
-    <bpmn:dataObjectReference id="DR_Rekon" name="Laporan Rekonsiliasi" dataObjectRef="DO_Rekon" />
-    <bpmn:dataObject id="DO_Rekon" />
-    <bpmn:dataObjectReference id="DR_EmailTolak" name="Notifikasi Penolakan (Telegram)" dataObjectRef="DO_EmailTolak" />
-    <bpmn:dataObject id="DO_EmailTolak" />
-    <bpmn:dataObjectReference id="DR_Konfirmasi" name="Notifikasi Konfirmasi Refund (Telegram)" dataObjectRef="DO_Konfirmasi" />
-    <bpmn:dataObject id="DO_Konfirmasi" />
+    <bpmn:dataObjectReference id="DR_Catatan" name="Catatan Permintaan (Spreadsheet)" dataObjectRef="DO_Catatan" /><bpmn:dataObject id="DO_Catatan" />
+    <bpmn:dataObjectReference id="DR_Lembar" name="Lembar Cek Kelayakan" dataObjectRef="DO_Lembar" /><bpmn:dataObject id="DO_Lembar" />
+    <bpmn:dataObjectReference id="DR_Hitung" name="Perhitungan Refund (Excel)" dataObjectRef="DO_Hitung" /><bpmn:dataObject id="DO_Hitung" />
+    <bpmn:dataObjectReference id="DR_Rekening" name="Data Rekening Tujuan" dataObjectRef="DO_Rekening" /><bpmn:dataObject id="DO_Rekening" />
+    <bpmn:dataObjectReference id="DR_Bukti" name="Bukti Transfer Bank" dataObjectRef="DO_Bukti" /><bpmn:dataObject id="DO_Bukti" />
+    <bpmn:dataObjectReference id="DR_Status" name="Status Spreadsheet" dataObjectRef="DO_Status" /><bpmn:dataObject id="DO_Status" />
+    <bpmn:dataObjectReference id="DR_Rekon" name="Laporan Rekonsiliasi" dataObjectRef="DO_Rekon" /><bpmn:dataObject id="DO_Rekon" />
+    <bpmn:dataObjectReference id="DR_EmailTolak" name="Notifikasi Penolakan (Telegram)" dataObjectRef="DO_EmailTolak" /><bpmn:dataObject id="DO_EmailTolak" />
+    <bpmn:dataObjectReference id="DR_Konfirmasi" name="Notifikasi Konfirmasi Refund (Telegram)" dataObjectRef="DO_Konfirmasi" /><bpmn:dataObject id="DO_Konfirmasi" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diag_Process_Refund_AS">
     <bpmndi:BPMNPlane id="Plane_Process_Refund_AS" bpmnElement="Collab_Refund_AS">
@@ -152,4 +117,19 @@
       <bpmndi:BPMNEdge id="di_doa_catatan" bpmnElement="doa_catatan"><di:waypoint x="600" y="370" /><di:waypoint x="600" y="358" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_DIn_DR_Catatan_RAS_Verify" bpmnElement="DIn_DR_Catatan_RAS_Verify"><di:waypoint x="618" y="333" /><di:waypoint x="700" y="333" /><di:waypoint x="700" y="410" /><di:waypoint x="760" y="410" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_doa_lembar" bpmnElement="doa_lembar"><di:waypoint x="1340" y="370" /><di:waypoint x="1340" y="358" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DR_Lembar_RAS_Calc" bpmnElement="DIn_DR_Lembar_RAS_Calc"><di:waypoint x="1358" y="333" /><di:waypoint x="1420" y="333" /><di:waypoint x="1420" y="630" /><di:waypoint x
+      <bpmndi:BPMNEdge id="di_DIn_DR_Lembar_RAS_Calc" bpmnElement="DIn_DR_Lembar_RAS_Calc"><di:waypoint x="1358" y="333" /><di:waypoint x="1420" y="333" /><di:waypoint x="1420" y="630" /><di:waypoint x="1460" y="630" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_hitung" bpmnElement="doa_hitung"><di:waypoint x="1480" y="590" /><di:waypoint x="1480" y="578" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DR_Hitung_RAS_MgrReview" bpmnElement="DIn_DR_Hitung_RAS_MgrReview"><di:waypoint x="1498" y="553" /><di:waypoint x="1620" y="553" /><di:waypoint x="1620" y="850" /><di:waypoint x="1860" y="850" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_rekening" bpmnElement="doa_rekening"><di:waypoint x="2300" y="150" /><di:waypoint x="2300" y="138" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DR_Rekening_RAS_Transfer" bpmnElement="DIn_DR_Rekening_RAS_Transfer"><di:waypoint x="2318" y="113" /><di:waypoint x="2380" y="113" /><di:waypoint x="2380" y="630" /><di:waypoint x="2420" y="630" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_bukti" bpmnElement="doa_bukti"><di:waypoint x="2440" y="590" /><di:waypoint x="2440" y="578" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DR_Bukti_RAS_UpdateSheet" bpmnElement="DIn_DR_Bukti_RAS_UpdateSheet"><di:waypoint x="2458" y="553" /><di:waypoint x="2620" y="553" /><di:waypoint x="2620" y="590" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_status" bpmnElement="doa_status"><di:waypoint x="2700" y="590" /><di:waypoint x="2700" y="578" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DR_Status_RAS_Reconcile" bpmnElement="DIn_DR_Status_RAS_Reconcile"><di:waypoint x="2718" y="553" /><di:waypoint x="2820" y="553" /><di:waypoint x="2820" y="590" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_rekon" bpmnElement="doa_rekon"><di:waypoint x="2860" y="590" /><di:waypoint x="2860" y="578" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DR_Rekon_RAS_ResultNotify" bpmnElement="DIn_DR_Rekon_RAS_ResultNotify"><di:waypoint x="2878" y="553" /><di:waypoint x="3020" y="553" /><di:waypoint x="3020" y="450" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_emailtolak" bpmnElement="doa_emailtolak"><di:waypoint x="2300" y="370" /><di:waypoint x="2300" y="358" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_konfirmasi" bpmnElement="doa_konfirmasi"><di:waypoint x="3020" y="370" /><di:waypoint x="3020" y="358" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
