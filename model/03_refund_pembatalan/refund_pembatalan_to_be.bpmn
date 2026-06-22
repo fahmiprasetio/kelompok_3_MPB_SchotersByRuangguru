@@ -1,526 +1,136 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Refund_TB" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.44.0">
-  <bpmn:collaboration id="Collab_Refund_TB">
-    <bpmn:participant id="Part_Refund_TB" name="Schoters by Ruangguru - Refund / Pembatalan (To-Be / Terdigitalisasi)" processRef="Process_Refund_TB"/>
-  </bpmn:collaboration>
+  <bpmn:collaboration id="Collab_Refund_TB"><bpmn:participant id="Part_Refund_TB" name="Schoters by Ruangguru - Refund / Pembatalan (To-Be / Terdigitalisasi)" processRef="Process_Refund_TB" /></bpmn:collaboration>
   <bpmn:process id="Process_Refund_TB" name="Refund / Pembatalan Program (To-Be)" isExecutable="true" camunda:historyTimeToLive="P180D">
     <bpmn:laneSet id="LaneSet_Process_Refund_TB">
-      <bpmn:lane id="L_Mhs" name="Mahasiswa">
-        <bpmn:flowNodeRef>Start_Refund</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_FixData</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_ConfirmAccount</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_ConfirmReceipt</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="L_CS" name="Customer Service">
-        <bpmn:flowNodeRef>T_VerifyDocs</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_Docs</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="L_Fin" name="Tim Finance">
-        <bpmn:flowNodeRef>T_Review</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_ApprovePartial</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_Join</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_ProcessPayment</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="L_Mgr" name="Manajer Finance">
-        <bpmn:flowNodeRef>T_ApproveFull</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="L_Sys" name="Sistem Schoters">
-        <bpmn:flowNodeRef>T_Validate</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_Eval</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>GW_Dec</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_NotifyReject</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>End_Reject</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_Record</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>T_NotifyDone</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>End_Done</bpmn:flowNodeRef>
-      </bpmn:lane>
+      <bpmn:lane id="L_Mhs" name="Mahasiswa"><bpmn:flowNodeRef>Start_Refund</bpmn:flowNodeRef><bpmn:flowNodeRef>T_FixData</bpmn:flowNodeRef><bpmn:flowNodeRef>T_ConfirmAccount</bpmn:flowNodeRef><bpmn:flowNodeRef>T_ConfirmReceipt</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="L_CS" name="Customer Service"><bpmn:flowNodeRef>T_VerifyDocs</bpmn:flowNodeRef><bpmn:flowNodeRef>GW_Docs</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="L_Fin" name="Tim Finance"><bpmn:flowNodeRef>T_Review</bpmn:flowNodeRef><bpmn:flowNodeRef>T_ApprovePartial</bpmn:flowNodeRef><bpmn:flowNodeRef>GW_Join</bpmn:flowNodeRef><bpmn:flowNodeRef>T_ProcessPayment</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="L_Mgr" name="Manajer Finance"><bpmn:flowNodeRef>T_ApproveFull</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="L_Sys" name="Sistem Schoters"><bpmn:flowNodeRef>T_Validate</bpmn:flowNodeRef><bpmn:flowNodeRef>T_Eval</bpmn:flowNodeRef><bpmn:flowNodeRef>GW_Dec</bpmn:flowNodeRef><bpmn:flowNodeRef>T_NotifyReject</bpmn:flowNodeRef><bpmn:flowNodeRef>End_Reject</bpmn:flowNodeRef><bpmn:flowNodeRef>T_Record</bpmn:flowNodeRef><bpmn:flowNodeRef>T_NotifyDone</bpmn:flowNodeRef><bpmn:flowNodeRef>End_Done</bpmn:flowNodeRef></bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:startEvent id="Start_Refund" name="Ajukan Permintaan Refund" camunda:formRef="form_refund_request" camunda:formRefBinding="latest">
-      <bpmn:outgoing>f1</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:serviceTask id="T_Validate" name="Validasi Otomatis Permintaan" camunda:expression="${true}" camunda:resultVariable="dataValid">
-      <bpmn:incoming>f1</bpmn:incoming>
-      <bpmn:outgoing>f2</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="doa_DRB_Tiket">
-        <bpmn:targetRef>DRB_Tiket</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:serviceTask>
-    <bpmn:userTask id="T_VerifyDocs" name="Verifikasi Dokumen Pendukung" camunda:formRef="form_doc_verify" camunda:formRefBinding="latest">
-      <bpmn:incoming>f2</bpmn:incoming>
-      <bpmn:incoming>f5</bpmn:incoming>
-      <bpmn:outgoing>f3</bpmn:outgoing>
-      <bpmn:property id="Prop_T_VerifyDocs_DRB_Tiket" name="__targetRef_placeholder"/>
-      <bpmn:dataInputAssociation id="DIn_DRB_Tiket_T_VerifyDocs">
-        <bpmn:sourceRef>DRB_Tiket</bpmn:sourceRef>
-        <bpmn:targetRef>Prop_T_VerifyDocs_DRB_Tiket</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
-      <bpmn:dataOutputAssociation id="doa_DRB_Verifikasi">
-        <bpmn:targetRef>DRB_Verifikasi</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:userTask>
-    <bpmn:exclusiveGateway id="GW_Docs" name="Dokumen Lengkap?" default="f6">
-      <bpmn:incoming>f3</bpmn:incoming>
-      <bpmn:outgoing>f4</bpmn:outgoing>
-      <bpmn:outgoing>f6</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:userTask id="T_FixData" name="Perbaiki Data Permintaan">
-      <bpmn:incoming>f4</bpmn:incoming>
-      <bpmn:outgoing>f5</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:userTask id="T_Review" name="Tinjau Permintaan Refund" camunda:formRef="form_refund_review" camunda:formRefBinding="latest">
-      <bpmn:incoming>f6</bpmn:incoming>
-      <bpmn:outgoing>f7</bpmn:outgoing>
-      <bpmn:property id="Prop_T_Review_DRB_Verifikasi" name="__targetRef_placeholder"/>
-      <bpmn:dataInputAssociation id="DIn_DRB_Verifikasi_T_Review">
-        <bpmn:sourceRef>DRB_Verifikasi</bpmn:sourceRef>
-        <bpmn:targetRef>Prop_T_Review_DRB_Verifikasi</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
-      <bpmn:dataOutputAssociation id="doa_DRB_Tinjauan">
-        <bpmn:targetRef>DRB_Tinjauan</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:userTask>
-    <bpmn:businessRuleTask id="T_Eval" name="Evaluasi Kelayakan Refund (DMN)" camunda:resultVariable="refundDecision" camunda:decisionRef="Decision_Refund" camunda:mapDecisionResult="singleEntry">
-      <bpmn:incoming>f7</bpmn:incoming>
-      <bpmn:outgoing>f8</bpmn:outgoing>
-      <bpmn:property id="Prop_T_Eval_DRB_Tinjauan" name="__targetRef_placeholder"/>
-      <bpmn:dataInputAssociation id="DIn_DRB_Tinjauan_T_Eval">
-        <bpmn:sourceRef>DRB_Tinjauan</bpmn:sourceRef>
-        <bpmn:targetRef>Prop_T_Eval_DRB_Tinjauan</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
-      <bpmn:dataOutputAssociation id="doa_DRB_Keputusan">
-        <bpmn:targetRef>DRB_Keputusan</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:businessRuleTask>
-    <bpmn:exclusiveGateway id="GW_Dec" name="Keputusan Refund?" default="f11">
-      <bpmn:incoming>f8</bpmn:incoming>
-      <bpmn:outgoing>f9</bpmn:outgoing>
-      <bpmn:outgoing>f10</bpmn:outgoing>
-      <bpmn:outgoing>f11</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:userTask id="T_ApproveFull" name="Setujui Refund Penuh (Manajer)">
-      <bpmn:incoming>f9</bpmn:incoming>
-      <bpmn:outgoing>f12</bpmn:outgoing>
-      <bpmn:property id="Prop_T_ApproveFull_DRB_Keputusan" name="__targetRef_placeholder"/>
-      <bpmn:dataInputAssociation id="DIn_DRB_Keputusan_T_ApproveFull">
-        <bpmn:sourceRef>DRB_Keputusan</bpmn:sourceRef>
-        <bpmn:targetRef>Prop_T_ApproveFull_DRB_Keputusan</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
-    </bpmn:userTask>
-    <bpmn:userTask id="T_ApprovePartial" name="Setujui Refund Sebagian">
-      <bpmn:incoming>f10</bpmn:incoming>
-      <bpmn:outgoing>f13</bpmn:outgoing>
-      <bpmn:property id="Prop_T_ApprovePartial_DRB_Keputusan" name="__targetRef_placeholder"/>
-      <bpmn:dataInputAssociation id="DIn_DRB_Keputusan_T_ApprovePartial">
-        <bpmn:sourceRef>DRB_Keputusan</bpmn:sourceRef>
-        <bpmn:targetRef>Prop_T_ApprovePartial_DRB_Keputusan</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
-    </bpmn:userTask>
-    <bpmn:serviceTask id="T_NotifyReject" name="Kirim Notifikasi Penolakan" camunda:expression="${true}">
-      <bpmn:incoming>f11</bpmn:incoming>
-      <bpmn:outgoing>f20</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="doa_DRB_EmailTolak">
-        <bpmn:targetRef>DRB_EmailTolak</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:serviceTask>
-    <bpmn:endEvent id="End_Reject" name="Refund Ditolak">
-      <bpmn:incoming>f20</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:exclusiveGateway id="GW_Join">
-      <bpmn:incoming>f12</bpmn:incoming>
-      <bpmn:incoming>f13</bpmn:incoming>
-      <bpmn:outgoing>f14</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:userTask id="T_ConfirmAccount" name="Konfirmasi Rekening Tujuan" camunda:formRef="form_account_confirm" camunda:formRefBinding="latest">
-      <bpmn:incoming>f14</bpmn:incoming>
-      <bpmn:outgoing>f15</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="doa_DRB_Rekening">
-        <bpmn:targetRef>DRB_Rekening</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:userTask>
-    <bpmn:userTask id="T_ProcessPayment" name="Proses Pembayaran Refund">
-      <bpmn:incoming>f15</bpmn:incoming>
-      <bpmn:outgoing>f16</bpmn:outgoing>
-      <bpmn:property id="Prop_T_ProcessPayment_DRB_Rekening" name="__targetRef_placeholder"/>
-      <bpmn:dataInputAssociation id="DIn_DRB_Rekening_T_ProcessPayment">
-        <bpmn:sourceRef>DRB_Rekening</bpmn:sourceRef>
-        <bpmn:targetRef>Prop_T_ProcessPayment_DRB_Rekening</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
-      <bpmn:dataOutputAssociation id="doa_DRB_Bukti">
-        <bpmn:targetRef>DRB_Bukti</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:userTask>
-    <bpmn:serviceTask id="T_Record" name="Catat Transaksi Refund" camunda:expression="${true}">
-      <bpmn:incoming>f16</bpmn:incoming>
-      <bpmn:outgoing>f17</bpmn:outgoing>
-      <bpmn:property id="Prop_T_Record_DRB_Bukti" name="__targetRef_placeholder"/>
-      <bpmn:dataInputAssociation id="DIn_DRB_Bukti_T_Record">
-        <bpmn:sourceRef>DRB_Bukti</bpmn:sourceRef>
-        <bpmn:targetRef>Prop_T_Record_DRB_Bukti</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
-      <bpmn:dataOutputAssociation id="doa_DRB_Catatan">
-        <bpmn:targetRef>DRB_Catatan</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:serviceTask>
-    <bpmn:userTask id="T_ConfirmReceipt" name="Konfirmasi Penerimaan Dana">
-      <bpmn:incoming>f17</bpmn:incoming>
-      <bpmn:outgoing>f18</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:serviceTask id="T_NotifyDone" name="Kirim Notifikasi Refund Selesai" camunda:expression="${true}">
-      <bpmn:incoming>f18</bpmn:incoming>
-      <bpmn:outgoing>f19</bpmn:outgoing>
-      <bpmn:property id="Prop_T_NotifyDone_DRB_Catatan" name="__targetRef_placeholder"/>
-      <bpmn:dataInputAssociation id="DIn_DRB_Catatan_T_NotifyDone">
-        <bpmn:sourceRef>DRB_Catatan</bpmn:sourceRef>
-        <bpmn:targetRef>Prop_T_NotifyDone_DRB_Catatan</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
-      <bpmn:dataOutputAssociation id="doa_DRB_Konfirmasi">
-        <bpmn:targetRef>DRB_Konfirmasi</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:serviceTask>
-    <bpmn:endEvent id="End_Done" name="Refund Selesai">
-      <bpmn:incoming>f19</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="f1" sourceRef="Start_Refund" targetRef="T_Validate"/>
-    <bpmn:sequenceFlow id="f2" sourceRef="T_Validate" targetRef="T_VerifyDocs"/>
-    <bpmn:sequenceFlow id="f3" sourceRef="T_VerifyDocs" targetRef="GW_Docs"/>
-    <bpmn:sequenceFlow id="f4" sourceRef="GW_Docs" targetRef="T_FixData" name="Dokumen Tidak Lengkap">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${dokumenLengkap == false}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="f5" sourceRef="T_FixData" targetRef="T_VerifyDocs"/>
-    <bpmn:sequenceFlow id="f6" sourceRef="GW_Docs" targetRef="T_Review" name="Dokumen Lengkap"/>
-    <bpmn:sequenceFlow id="f7" sourceRef="T_Review" targetRef="T_Eval"/>
-    <bpmn:sequenceFlow id="f8" sourceRef="T_Eval" targetRef="GW_Dec"/>
-    <bpmn:sequenceFlow id="f9" sourceRef="GW_Dec" targetRef="T_ApproveFull" name="Refund Penuh">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${refundDecision=='Full Refund'}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="f10" sourceRef="GW_Dec" targetRef="T_ApprovePartial" name="Refund Sebagian">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${refundDecision=='Partial Refund'}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="f11" sourceRef="GW_Dec" targetRef="T_NotifyReject" name="Tanpa Refund"/>
-    <bpmn:sequenceFlow id="f12" sourceRef="T_ApproveFull" targetRef="GW_Join"/>
-    <bpmn:sequenceFlow id="f13" sourceRef="T_ApprovePartial" targetRef="GW_Join"/>
-    <bpmn:sequenceFlow id="f14" sourceRef="GW_Join" targetRef="T_ConfirmAccount"/>
-    <bpmn:sequenceFlow id="f15" sourceRef="T_ConfirmAccount" targetRef="T_ProcessPayment"/>
-    <bpmn:sequenceFlow id="f16" sourceRef="T_ProcessPayment" targetRef="T_Record"/>
-    <bpmn:sequenceFlow id="f17" sourceRef="T_Record" targetRef="T_ConfirmReceipt"/>
-    <bpmn:sequenceFlow id="f18" sourceRef="T_ConfirmReceipt" targetRef="T_NotifyDone"/>
-    <bpmn:sequenceFlow id="f19" sourceRef="T_NotifyDone" targetRef="End_Done"/>
-    <bpmn:sequenceFlow id="f20" sourceRef="T_NotifyReject" targetRef="End_Reject"/>
-    <bpmn:dataObjectReference id="DRB_Tiket" name="Tiket Refund" dataObjectRef="DOB_Tiket"/>
-    <bpmn:dataObject id="DOB_Tiket"/>
-    <bpmn:dataObjectReference id="DRB_Verifikasi" name="Hasil Verifikasi Dokumen" dataObjectRef="DOB_Verifikasi"/>
-    <bpmn:dataObject id="DOB_Verifikasi"/>
-    <bpmn:dataObjectReference id="DRB_Tinjauan" name="Hasil Tinjauan Refund" dataObjectRef="DOB_Tinjauan"/>
-    <bpmn:dataObject id="DOB_Tinjauan"/>
-    <bpmn:dataObjectReference id="DRB_Keputusan" name="Keputusan Refund (DMN)" dataObjectRef="DOB_Keputusan"/>
-    <bpmn:dataObject id="DOB_Keputusan"/>
-    <bpmn:dataObjectReference id="DRB_Rekening" name="Data Rekening Tujuan" dataObjectRef="DOB_Rekening"/>
-    <bpmn:dataObject id="DOB_Rekening"/>
-    <bpmn:dataObjectReference id="DRB_Bukti" name="Bukti Pembayaran" dataObjectRef="DOB_Bukti"/>
-    <bpmn:dataObject id="DOB_Bukti"/>
-    <bpmn:dataObjectReference id="DRB_Catatan" name="Catatan Transaksi Refund" dataObjectRef="DOB_Catatan"/>
-    <bpmn:dataObject id="DOB_Catatan"/>
-    <bpmn:dataObjectReference id="DRB_EmailTolak" name="Email Penolakan" dataObjectRef="DOB_EmailTolak"/>
-    <bpmn:dataObject id="DOB_EmailTolak"/>
-    <bpmn:dataObjectReference id="DRB_Konfirmasi" name="Email Konfirmasi Selesai" dataObjectRef="DOB_Konfirmasi"/>
-    <bpmn:dataObject id="DOB_Konfirmasi"/>
+    <bpmn:startEvent id="Start_Refund" name="Ajukan Permintaan Refund" camunda:formRef="form_refund_request" camunda:formRefBinding="latest"><bpmn:outgoing>f1</bpmn:outgoing></bpmn:startEvent>
+    <bpmn:serviceTask id="T_Validate" name="Validasi Otomatis Permintaan" camunda:expression="${true}" camunda:resultVariable="dataValid"><bpmn:incoming>f1</bpmn:incoming><bpmn:outgoing>f2</bpmn:outgoing><bpmn:dataOutputAssociation id="doa_DRB_Tiket"><bpmn:targetRef>DRB_Tiket</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:serviceTask>
+    <bpmn:userTask id="T_VerifyDocs" name="Verifikasi Dokumen Pendukung" camunda:formRef="form_doc_verify" camunda:formRefBinding="latest"><bpmn:incoming>f2</bpmn:incoming><bpmn:incoming>f5</bpmn:incoming><bpmn:outgoing>f3</bpmn:outgoing><bpmn:property id="Prop_T_VerifyDocs_DRB_Tiket" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_DRB_Tiket_T_VerifyDocs"><bpmn:sourceRef>DRB_Tiket</bpmn:sourceRef><bpmn:targetRef>Prop_T_VerifyDocs_DRB_Tiket</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="doa_DRB_Verifikasi"><bpmn:targetRef>DRB_Verifikasi</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_Docs" name="Dokumen Lengkap?" default="f6"><bpmn:incoming>f3</bpmn:incoming><bpmn:outgoing>f4</bpmn:outgoing><bpmn:outgoing>f6</bpmn:outgoing></bpmn:exclusiveGateway>
+    <bpmn:userTask id="T_FixData" name="Perbaiki Data Permintaan"><bpmn:incoming>f4</bpmn:incoming><bpmn:outgoing>f5</bpmn:outgoing></bpmn:userTask>
+    <bpmn:userTask id="T_Review" name="Tinjau Permintaan Refund" camunda:formRef="form_refund_review" camunda:formRefBinding="latest"><bpmn:incoming>f6</bpmn:incoming><bpmn:outgoing>f7</bpmn:outgoing><bpmn:property id="Prop_T_Review_DRB_Verifikasi" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_DRB_Verifikasi_T_Review"><bpmn:sourceRef>DRB_Verifikasi</bpmn:sourceRef><bpmn:targetRef>Prop_T_Review_DRB_Verifikasi</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="doa_DRB_Tinjauan"><bpmn:targetRef>DRB_Tinjauan</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:businessRuleTask id="T_Eval" name="Evaluasi Kelayakan Refund (DMN)" camunda:resultVariable="refundDecision" camunda:decisionRef="Decision_Refund" camunda:mapDecisionResult="singleEntry"><bpmn:incoming>f7</bpmn:incoming><bpmn:outgoing>f8</bpmn:outgoing><bpmn:property id="Prop_T_Eval_DRB_Tinjauan" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_DRB_Tinjauan_T_Eval"><bpmn:sourceRef>DRB_Tinjauan</bpmn:sourceRef><bpmn:targetRef>Prop_T_Eval_DRB_Tinjauan</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="doa_DRB_Keputusan"><bpmn:targetRef>DRB_Keputusan</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="GW_Dec" name="Keputusan Refund?" default="f11"><bpmn:incoming>f8</bpmn:incoming><bpmn:outgoing>f9</bpmn:outgoing><bpmn:outgoing>f10</bpmn:outgoing><bpmn:outgoing>f11</bpmn:outgoing></bpmn:exclusiveGateway>
+    <bpmn:userTask id="T_ApproveFull" name="Setujui Refund Penuh (Manajer)"><bpmn:incoming>f9</bpmn:incoming><bpmn:outgoing>f12</bpmn:outgoing><bpmn:property id="Prop_T_ApproveFull_DRB_Keputusan" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_DRB_Keputusan_T_ApproveFull"><bpmn:sourceRef>DRB_Keputusan</bpmn:sourceRef><bpmn:targetRef>Prop_T_ApproveFull_DRB_Keputusan</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:userTask>
+    <bpmn:userTask id="T_ApprovePartial" name="Setujui Refund Sebagian"><bpmn:incoming>f10</bpmn:incoming><bpmn:outgoing>f13</bpmn:outgoing><bpmn:property id="Prop_T_ApprovePartial_DRB_Keputusan" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_DRB_Keputusan_T_ApprovePartial"><bpmn:sourceRef>DRB_Keputusan</bpmn:sourceRef><bpmn:targetRef>Prop_T_ApprovePartial_DRB_Keputusan</bpmn:targetRef></bpmn:dataInputAssociation></bpmn:userTask>
+    <bpmn:serviceTask id="T_NotifyReject" name="Kirim Notifikasi Penolakan"><bpmn:extensionElements><camunda:connector><camunda:connectorId>http-connector</camunda:connectorId><camunda:inputOutput><camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter><camunda:inputParameter name="method">POST</camunda:inputParameter><camunda:inputParameter name="headers"><camunda:map><camunda:entry key="Content-Type">application/json</camunda:entry></camunda:map></camunda:inputParameter><camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\u274C [Schoters] Mohon maaf, permintaan refund Anda tidak memenuhi kriteria kebijakan sehingga tidak dapat disetujui. Silakan hubungi tim kami untuk informasi lebih lanjut."}</camunda:inputParameter><camunda:outputParameter name="logNotifyReject">${statusCode}</camunda:outputParameter></camunda:inputOutput></camunda:connector></bpmn:extensionElements><bpmn:incoming>f11</bpmn:incoming><bpmn:outgoing>f20</bpmn:outgoing><bpmn:dataOutputAssociation id="doa_DRB_EmailTolak"><bpmn:targetRef>DRB_EmailTolak</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:serviceTask>
+    <bpmn:endEvent id="End_Reject" name="Refund Ditolak"><bpmn:incoming>f20</bpmn:incoming></bpmn:endEvent>
+    <bpmn:exclusiveGateway id="GW_Join"><bpmn:incoming>f12</bpmn:incoming><bpmn:incoming>f13</bpmn:incoming><bpmn:outgoing>f14</bpmn:outgoing></bpmn:exclusiveGateway>
+    <bpmn:userTask id="T_ConfirmAccount" name="Konfirmasi Rekening Tujuan" camunda:formRef="form_account_confirm" camunda:formRefBinding="latest"><bpmn:incoming>f14</bpmn:incoming><bpmn:outgoing>f15</bpmn:outgoing><bpmn:dataOutputAssociation id="doa_DRB_Rekening"><bpmn:targetRef>DRB_Rekening</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:userTask id="T_ProcessPayment" name="Proses Pembayaran Refund"><bpmn:incoming>f15</bpmn:incoming><bpmn:outgoing>f16</bpmn:outgoing><bpmn:property id="Prop_T_ProcessPayment_DRB_Rekening" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_DRB_Rekening_T_ProcessPayment"><bpmn:sourceRef>DRB_Rekening</bpmn:sourceRef><bpmn:targetRef>Prop_T_ProcessPayment_DRB_Rekening</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="doa_DRB_Bukti"><bpmn:targetRef>DRB_Bukti</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:userTask>
+    <bpmn:serviceTask id="T_Record" name="Catat Transaksi Refund" camunda:expression="${true}"><bpmn:incoming>f16</bpmn:incoming><bpmn:outgoing>f17</bpmn:outgoing><bpmn:property id="Prop_T_Record_DRB_Bukti" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_DRB_Bukti_T_Record"><bpmn:sourceRef>DRB_Bukti</bpmn:sourceRef><bpmn:targetRef>Prop_T_Record_DRB_Bukti</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="doa_DRB_Catatan"><bpmn:targetRef>DRB_Catatan</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:serviceTask>
+    <bpmn:userTask id="T_ConfirmReceipt" name="Konfirmasi Penerimaan Dana"><bpmn:incoming>f17</bpmn:incoming><bpmn:outgoing>f18</bpmn:outgoing></bpmn:userTask>
+    <bpmn:serviceTask id="T_NotifyDone" name="Kirim Notifikasi Refund Selesai"><bpmn:extensionElements><camunda:connector><camunda:connectorId>http-connector</camunda:connectorId><camunda:inputOutput><camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter><camunda:inputParameter name="method">POST</camunda:inputParameter><camunda:inputParameter name="headers"><camunda:map><camunda:entry key="Content-Type">application/json</camunda:entry></camunda:map></camunda:inputParameter><camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\u2705 [Schoters] Refund Anda telah selesai diproses dan dana telah ditransfer ke rekening tujuan. Terima kasih telah menggunakan layanan kami."}</camunda:inputParameter><camunda:outputParameter name="logNotifyDone">${statusCode}</camunda:outputParameter></camunda:inputOutput></camunda:connector></bpmn:extensionElements><bpmn:incoming>f18</bpmn:incoming><bpmn:outgoing>f19</bpmn:outgoing><bpmn:property id="Prop_T_NotifyDone_DRB_Catatan" name="__targetRef_placeholder" /><bpmn:dataInputAssociation id="DIn_DRB_Catatan_T_NotifyDone"><bpmn:sourceRef>DRB_Catatan</bpmn:sourceRef><bpmn:targetRef>Prop_T_NotifyDone_DRB_Catatan</bpmn:targetRef></bpmn:dataInputAssociation><bpmn:dataOutputAssociation id="doa_DRB_Konfirmasi"><bpmn:targetRef>DRB_Konfirmasi</bpmn:targetRef></bpmn:dataOutputAssociation></bpmn:serviceTask>
+    <bpmn:endEvent id="End_Done" name="Refund Selesai"><bpmn:incoming>f19</bpmn:incoming></bpmn:endEvent>
+    <bpmn:sequenceFlow id="f1" sourceRef="Start_Refund" targetRef="T_Validate" />
+    <bpmn:sequenceFlow id="f2" sourceRef="T_Validate" targetRef="T_VerifyDocs" />
+    <bpmn:sequenceFlow id="f3" sourceRef="T_VerifyDocs" targetRef="GW_Docs" />
+    <bpmn:sequenceFlow id="f4" sourceRef="GW_Docs" targetRef="T_FixData" name="Dokumen Tidak Lengkap"><bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${dokumenLengkap == false}</bpmn:conditionExpression></bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f5" sourceRef="T_FixData" targetRef="T_VerifyDocs" />
+    <bpmn:sequenceFlow id="f6" sourceRef="GW_Docs" targetRef="T_Review" name="Dokumen Lengkap" />
+    <bpmn:sequenceFlow id="f7" sourceRef="T_Review" targetRef="T_Eval" />
+    <bpmn:sequenceFlow id="f8" sourceRef="T_Eval" targetRef="GW_Dec" />
+    <bpmn:sequenceFlow id="f9" sourceRef="GW_Dec" targetRef="T_ApproveFull" name="Refund Penuh"><bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${refundDecision=='Full Refund'}</bpmn:conditionExpression></bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f10" sourceRef="GW_Dec" targetRef="T_ApprovePartial" name="Refund Sebagian"><bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${refundDecision=='Partial Refund'}</bpmn:conditionExpression></bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f11" sourceRef="GW_Dec" targetRef="T_NotifyReject" name="Tanpa Refund" />
+    <bpmn:sequenceFlow id="f12" sourceRef="T_ApproveFull" targetRef="GW_Join" />
+    <bpmn:sequenceFlow id="f13" sourceRef="T_ApprovePartial" targetRef="GW_Join" />
+    <bpmn:sequenceFlow id="f14" sourceRef="GW_Join" targetRef="T_ConfirmAccount" />
+    <bpmn:sequenceFlow id="f15" sourceRef="T_ConfirmAccount" targetRef="T_ProcessPayment" />
+    <bpmn:sequenceFlow id="f16" sourceRef="T_ProcessPayment" targetRef="T_Record" />
+    <bpmn:sequenceFlow id="f17" sourceRef="T_Record" targetRef="T_ConfirmReceipt" />
+    <bpmn:sequenceFlow id="f18" sourceRef="T_ConfirmReceipt" targetRef="T_NotifyDone" />
+    <bpmn:sequenceFlow id="f19" sourceRef="T_NotifyDone" targetRef="End_Done" />
+    <bpmn:sequenceFlow id="f20" sourceRef="T_NotifyReject" targetRef="End_Reject" />
+    <bpmn:dataObjectReference id="DRB_Tiket" name="Tiket Refund" dataObjectRef="DOB_Tiket" /><bpmn:dataObject id="DOB_Tiket" />
+    <bpmn:dataObjectReference id="DRB_Verifikasi" name="Hasil Verifikasi Dokumen" dataObjectRef="DOB_Verifikasi" /><bpmn:dataObject id="DOB_Verifikasi" />
+    <bpmn:dataObjectReference id="DRB_Tinjauan" name="Hasil Tinjauan Refund" dataObjectRef="DOB_Tinjauan" /><bpmn:dataObject id="DOB_Tinjauan" />
+    <bpmn:dataObjectReference id="DRB_Keputusan" name="Keputusan Refund (DMN)" dataObjectRef="DOB_Keputusan" /><bpmn:dataObject id="DOB_Keputusan" />
+    <bpmn:dataObjectReference id="DRB_Rekening" name="Data Rekening Tujuan" dataObjectRef="DOB_Rekening" /><bpmn:dataObject id="DOB_Rekening" />
+    <bpmn:dataObjectReference id="DRB_Bukti" name="Bukti Pembayaran" dataObjectRef="DOB_Bukti" /><bpmn:dataObject id="DOB_Bukti" />
+    <bpmn:dataObjectReference id="DRB_Catatan" name="Catatan Transaksi Refund" dataObjectRef="DOB_Catatan" /><bpmn:dataObject id="DOB_Catatan" />
+    <bpmn:dataObjectReference id="DRB_EmailTolak" name="Notifikasi Penolakan (Telegram)" dataObjectRef="DOB_EmailTolak" /><bpmn:dataObject id="DOB_EmailTolak" />
+    <bpmn:dataObjectReference id="DRB_Konfirmasi" name="Notifikasi Konfirmasi Selesai (Telegram)" dataObjectRef="DOB_Konfirmasi" /><bpmn:dataObject id="DOB_Konfirmasi" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diag">
     <bpmndi:BPMNPlane id="Plane" bpmnElement="Collab_Refund_TB">
-      <bpmndi:BPMNShape id="di_Part_Refund_TB" bpmnElement="Part_Refund_TB" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="2760" height="800"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Sys" bpmnElement="L_Sys" isHorizontal="true">
-        <dc:Bounds x="190" y="720" width="2730" height="160"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Mgr" bpmnElement="L_Mgr" isHorizontal="true">
-        <dc:Bounds x="190" y="560" width="2730" height="160"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Fin" bpmnElement="L_Fin" isHorizontal="true">
-        <dc:Bounds x="190" y="400" width="2730" height="160"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_CS" bpmnElement="L_CS" isHorizontal="true">
-        <dc:Bounds x="190" y="240" width="2730" height="160"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_L_Mhs" bpmnElement="L_Mhs" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="2730" height="160"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_Start_Refund" bpmnElement="Start_Refund">
-        <dc:Bounds x="232" y="142" width="36" height="36"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_Validate" bpmnElement="T_Validate">
-        <dc:Bounds x="320" y="760" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_VerifyDocs" bpmnElement="T_VerifyDocs">
-        <dc:Bounds x="500" y="280" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_GW_Docs" bpmnElement="GW_Docs" isMarkerVisible="true">
-        <dc:Bounds x="700" y="295" width="50" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_FixData" bpmnElement="T_FixData">
-        <dc:Bounds x="640" y="120" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_Review" bpmnElement="T_Review">
-        <dc:Bounds x="900" y="440" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_Eval" bpmnElement="T_Eval">
-        <dc:Bounds x="1080" y="760" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_GW_Dec" bpmnElement="GW_Dec" isMarkerVisible="true">
-        <dc:Bounds x="1300" y="775" width="50" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_ApproveFull" bpmnElement="T_ApproveFull">
-        <dc:Bounds x="1480" y="600" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_ApprovePartial" bpmnElement="T_ApprovePartial">
-        <dc:Bounds x="1480" y="440" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_NotifyReject" bpmnElement="T_NotifyReject">
-        <dc:Bounds x="1480" y="760" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_End_Reject" bpmnElement="End_Reject">
-        <dc:Bounds x="1722" y="782" width="36" height="36"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_GW_Join" bpmnElement="GW_Join" isMarkerVisible="true">
-        <dc:Bounds x="1720" y="455" width="50" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_ConfirmAccount" bpmnElement="T_ConfirmAccount">
-        <dc:Bounds x="1860" y="120" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_ProcessPayment" bpmnElement="T_ProcessPayment">
-        <dc:Bounds x="2040" y="440" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_Record" bpmnElement="T_Record">
-        <dc:Bounds x="2220" y="760" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_ConfirmReceipt" bpmnElement="T_ConfirmReceipt">
-        <dc:Bounds x="2400" y="120" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_T_NotifyDone" bpmnElement="T_NotifyDone">
-        <dc:Bounds x="2580" y="760" width="120" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_End_Done" bpmnElement="End_Done">
-        <dc:Bounds x="2802" y="782" width="36" height="36"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DRB_Tiket" bpmnElement="DRB_Tiket">
-        <dc:Bounds x="362" y="670" width="36" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DRB_Verifikasi" bpmnElement="DRB_Verifikasi">
-        <dc:Bounds x="542" y="380" width="36" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DRB_Tinjauan" bpmnElement="DRB_Tinjauan">
-        <dc:Bounds x="942" y="350" width="36" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DRB_Keputusan" bpmnElement="DRB_Keputusan">
-        <dc:Bounds x="1122" y="670" width="36" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DRB_Rekening" bpmnElement="DRB_Rekening">
-        <dc:Bounds x="1902" y="220" width="36" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DRB_Bukti" bpmnElement="DRB_Bukti">
-        <dc:Bounds x="2082" y="350" width="36" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DRB_Catatan" bpmnElement="DRB_Catatan">
-        <dc:Bounds x="2262" y="670" width="36" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DRB_EmailTolak" bpmnElement="DRB_EmailTolak">
-        <dc:Bounds x="1522" y="670" width="36" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="di_DRB_Konfirmasi" bpmnElement="DRB_Konfirmasi">
-        <dc:Bounds x="2622" y="670" width="36" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="di_f1" bpmnElement="f1">
-        <di:waypoint x="268" y="160"/>
-        <di:waypoint x="294" y="160"/>
-        <di:waypoint x="294" y="800"/>
-        <di:waypoint x="320" y="800"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f2" bpmnElement="f2">
-        <di:waypoint x="440" y="800"/>
-        <di:waypoint x="470" y="800"/>
-        <di:waypoint x="470" y="320"/>
-        <di:waypoint x="500" y="320"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f3" bpmnElement="f3">
-        <di:waypoint x="620" y="320"/>
-        <di:waypoint x="700" y="320"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f4" bpmnElement="f4">
-        <di:waypoint x="700" y="320"/>
-        <di:waypoint x="730" y="320"/>
-        <di:waypoint x="730" y="160"/>
-        <di:waypoint x="760" y="160"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f5" bpmnElement="f5">
-        <di:waypoint x="640" y="160"/>
-        <di:waypoint x="630" y="160"/>
-        <di:waypoint x="630" y="320"/>
-        <di:waypoint x="620" y="320"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f6" bpmnElement="f6">
-        <di:waypoint x="750" y="320"/>
-        <di:waypoint x="825" y="320"/>
-        <di:waypoint x="825" y="480"/>
-        <di:waypoint x="900" y="480"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f7" bpmnElement="f7">
-        <di:waypoint x="1020" y="480"/>
-        <di:waypoint x="1050" y="480"/>
-        <di:waypoint x="1050" y="800"/>
-        <di:waypoint x="1080" y="800"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f8" bpmnElement="f8">
-        <di:waypoint x="1200" y="800"/>
-        <di:waypoint x="1300" y="800"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f9" bpmnElement="f9">
-        <di:waypoint x="1350" y="800"/>
-        <di:waypoint x="1415" y="800"/>
-        <di:waypoint x="1415" y="640"/>
-        <di:waypoint x="1480" y="640"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f10" bpmnElement="f10">
-        <di:waypoint x="1350" y="800"/>
-        <di:waypoint x="1415" y="800"/>
-        <di:waypoint x="1415" y="480"/>
-        <di:waypoint x="1480" y="480"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f11" bpmnElement="f11">
-        <di:waypoint x="1350" y="800"/>
-        <di:waypoint x="1480" y="800"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f12" bpmnElement="f12">
-        <di:waypoint x="1600" y="640"/>
-        <di:waypoint x="1660" y="640"/>
-        <di:waypoint x="1660" y="480"/>
-        <di:waypoint x="1720" y="480"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f13" bpmnElement="f13">
-        <di:waypoint x="1600" y="480"/>
-        <di:waypoint x="1720" y="480"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f14" bpmnElement="f14">
-        <di:waypoint x="1770" y="480"/>
-        <di:waypoint x="1815" y="480"/>
-        <di:waypoint x="1815" y="160"/>
-        <di:waypoint x="1860" y="160"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f15" bpmnElement="f15">
-        <di:waypoint x="1980" y="160"/>
-        <di:waypoint x="2010" y="160"/>
-        <di:waypoint x="2010" y="480"/>
-        <di:waypoint x="2040" y="480"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f16" bpmnElement="f16">
-        <di:waypoint x="2160" y="480"/>
-        <di:waypoint x="2190" y="480"/>
-        <di:waypoint x="2190" y="800"/>
-        <di:waypoint x="2220" y="800"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f17" bpmnElement="f17">
-        <di:waypoint x="2340" y="800"/>
-        <di:waypoint x="2370" y="800"/>
-        <di:waypoint x="2370" y="160"/>
-        <di:waypoint x="2400" y="160"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f18" bpmnElement="f18">
-        <di:waypoint x="2520" y="160"/>
-        <di:waypoint x="2550" y="160"/>
-        <di:waypoint x="2550" y="800"/>
-        <di:waypoint x="2580" y="800"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f19" bpmnElement="f19">
-        <di:waypoint x="2700" y="800"/>
-        <di:waypoint x="2802" y="800"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_f20" bpmnElement="f20">
-        <di:waypoint x="1600" y="800"/>
-        <di:waypoint x="1722" y="800"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_DRB_Tiket" bpmnElement="doa_DRB_Tiket">
-        <di:waypoint x="380" y="760"/>
-        <di:waypoint x="380" y="720"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DRB_Tiket_T_VerifyDocs" bpmnElement="DIn_DRB_Tiket_T_VerifyDocs">
-        <di:waypoint x="398" y="695"/>
-        <di:waypoint x="449" y="695"/>
-        <di:waypoint x="449" y="320"/>
-        <di:waypoint x="500" y="320"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_DRB_Verifikasi" bpmnElement="doa_DRB_Verifikasi">
-        <di:waypoint x="560" y="360"/>
-        <di:waypoint x="560" y="380"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DRB_Verifikasi_T_Review" bpmnElement="DIn_DRB_Verifikasi_T_Review">
-        <di:waypoint x="578" y="405"/>
-        <di:waypoint x="739" y="405"/>
-        <di:waypoint x="739" y="480"/>
-        <di:waypoint x="900" y="480"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_DRB_Tinjauan" bpmnElement="doa_DRB_Tinjauan">
-        <di:waypoint x="960" y="440"/>
-        <di:waypoint x="960" y="400"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DRB_Tinjauan_T_Eval" bpmnElement="DIn_DRB_Tinjauan_T_Eval">
-        <di:waypoint x="978" y="375"/>
-        <di:waypoint x="1029" y="375"/>
-        <di:waypoint x="1029" y="800"/>
-        <di:waypoint x="1080" y="800"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_DRB_Keputusan" bpmnElement="doa_DRB_Keputusan">
-        <di:waypoint x="1140" y="760"/>
-        <di:waypoint x="1140" y="720"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DRB_Keputusan_T_ApproveFull" bpmnElement="DIn_DRB_Keputusan_T_ApproveFull">
-        <di:waypoint x="1158" y="695"/>
-        <di:waypoint x="1319" y="695"/>
-        <di:waypoint x="1319" y="640"/>
-        <di:waypoint x="1480" y="640"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DRB_Keputusan_T_ApprovePartial" bpmnElement="DIn_DRB_Keputusan_T_ApprovePartial">
-        <di:waypoint x="1158" y="695"/>
-        <di:waypoint x="1319" y="695"/>
-        <di:waypoint x="1319" y="480"/>
-        <di:waypoint x="1480" y="480"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_DRB_Rekening" bpmnElement="doa_DRB_Rekening">
-        <di:waypoint x="1920" y="200"/>
-        <di:waypoint x="1920" y="220"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DRB_Rekening_T_ProcessPayment" bpmnElement="DIn_DRB_Rekening_T_ProcessPayment">
-        <di:waypoint x="1938" y="245"/>
-        <di:waypoint x="1989" y="245"/>
-        <di:waypoint x="1989" y="480"/>
-        <di:waypoint x="2040" y="480"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_DRB_Bukti" bpmnElement="doa_DRB_Bukti">
-        <di:waypoint x="2100" y="440"/>
-        <di:waypoint x="2100" y="400"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DRB_Bukti_T_Record" bpmnElement="DIn_DRB_Bukti_T_Record">
-        <di:waypoint x="2118" y="375"/>
-        <di:waypoint x="2169" y="375"/>
-        <di:waypoint x="2169" y="800"/>
-        <di:waypoint x="2220" y="800"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_DRB_Catatan" bpmnElement="doa_DRB_Catatan">
-        <di:waypoint x="2280" y="760"/>
-        <di:waypoint x="2280" y="720"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_DIn_DRB_Catatan_T_NotifyDone" bpmnElement="DIn_DRB_Catatan_T_NotifyDone">
-        <di:waypoint x="2298" y="695"/>
-        <di:waypoint x="2439" y="695"/>
-        <di:waypoint x="2439" y="800"/>
-        <di:waypoint x="2580" y="800"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_DRB_EmailTolak" bpmnElement="doa_DRB_EmailTolak">
-        <di:waypoint x="1540" y="760"/>
-        <di:waypoint x="1540" y="720"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="di_doa_DRB_Konfirmasi" bpmnElement="doa_DRB_Konfirmasi">
-        <di:waypoint x="2640" y="760"/>
-        <di:waypoint x="2640" y="720"/>
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="di_Part_Refund_TB" bpmnElement="Part_Refund_TB" isHorizontal="true"><dc:Bounds x="160" y="80" width="2760" height="800" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Sys" bpmnElement="L_Sys" isHorizontal="true"><dc:Bounds x="190" y="720" width="2730" height="160" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Mgr" bpmnElement="L_Mgr" isHorizontal="true"><dc:Bounds x="190" y="560" width="2730" height="160" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Fin" bpmnElement="L_Fin" isHorizontal="true"><dc:Bounds x="190" y="400" width="2730" height="160" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_CS" bpmnElement="L_CS" isHorizontal="true"><dc:Bounds x="190" y="240" width="2730" height="160" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_L_Mhs" bpmnElement="L_Mhs" isHorizontal="true"><dc:Bounds x="190" y="80" width="2730" height="160" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_Start_Refund" bpmnElement="Start_Refund"><dc:Bounds x="232" y="142" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Validate" bpmnElement="T_Validate"><dc:Bounds x="320" y="760" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_VerifyDocs" bpmnElement="T_VerifyDocs"><dc:Bounds x="500" y="280" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_Docs" bpmnElement="GW_Docs" isMarkerVisible="true"><dc:Bounds x="700" y="295" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_FixData" bpmnElement="T_FixData"><dc:Bounds x="640" y="120" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Review" bpmnElement="T_Review"><dc:Bounds x="900" y="440" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Eval" bpmnElement="T_Eval"><dc:Bounds x="1080" y="760" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_Dec" bpmnElement="GW_Dec" isMarkerVisible="true"><dc:Bounds x="1300" y="775" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ApproveFull" bpmnElement="T_ApproveFull"><dc:Bounds x="1480" y="600" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ApprovePartial" bpmnElement="T_ApprovePartial"><dc:Bounds x="1480" y="440" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_NotifyReject" bpmnElement="T_NotifyReject"><dc:Bounds x="1480" y="760" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_End_Reject" bpmnElement="End_Reject"><dc:Bounds x="1722" y="782" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_GW_Join" bpmnElement="GW_Join" isMarkerVisible="true"><dc:Bounds x="1720" y="455" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ConfirmAccount" bpmnElement="T_ConfirmAccount"><dc:Bounds x="1860" y="120" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ProcessPayment" bpmnElement="T_ProcessPayment"><dc:Bounds x="2040" y="440" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_Record" bpmnElement="T_Record"><dc:Bounds x="2220" y="760" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_ConfirmReceipt" bpmnElement="T_ConfirmReceipt"><dc:Bounds x="2400" y="120" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_T_NotifyDone" bpmnElement="T_NotifyDone"><dc:Bounds x="2580" y="760" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_End_Done" bpmnElement="End_Done"><dc:Bounds x="2802" y="782" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DRB_Tiket" bpmnElement="DRB_Tiket"><dc:Bounds x="362" y="670" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DRB_Verifikasi" bpmnElement="DRB_Verifikasi"><dc:Bounds x="542" y="380" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DRB_Tinjauan" bpmnElement="DRB_Tinjauan"><dc:Bounds x="942" y="350" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DRB_Keputusan" bpmnElement="DRB_Keputusan"><dc:Bounds x="1122" y="670" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DRB_Rekening" bpmnElement="DRB_Rekening"><dc:Bounds x="1902" y="220" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DRB_Bukti" bpmnElement="DRB_Bukti"><dc:Bounds x="2082" y="350" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DRB_Catatan" bpmnElement="DRB_Catatan"><dc:Bounds x="2262" y="670" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DRB_EmailTolak" bpmnElement="DRB_EmailTolak"><dc:Bounds x="1522" y="670" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_DRB_Konfirmasi" bpmnElement="DRB_Konfirmasi"><dc:Bounds x="2622" y="670" width="36" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_f1" bpmnElement="f1"><di:waypoint x="268" y="160" /><di:waypoint x="294" y="160" /><di:waypoint x="294" y="800" /><di:waypoint x="320" y="800" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f2" bpmnElement="f2"><di:waypoint x="440" y="800" /><di:waypoint x="470" y="800" /><di:waypoint x="470" y="320" /><di:waypoint x="500" y="320" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f3" bpmnElement="f3"><di:waypoint x="620" y="320" /><di:waypoint x="700" y="320" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f4" bpmnElement="f4"><di:waypoint x="700" y="320" /><di:waypoint x="730" y="320" /><di:waypoint x="730" y="160" /><di:waypoint x="760" y="160" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f5" bpmnElement="f5"><di:waypoint x="640" y="160" /><di:waypoint x="630" y="160" /><di:waypoint x="630" y="320" /><di:waypoint x="620" y="320" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f6" bpmnElement="f6"><di:waypoint x="750" y="320" /><di:waypoint x="825" y="320" /><di:waypoint x="825" y="480" /><di:waypoint x="900" y="480" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f7" bpmnElement="f7"><di:waypoint x="1020" y="480" /><di:waypoint x="1050" y="480" /><di:waypoint x="1050" y="800" /><di:waypoint x="1080" y="800" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f8" bpmnElement="f8"><di:waypoint x="1200" y="800" /><di:waypoint x="1300" y="800" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f9" bpmnElement="f9"><di:waypoint x="1350" y="800" /><di:waypoint x="1415" y="800" /><di:waypoint x="1415" y="640" /><di:waypoint x="1480" y="640" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f10" bpmnElement="f10"><di:waypoint x="1350" y="800" /><di:waypoint x="1415" y="800" /><di:waypoint x="1415" y="480" /><di:waypoint x="1480" y="480" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f11" bpmnElement="f11"><di:waypoint x="1350" y="800" /><di:waypoint x="1480" y="800" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f12" bpmnElement="f12"><di:waypoint x="1600" y="640" /><di:waypoint x="1660" y="640" /><di:waypoint x="1660" y="480" /><di:waypoint x="1720" y="480" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f13" bpmnElement="f13"><di:waypoint x="1600" y="480" /><di:waypoint x="1720" y="480" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f14" bpmnElement="f14"><di:waypoint x="1770" y="480" /><di:waypoint x="1815" y="480" /><di:waypoint x="1815" y="160" /><di:waypoint x="1860" y="160" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f15" bpmnElement="f15"><di:waypoint x="1980" y="160" /><di:waypoint x="2010" y="160" /><di:waypoint x="2010" y="480" /><di:waypoint x="2040" y="480" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f16" bpmnElement="f16"><di:waypoint x="2160" y="480" /><di:waypoint x="2190" y="480" /><di:waypoint x="2190" y="800" /><di:waypoint x="2220" y="800" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f17" bpmnElement="f17"><di:waypoint x="2340" y="800" /><di:waypoint x="2370" y="800" /><di:waypoint x="2370" y="160" /><di:waypoint x="2400" y="160" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f18" bpmnElement="f18"><di:waypoint x="2520" y="160" /><di:waypoint x="2550" y="160" /><di:waypoint x="2550" y="800" /><di:waypoint x="2580" y="800" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f19" bpmnElement="f19"><di:waypoint x="2700" y="800" /><di:waypoint x="2802" y="800" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_f20" bpmnElement="f20"><di:waypoint x="1600" y="800" /><di:waypoint x="1722" y="800" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_DRB_Tiket" bpmnElement="doa_DRB_Tiket"><di:waypoint x="380" y="760" /><di:waypoint x="380" y="720" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DRB_Tiket_T_VerifyDocs" bpmnElement="DIn_DRB_Tiket_T_VerifyDocs"><di:waypoint x="398" y="695" /><di:waypoint x="449" y="695" /><di:waypoint x="449" y="320" /><di:waypoint x="500" y="320" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_DRB_Verifikasi" bpmnElement="doa_DRB_Verifikasi"><di:waypoint x="560" y="360" /><di:waypoint x="560" y="380" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DRB_Verifikasi_T_Review" bpmnElement="DIn_DRB_Verifikasi_T_Review"><di:waypoint x="578" y="405" /><di:waypoint x="739" y="405" /><di:waypoint x="739" y="480" /><di:waypoint x="900" y="480" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_DRB_Tinjauan" bpmnElement="doa_DRB_Tinjauan"><di:waypoint x="960" y="440" /><di:waypoint x="960" y="400" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DRB_Tinjauan_T_Eval" bpmnElement="DIn_DRB_Tinjauan_T_Eval"><di:waypoint x="978" y="375" /><di:waypoint x="1029" y="375" /><di:waypoint x="1029" y="800" /><di:waypoint x="1080" y="800" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_DRB_Keputusan" bpmnElement="doa_DRB_Keputusan"><di:waypoint x="1140" y="760" /><di:waypoint x="1140" y="720" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DRB_Keputusan_T_ApproveFull" bpmnElement="DIn_DRB_Keputusan_T_ApproveFull"><di:waypoint x="1158" y="695" /><di:waypoint x="1319" y="695" /><di:waypoint x="1319" y="640" /><di:waypoint x="1480" y="640" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DRB_Keputusan_T_ApprovePartial" bpmnElement="DIn_DRB_Keputusan_T_ApprovePartial"><di:waypoint x="1158" y="695" /><di:waypoint x="1319" y="695" /><di:waypoint x="1319" y="480" /><di:waypoint x="1480" y="480" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_DRB_Rekening" bpmnElement="doa_DRB_Rekening"><di:waypoint x="1920" y="200" /><di:waypoint x="1920" y="220" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DRB_Rekening_T_ProcessPayment" bpmnElement="DIn_DRB_Rekening_T_ProcessPayment"><di:waypoint x="1938" y="245" /><di:waypoint x="1989" y="245" /><di:waypoint x="1989" y="480" /><di:waypoint x="2040" y="480" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_DRB_Bukti" bpmnElement="doa_DRB_Bukti"><di:waypoint x="2100" y="440" /><di:waypoint x="2100" y="400" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DRB_Bukti_T_Record" bpmnElement="DIn_DRB_Bukti_T_Record"><di:waypoint x="2118" y="375" /><di:waypoint x="2169" y="375" /><di:waypoint x="2169" y="800" /><di:waypoint x="2220" y="800" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_DRB_Catatan" bpmnElement="doa_DRB_Catatan"><di:waypoint x="2280" y="760" /><di:waypoint x="2280" y="720" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_DIn_DRB_Catatan_T_NotifyDone" bpmnElement="DIn_DRB_Catatan_T_NotifyDone"><di:waypoint x="2298" y="695" /><di:waypoint x="2439" y="695" /><di:waypoint x="2439" y="800" /><di:waypoint x="2580" y="800" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_DRB_EmailTolak" bpmnElement="doa_DRB_EmailTolak"><di:waypoint x="1540" y="760" /><di:waypoint x="1540" y="720" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_doa_DRB_Konfirmasi" bpmnElement="doa_DRB_Konfirmasi"><di:waypoint x="2640" y="760" /><di:waypoint x="2640" y="720" /></bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
