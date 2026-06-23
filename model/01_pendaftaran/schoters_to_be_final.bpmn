@@ -48,14 +48,14 @@
         <camunda:connector>
           <camunda:connectorId>http-connector</camunda:connectorId>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://fahmiprasetio.app.n8n.cloud/webhook/notif-mpb</camunda:inputParameter>
             <camunda:inputParameter name="method">POST</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
                 <camunda:entry key="Content-Type">application/json</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
-            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83D\uDCE5 [LOG SISTEM] Aplikasi pendaftaran baru diterima dan tercatat otomatis di CRM Schoters."}</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"stage":"Auto-Log Aplikasi","text":"\uD83D\uDCE5 [LOG SISTEM] Aplikasi pendaftaran baru diterima dan tercatat otomatis di CRM Schoters."}</camunda:inputParameter>
             <camunda:outputParameter name="logAutoLog">${statusCode}</camunda:outputParameter>
           </camunda:inputOutput>
         </camunda:connector>
@@ -85,14 +85,14 @@
         <camunda:connector>
           <camunda:connectorId>http-connector</camunda:connectorId>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://fahmiprasetio.app.n8n.cloud/webhook/notif-mpb</camunda:inputParameter>
             <camunda:inputParameter name="method">POST</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
                 <camunda:entry key="Content-Type">application/json</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
-            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83D\uDCE8 [LOG SISTEM] Surat penawaran digital (offer letter) telah dikirim otomatis ke calon mahasiswa."}</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"stage":"Kirim Offer Letter","text":"\uD83D\uDCE8 [LOG SISTEM] Surat penawaran digital (offer letter) telah dikirim otomatis ke calon mahasiswa."}</camunda:inputParameter>
             <camunda:outputParameter name="logSendOffer">${statusCode}</camunda:outputParameter>
           </camunda:inputOutput>
         </camunda:connector>
@@ -108,14 +108,14 @@
         <camunda:connector>
           <camunda:connectorId>http-connector</camunda:connectorId>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://fahmiprasetio.app.n8n.cloud/webhook/notif-mpb</camunda:inputParameter>
             <camunda:inputParameter name="method">POST</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
                 <camunda:entry key="Content-Type">application/json</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
-            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83E\uDDFE [LOG SISTEM] Invoice pembayaran telah dibuat otomatis oleh sistem."}</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"stage":"Generate Invoice","text":"\uD83E\uDDFE [LOG SISTEM] Invoice pembayaran telah dibuat otomatis oleh sistem."}</camunda:inputParameter>
             <camunda:outputParameter name="logGenInvoice">${statusCode}</camunda:outputParameter>
           </camunda:inputOutput>
         </camunda:connector>
@@ -134,14 +134,14 @@
         <camunda:connector>
           <camunda:connectorId>http-connector</camunda:connectorId>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://fahmiprasetio.app.n8n.cloud/webhook/notif-mpb</camunda:inputParameter>
             <camunda:inputParameter name="method">POST</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
                 <camunda:entry key="Content-Type">application/json</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
-            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83D\uDCC4 [LOG SISTEM] Dokumen perjanjian digital telah dibuat otomatis dan siap ditandatangani."}</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"stage":"Generate Perjanjian","text":"\uD83D\uDCC4 [LOG SISTEM] Dokumen perjanjian digital telah dibuat otomatis dan siap ditandatangani."}</camunda:inputParameter>
             <camunda:outputParameter name="logGenAgreement">${statusCode}</camunda:outputParameter>
           </camunda:inputOutput>
         </camunda:connector>
@@ -161,14 +161,14 @@
         <camunda:connector>
           <camunda:connectorId>http-connector</camunda:connectorId>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://fahmiprasetio.app.n8n.cloud/webhook/notif-mpb</camunda:inputParameter>
             <camunda:inputParameter name="method">POST</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
                 <camunda:entry key="Content-Type">application/json</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
-            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\u23F0 [PENGINGAT] Dokumen perjanjian digital Anda belum ditandatangani. Mohon segera tandatangani."}</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"stage":"Pengingat TTD","text":"\u23F0 [PENGINGAT] Dokumen perjanjian digital Anda belum ditandatangani. Mohon segera tandatangani."}</camunda:inputParameter>
             <camunda:outputParameter name="remindStatus">${statusCode}</camunda:outputParameter>
           </camunda:inputOutput>
         </camunda:connector>
@@ -187,14 +187,14 @@
         <camunda:connector>
           <camunda:connectorId>http-connector</camunda:connectorId>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">https://api.telegram.org/bot8493118055:AAFusBcgndE72GV1RgXtaQkdFWGG0LDSAOo/sendMessage</camunda:inputParameter>
+            <camunda:inputParameter name="url">https://fahmiprasetio.app.n8n.cloud/webhook/notif-mpb</camunda:inputParameter>
             <camunda:inputParameter name="method">POST</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
                 <camunda:entry key="Content-Type">application/json</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
-            <camunda:inputParameter name="payload">{"chat_id":"8461739547","text":"\uD83C\uDF89 Selamat! Pendaftaran telah selesai dan mahasiswa resmi enrolled di Schoters."}</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{"stage":"Enrolled","text":"\uD83C\uDF89 Selamat! Pendaftaran telah selesai dan mahasiswa resmi enrolled di Schoters."}</camunda:inputParameter>
             <camunda:outputParameter name="notifyStatus">${statusCode}</camunda:outputParameter>
           </camunda:inputOutput>
         </camunda:connector>
