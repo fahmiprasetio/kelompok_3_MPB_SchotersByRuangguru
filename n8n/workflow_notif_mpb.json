@@ -1,0 +1,88 @@
+{
+  "name": "Notif MPB Kelompok 3",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "notif-mpb",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "node-webhook",
+      "name": "Webhook (dari BPMN)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "notif-mpb"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "-5424158838",
+        "text": "SET_EKSPRESI_DI_UI_lihat_README",
+        "additionalFields": {}
+      },
+      "id": "node-telegram",
+      "name": "Kirim Telegram Grup",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [520, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "REPLACE_TELEGRAM_CRED_ID",
+          "name": "Bot MPB Kelompok 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Log"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Waktu": "SET_EKSPRESI_DI_UI",
+            "Tahap": "SET_EKSPRESI_DI_UI",
+            "Pesan": "SET_EKSPRESI_DI_UI"
+          },
+          "matchingColumns": []
+        },
+        "options": {}
+      },
+      "id": "node-sheets",
+      "name": "Log ke Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [520, 400],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_GOOGLE_CRED_ID",
+          "name": "Google Sheets MPB"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook (dari BPMN)": {
+      "main": [
+        [
+          { "node": "Kirim Telegram Grup", "type": "main", "index": 0 },
+          { "node": "Log ke Google Sheets", "type": "main", "index": 0 }
+        ]
+      ]
+    }
+  },
+  "settings": {},
+  "active": false
+}
