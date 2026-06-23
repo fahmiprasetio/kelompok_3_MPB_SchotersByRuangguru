@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Onboarding_Sub" targetNamespace="http://bpmn.io/schema/bpmn" exporter="manual" exporterVersion="1.0">
+  <bpmn:process id="Process_Onboarding_Sub" name="Student Onboarding" isExecutable="true" camunda:historyTimeToLive="P180D">
+    <bpmn:startEvent id="OB_Start" name="Onboarding Started" />
+    <bpmn:userTask id="OB_Video" name="Schedule Onboarding Video Call" camunda:candidateGroups="program" />
+    <bpmn:serviceTask id="OB_LMS" name="Provision LMS Access" camunda:expression="${true}" />
+    <bpmn:serviceTask id="OB_Welcome" name="Send Welcome Kit" camunda:expression="${true}" />
+    <bpmn:endEvent id="OB_End" name="Onboarding Completed" />
+    <bpmn:sequenceFlow id="ob1" sourceRef="OB_Start" targetRef="OB_Video" />
+    <bpmn:sequenceFlow id="ob2" sourceRef="OB_Video" targetRef="OB_LMS" />
+    <bpmn:sequenceFlow id="ob3" sourceRef="OB_LMS" targetRef="OB_Welcome" />
+    <bpmn:sequenceFlow id="ob4" sourceRef="OB_Welcome" targetRef="OB_End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diag_OB">
+    <bpmndi:BPMNPlane id="Plane_OB" bpmnElement="Process_Onboarding_Sub">
+      <bpmndi:BPMNShape id="di_OB_Start" bpmnElement="OB_Start"><dc:Bounds x="160" y="182" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_OB_Video" bpmnElement="OB_Video"><dc:Bounds x="260" y="160" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_OB_LMS" bpmnElement="OB_LMS"><dc:Bounds x="440" y="160" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_OB_Welcome" bpmnElement="OB_Welcome"><dc:Bounds x="620" y="160" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="di_OB_End" bpmnElement="OB_End"><dc:Bounds x="820" y="182" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_ob1" bpmnElement="ob1"><di:waypoint x="196" y="200" /><di:waypoint x="260" y="200" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ob2" bpmnElement="ob2"><di:waypoint x="380" y="200" /><di:waypoint x="440" y="200" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ob3" bpmnElement="ob3"><di:waypoint x="560" y="200" /><di:waypoint x="620" y="200" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_ob4" bpmnElement="ob4"><di:waypoint x="740" y="200" /><di:waypoint x="820" y="200" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
